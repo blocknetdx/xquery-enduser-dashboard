@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect } from "react"
 import { useSelector } from "react-redux"
-import { useAccountCenter, useConnectWallet, useWallets } from "@web3-onboard/react"
+import { useConnectWallet, useWallets } from "@web3-onboard/react"
 import { createStyles, makeStyles } from "@mui/styles"
-import { initWeb3Onboard } from '../../services'
 import { Box, Button, Typography } from "@mui/material"
 import { FlexColumn } from "../../components/Layout"
 import styles from "./index.module.scss"
@@ -53,13 +52,6 @@ const Login = (props) => {
   const { loading, setDirect } = props
   const [{ wallet }, connect] = useConnectWallet() // eslint-disable-line
   const connectedWallets = useWallets()
-  const [web3Onboard, setWeb3Onboard] = useState(null) // eslint-disable-line
-  const updateAccountCenter = useAccountCenter()
-  updateAccountCenter({ position: 'bottomRight' })
-
-  useEffect(() => {
-    setWeb3Onboard(initWeb3Onboard)
-  }, [])
 
   useEffect(() => {
     if (!connectedWallets.length) return
@@ -71,6 +63,7 @@ const Login = (props) => {
   }, [connectedWallets, wallet])
 
   const handleConnect = async () => {
+    // await connect()
     if (!wallet) {
       await connect()
     } else {
