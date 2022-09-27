@@ -1,1 +1,2 @@
-export const NEW_PROJECT_MSG = 'create project'
+export const NEW_PROJECT_MSG = 'XQuery uses a cryptographic signature to verify that you are the owner of this Ethereum address. Please sign this tx to login.'
+export const ENDPOINT = 'http://143.198.144.71:5432/api'
