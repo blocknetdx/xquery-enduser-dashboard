@@ -29,6 +29,11 @@ export const light = createTheme({
       fontSize: 12,
       fontWeight: 500
     },
+    p: {
+      fontSize: 14,
+      fontWeight: 300,
+      textTransform: "none"
+    },
     button: {
       fontSize: 16,
       fontWeight: 500,

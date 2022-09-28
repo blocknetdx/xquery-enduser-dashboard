@@ -70,7 +70,7 @@ const StyledPagination = (props) => {
             startIcon={<img src={backward} alt='backward' />}
           >
           </Button>
-          <Typography variant='h5' color='common.black'>Page {curPage} of {Math.ceil(length / 10) + (length === 0 ? 1 : 0)}</Typography>
+          <Typography variant='p' color='common.black'>Page {curPage} of {Math.ceil(length / 10) + (length === 0 ? 1 : 0)}</Typography>
           <Button
             style={{ color: theme.palette.common.black }}
             className={`${styles.arrow}`}
@@ -276,7 +276,7 @@ const StyledTable = (props) => {
       <div className={`${styles.header} ${classes.bottomDiv}`}>
         <FlexColumn>
           <Typography variant='h3' color='common.black' className={`${styles.title}`}>Your Projects</Typography>
-          <Typography variant='h5' color='text.primary' fontWeight='normal !important'>Lorem ipsum dolor sit amet, consectetur adipiscing elit</Typography>
+          <Typography variant='p' color='text.primary' fontWeight='normal !important'>Lorem ipsum dolor sit amet, consectetur adipiscing elit</Typography>
         </FlexColumn>
       </div>
       <div className={`${styles.filter} ${classes.bottomDiv}`}>
@@ -364,7 +364,7 @@ const StyledTable = (props) => {
                 <TableCell className={`${classes.cell} ${classes.sticky}`} padding="none" align="right">
                   <FlexColumn className={`${styles.column}`} style={{ padding: '12px 0px 12px 35px' }}>
                     <div className={styles.infoBtn} onClick={() => handleGetInfo(data.projectId, data.apiKey)}>
-                      <Typography variant='h5' color='white' className={styles.info} style={{ whiteSpace: 'nowrap' }}>
+                      <Typography variant='p' color='white' className={styles.info} style={{ whiteSpace: 'nowrap' }}>
                         View project info
                       </Typography>
                       <img src={info} alt='info' />

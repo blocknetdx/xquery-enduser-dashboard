@@ -114,18 +114,18 @@ export const initWeb3Onboard = init({
     name: 'Blocknative Web3-Onboard',
     icon: blocknativeIcon,
     logo: blocknativeLogo,
-    description: 'Demo app for Web3-Onboard',
+    description: 'Web3-Onboard',
     recommendedInjectedWallets: [
       { name: 'Coinbase', url: 'https://wallet.coinbase.com/' },
       { name: 'MetaMask', url: 'https://metamask.io' }
     ],
     agreement: {
-      version: '1.0.0',
-      termsUrl: 'https://www.blocknative.com/terms-conditions',
-      privacyUrl: 'https://www.blocknative.com/privacy-policy'
-    },
-    gettingStartedGuide: 'https://blocknative.com',
-    explore: 'https://blocknative.com'
+      version: '1.0.0'
+      // termsUrl: 'https://www.blocknative.com/terms-conditions',
+      // privacyUrl: 'https://www.blocknative.com/privacy-policy'
+    }
+    // gettingStartedGuide: 'https://blocknative.com',
+    // explore: 'https://blocknative.com'
   },
   accountCenter: {
     desktop: {
