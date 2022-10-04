@@ -1,3 +1,4 @@
+import { ImportantDevices } from "@mui/icons-material"
 import { createTheme } from "@mui/material/styles"
 
 export const light = createTheme({
@@ -115,10 +116,15 @@ export const dark = createTheme({
       fontSize: 12,
       fontWeight: 500
     },
+    p: {
+      fontSize: 14,
+      fontWeight: 300
+    },
     button: {
       fontSize: 16,
       fontWeight: 500,
-      textTransform: "none"
+      textTransform: "none",
+      boxShadow: "none"
     }
   },
   palette: {
