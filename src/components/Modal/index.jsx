@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme) =>
       right: 0,
       background: theme.palette.info.dark,
       padding: "10px",
-      backgroundColor: '#F2F4F7'
+      background: 'none !important'
     },
     cell: {
       width: '86px !important',
@@ -93,7 +93,7 @@ const useStyles = makeStyles((theme) =>
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:nth-of-type(even)': {
-    backgroundColor: '#F2F4F7',
+    backgroundColor: '#F2F4F7 !important',
     color: theme.palette.primary.text
   },
   // hide last border
@@ -144,7 +144,8 @@ const titles = [
 const filterlist = [
   'ETH',
   'AVAX',
-  'BSC'
+  'BSC',
+  'SYS'
 ]
 
 const ProjectModal = (props) => {

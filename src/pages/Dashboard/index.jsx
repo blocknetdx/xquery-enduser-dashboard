@@ -107,6 +107,9 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 10,
     color: `${theme.palette.common.black} !important`
   },
+  button: {
+    boxShadow: 'none !important'
+  },
   overview: {
     [theme.breakpoints.down(960)]: {
       fontSize: '20px !important',
@@ -276,19 +279,19 @@ const Dashboard = ({ signature }) => {
                 <div className={styles.aboutBody2}>
                   <Typography variant='p' color='text.primary'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quis sit facilisi non, suspendisse.</Typography>
                   <FlexRow className={`${styles.flexStart}`}>
-                    <IconButton>
+                    <IconButton href="https://twitter.com/The_Blocknet" target="_blank">
                       <img src={twitter} alt='twitter' />
                     </IconButton>
-                    <IconButton>
+                    <IconButton href="https://www.reddit.com/r/theblocknet/" target="_blank">
                       <img src={reddit} alt='reddit' />
                     </IconButton>
-                    <IconButton>
+                    <IconButton href="https://discord.gg/mZ6pTneMx3" target="_blank">
                       <img src={discord} alt='discord' />
                     </IconButton>
-                    <IconButton>
+                    <IconButton href="https://t.me/Blocknet" target="_blank">
                       <img src={telegram} alt='telegram' />
                     </IconButton>
-                    <IconButton>
+                    <IconButton href="https://github.com/blocknetdx/" target="_blank">
                       <img src={github} alt='github' />
                     </IconButton>
                   </FlexRow>
