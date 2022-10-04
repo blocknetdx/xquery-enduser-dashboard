@@ -1,4 +1,3 @@
-import { ImportantDevices } from "@mui/icons-material"
 import { createTheme } from "@mui/material/styles"
 
 export const light = createTheme({
