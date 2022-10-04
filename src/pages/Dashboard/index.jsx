@@ -107,6 +107,9 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 10,
     color: `${theme.palette.common.black} !important`
   },
+  button: {
+    boxShadow: 'none !important'
+  },
   overview: {
     [theme.breakpoints.down(960)]: {
       fontSize: '20px !important',
@@ -276,19 +279,19 @@ const Dashboard = ({ signature }) => {
                 <div className={styles.aboutBody2}>
                   <Typography variant='p' color='text.primary'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quis sit facilisi non, suspendisse.</Typography>
                   <FlexRow className={`${styles.flexStart}`}>
-                    <IconButton>
+                    <IconButton href="https://twitter.com/The_Blocknet" target="_blank">
                       <img src={twitter} alt='twitter' />
                     </IconButton>
-                    <IconButton>
+                    <IconButton href="https://www.reddit.com/r/theblocknet/" target="_blank">
                       <img src={reddit} alt='reddit' />
                     </IconButton>
-                    <IconButton>
+                    <IconButton href="https://discord.gg/mZ6pTneMx3" target="_blank">
                       <img src={discord} alt='discord' />
                     </IconButton>
-                    <IconButton>
+                    <IconButton href="https://t.me/Blocknet" target="_blank">
                       <img src={telegram} alt='telegram' />
                     </IconButton>
-                    <IconButton>
+                    <IconButton href="https://github.com/blocknetdx/" target="_blank">
                       <img src={github} alt='github' />
                     </IconButton>
                   </FlexRow>
@@ -307,11 +310,11 @@ const Dashboard = ({ signature }) => {
                   <Typography variant='p' color='text.primary' sx={{ lineHeight: '1.43 !important' }}>Dolor enim eu tortor urna sed duis nulla. Aliquam vestibulum, nulla odio nisl vitae. In aliquet pellentesque aenean hac vestibulum turpis mi bibendum diam. Tempor integer aliquam in vitae malesuada fringilla. Elit nisi in eleifend sed nisi. Pulvinar at orci, proin imperdiet commodo consectetur convallis risus.</Typography>
                   <FlexRow className={`${styles.flexStart}`}>
                     <img src={website} alt='website' />
-                    <a className={`${styles.link}`} href='https://blocknet.co' target='_blank' rel='noopener noreferrer'>Blocknet.co</a>
+                    <a className={`${styles.link}`} href='https://blocknet.org' target='_blank' rel='noopener noreferrer'>Blocknet.org</a>
                   </FlexRow>
                   <FlexRow className={`${styles.flexStart}`}>
                     <img src={book} alt='book' />
-                    <a className={`${styles.link}`} href='https://docs.blocknet.co' target='_blank' rel='noopener noreferrer'>docs.blocknet.co</a>
+                    <a className={`${styles.link}`} href='https://docs.blocknet.org' target='_blank' rel='noopener noreferrer'>docs.blocknet.org</a>
                   </FlexRow>
                   <FlexRow className={`${styles.flexStart}`}>
                     <img src={discord} alt='discord' />

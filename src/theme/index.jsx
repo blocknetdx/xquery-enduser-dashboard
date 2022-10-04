@@ -1,6 +1,18 @@
 import { createTheme } from "@mui/material/styles"
 
 export const light = createTheme({
+  components: {
+    // Name of the component
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          boxShadow: 'none',
+          textTransform: 'none',
+          fontWeight: 500
+        }
+      },
+    },
+  },
   typography: {
     fontFamily: 'Inter',
     h1: {
@@ -32,11 +44,6 @@ export const light = createTheme({
     p: {
       fontSize: 14,
       fontWeight: 300,
-      textTransform: "none"
-    },
-    button: {
-      fontSize: 16,
-      fontWeight: 500,
       textTransform: "none"
     }
   },
@@ -115,10 +122,9 @@ export const dark = createTheme({
       fontSize: 12,
       fontWeight: 500
     },
-    button: {
-      fontSize: 16,
-      fontWeight: 500,
-      textTransform: "none"
+    p: {
+      fontSize: 14,
+      fontWeight: 300
     }
   },
   palette: {
