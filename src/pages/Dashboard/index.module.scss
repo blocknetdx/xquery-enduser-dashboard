@@ -28,7 +28,7 @@
 }
 
 .aboutHead {
-  padding: 20px 15px 10px;
+  padding: 20px 16px 10px;
 }
 
 .aboutBody1 {
@@ -81,14 +81,17 @@
 
 .codes {
   line-height: 1.5 !important;
-  font-family: 'Inter';
-  overflow-x: hidden;
+  overflow-x: scroll;
   margin: 0px;
 }
 
 .mobileSelect {
   display: none;
   width: 100%;
+}
+
+.iconBtn {
+  padding-left: 4px;
 }
 
 @media (max-width: 1280px) {

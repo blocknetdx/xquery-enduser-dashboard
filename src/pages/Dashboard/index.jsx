@@ -228,14 +228,14 @@ const Dashboard = ({ signature }) => {
                 <div className={styles.aboutBody1}>
                   <Typography variant='p' color='text.primary'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Rhoncus elit interdum aliquet.</Typography>
                   <FlexRow className={`${styles.spaceBetween}`}>
-                    <OutsideButton href="https://docs.blocknet.org" variant='contained'>
+                    <Button href='https://api.blocknet.org/#xquery-api' target='_blank' variant='outlined' sx={{ width: '48%', borderRadius: '6px', border: 'solid 1px #bdb4fe', backgroundColor: '#f9f5ff', color: '#6941c6' }}>
                       Support docs
-                      <img src={launch} width='20px' height='20px' alt="launch" />
-                    </OutsideButton>
-                    <OutsideButton href="https://discord.gg/mZ6pTneMx3" variant='contained'>
+                      <img class="iconBtn" src={launch} width='20px' height='20px' alt="launch" />
+                    </Button>
+                    <Button href='https://discord.gg/mZ6pTneMx3' target='_blank' variant='outlined' sx={{ width: '48%', borderRadius: '6px', border: 'solid 1px #bdb4fe', backgroundColor: '#f9f5ff', color: '#6941c6' }}>
                       Join Discord
-                      <img src={launch} width='20px' height='20px' alt="launch" />
-                    </OutsideButton>
+                      <img class="iconBtn" src={launch} width='20px' height='20px' alt="launch" />
+                    </Button>
                   </FlexRow>
                 </div>
               </Card>
@@ -248,7 +248,7 @@ const Dashboard = ({ signature }) => {
                     sx={{ padding: 0, alignItems: 'flex-start', margin: '0px !important' }}
                   >
                     <div>
-                      <Typography variant='h4' color='common.black' className={styles.title}>Your First Request</Typography>
+                      <Typography variant='h4' color='common.black' className={styles.title} sx={{marginBottom: '16px' }}>Your First Request</Typography>
                       <Typography variant='p' color='text.primary' sx={{ mt: '20px', width: 'calc(100% + 25px)' }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quis sit facilisi non, suspendisse.</Typography>
                     </div>
 
