@@ -229,12 +229,12 @@ const Dashboard = ({ signature }) => {
                   <Typography variant='p' color='text.primary'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Rhoncus elit interdum aliquet.</Typography>
                   <FlexRow className={`${styles.spaceBetween}`}>
                     <Button href='https://api.blocknet.org/#xquery-api' target='_blank' variant='outlined' sx={{ width: '48%', borderRadius: '6px', border: 'solid 1px #bdb4fe', backgroundColor: '#f9f5ff', color: '#6941c6' }}>
-                      <span>Support docs</span>
-                      <img class="iconBtn" src={launch} width='20px' height='20px' alt="launch" />
+                      <span class="iconBtnSpace">Support docs</span>
+                      <img src={launch} width='20px' height='20px' alt="launch" />
                     </Button>
                     <Button href='https://discord.gg/mZ6pTneMx3' target='_blank' variant='outlined' sx={{ width: '48%', borderRadius: '6px', border: 'solid 1px #bdb4fe', backgroundColor: '#f9f5ff', color: '#6941c6' }}>
-                    <span>Join Discord</span>
-                      <img class="iconBtn" src={launch} width='20px' height='20px' alt="launch" />
+                      <span class="iconBtnSpace">Join Discord</span>
+                      <img src={launch} width='20px' height='20px' alt="launch" />
                     </Button>
                   </FlexRow>
                 </div>
@@ -297,8 +297,8 @@ const Dashboard = ({ signature }) => {
                   </FlexRow>
                 </div>
               </Card>
-              <Card className={`${styles.about}`}>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+              <Card className={`${styles.about1}`}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                   <Typography variant='h4' color='common.black' className={styles.title}>About XQuery</Typography>
                   <Typography variant='p' color='text.primary' sx={{ lineHeight: '1.43 !important', marginTop: isMobile ? '-15px' : '0px' }}>
                     XQuery decentralizes access to indexed blockchain data, removing a critical burden of trust from the blockchain stack: centralized data providers.

@@ -362,18 +362,10 @@ const StyledTable = (props) => {
                   </FlexColumn>
                 </TableCell>
                 <TableCell className={`${classes.cell}`} padding="0 10px 0 0" align="right">
-                    <Button variant='contained' onClick={() => handleGetInfo(data.projectId, data.apiKey)} style={{ padding: '2px 16px' }}>
-                      <span className={styles.infoBtn}>View project info</span>
+                    <Button variant='contained' onClick={() => handleGetInfo(data.projectId, data.apiKey)} style={{ padding: '2px 16px', padding: '6px 16px', display: 'flex', alignItems: 'center', height: '40px', margin: '0 auto' }}>
+                      <span className={styles.infoBtnSpace}>View project info</span>
                       <img src={info} alt='info' />
                     </Button>
-                {/* <FlexColumn className={`${styles.column}`} style={{ padding: '12px 0px 12px 35px' }}>
-                      <div className={styles.infoBtn} onClick={() => handleGetInfo(data.projectId, data.apiKey)}>
-                        <Typography variant='p' color='white' className={styles.info} style={{ whiteSpace: 'nowrap' }}>
-                          View project info
-                        </Typography>
-                        <img src={info} alt='info' />
-                      </div>
-                    </FlexColumn> */}
                 </TableCell>
               </TableRow>
             ))}
