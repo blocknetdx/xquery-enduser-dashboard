@@ -149,6 +149,15 @@ const titles = [
 
 const filterlist = ['ETH', 'AVAX', 'BSC', 'SYS']
 
+const hasNetwork = (row, filters) => {
+  for (let i = 0; i < filters.length; ++i) {
+    if (row.networks.findIndex(network => network === filters[i]) >= 0) {
+      return true
+    }
+  }
+  return false
+}
+
 const ProjectModal = props => {
   const { open, signature, handleClose } = props
   // const [{ wallet }] = useConnectWallet()
@@ -231,6 +240,8 @@ const ProjectModal = props => {
     for (let i = 0; i < len; i++) pass += ch
     return pass
   }
+
+  console.log('rows:', rows, toFilter)
 
   return (
     <div>
@@ -404,87 +415,101 @@ const ProjectModal = props => {
                       </TableRow>
                     </TableHead>
                     <TableBody sx={{ backgroundColor: 'white' }}>
-                      {rows.map((row, index) => (
-                        <StyledTableRow key={index}>
-                          <StyledTableCell component="th" scope="row">
-                            <Stack direction={'column'}>
-                              <div
-                                style={{ color: '#344054', fontWeight: '500' }}
+                      {rows
+                        .filter(
+                          row =>
+                            toFilter.length === 0 || hasNetwork(row, toFilter)
+                        )
+                        .map((row, index) => (
+                          <StyledTableRow key={index}>
+                            <StyledTableCell component="th" scope="row">
+                              <Stack direction={'column'}>
+                                <div
+                                  style={{
+                                    color: '#344054',
+                                    fontWeight: '500'
+                                  }}
+                                >
+                                  {row.ip[0]}
+                                </div>
+                                <div style={{ color: '#667085' }}>
+                                  {row.ip[1]}
+                                </div>
+                              </Stack>
+                            </StyledTableCell>
+                            <StyledTableCell align="left">
+                              <Stack
+                                display="flex"
+                                gap="5px"
+                                flexDirection="row"
                               >
-                                {row.ip[0]}
-                              </div>
-                              <div style={{ color: '#667085' }}>
-                                {row.ip[1]}
-                              </div>
-                            </Stack>
-                          </StyledTableCell>
-                          <StyledTableCell align="left">
-                            <Stack display="flex" gap="5px" flexDirection="row">
-                              {/* {
+                                {/* {
                                   row.networks.map((network) => {
                                     return <Chip key={network} label={network} size='small' color="primary" />
                                   })
                                 } */}
-                              <Chip
-                                label={'ETH'}
-                                size="small"
-                                className={styles.chipEth}
-                              />
-                              <Chip
-                                label={'AVAX'}
-                                size="small"
-                                className={styles.chipAvax}
-                              />
-                              <Chip
-                                label={'BSC'}
-                                size="small"
-                                className={styles.chipBsc}
-                              />
-                            </Stack>
-                          </StyledTableCell>
-                          <StyledTableCell align="left">
-                            <Stack direction="column">
-                              <div
-                                style={{
-                                  color: '#344054',
-                                  whiteSpace: 'nowrap'
-                                }}
-                              >
-                                Tier 1: ${row.cost[0]}
-                              </div>
-                              <div
-                                style={{
-                                  color: '#344054',
-                                  whiteSpace: 'nowrap'
-                                }}
-                              >
-                                Tier 2: ${row.cost[1]}
-                              </div>
-                            </Stack>
-                          </StyledTableCell>
-                          <StyledTableCell
-                            align="left"
-                            className={classes.sticky}
-                          >
-                            <Button
-                              variant="contained"
-                              className={styles.info}
-                              fullWidth
-                              endIcon={<img src={info} alt="info" />}
-                              onClick={onClickDetail}
+                                <Chip
+                                  label={'ETH'}
+                                  size="small"
+                                  className={styles.chipEth}
+                                />
+                                <Chip
+                                  label={'AVAX'}
+                                  size="small"
+                                  className={styles.chipAvax}
+                                />
+                                <Chip
+                                  label={'BSC'}
+                                  size="small"
+                                  className={styles.chipBsc}
+                                />
+                              </Stack>
+                            </StyledTableCell>
+                            <StyledTableCell align="left">
+                              <Stack direction="column">
+                                <div
+                                  style={{
+                                    color: '#344054',
+                                    whiteSpace: 'nowrap'
+                                  }}
+                                >
+                                  Tier 1: ${row.cost[0]}
+                                </div>
+                                <div
+                                  style={{
+                                    color: '#344054',
+                                    whiteSpace: 'nowrap'
+                                  }}
+                                >
+                                  Tier 2: ${row.cost[1]}
+                                </div>
+                              </Stack>
+                            </StyledTableCell>
+                            <StyledTableCell
+                              align="left"
+                              className={classes.sticky}
                             >
-                              <Typography variant="h5">View details</Typography>
-                            </Button>
-                            <Button
-                              variant="contained"
-                              className={styles.infoMobile}
-                              onClick={onClickDetail}
-                            >
-                              <img src={info} alt="info" />
-                            </Button>
-                          </StyledTableCell>
-                        </StyledTableRow>
-                      ))}
+                              <Button
+                                variant="contained"
+                                className={styles.info}
+                                fullWidth
+                                endIcon={<img src={info} alt="info" />}
+                                onClick={onClickDetail}
+                              >
+                                <Typography variant="h5">
+                                  View details
+                                </Typography>
+                              </Button>
+                              <Button
+                                variant="contained"
+                                className={styles.infoMobile}
+                                onClick={onClickDetail}
+                              >
+                                <img src={info} alt="info" />
+                              </Button>
+                            </StyledTableCell>
+                          </StyledTableRow>
+                        ))}
                     </TableBody>
                   </Table>
                 </TableContainer>
