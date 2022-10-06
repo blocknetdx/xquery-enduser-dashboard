@@ -1,14 +1,14 @@
-import React, { useEffect } from "react"
-import { useSelector } from "react-redux"
-import { useConnectWallet, useWallets } from "@web3-onboard/react"
-import { createStyles, makeStyles } from "@mui/styles"
-import { Box, Button, Typography } from "@mui/material"
-import { FlexColumn } from "../../components/Layout"
-import styles from "./index.module.scss"
-import logo from "../../assets/logo.svg"
-import { dark, light } from "../../theme"
+import React, { useEffect } from 'react'
+import { useSelector } from 'react-redux'
+import { useConnectWallet, useWallets } from '@web3-onboard/react'
+import { createStyles, makeStyles } from '@mui/styles'
+import { Box, Button, Typography } from '@mui/material'
+import { FlexColumn } from '../../components/Layout'
+import styles from './index.module.scss'
+import logo from '../../assets/logo.svg'
+import { dark, light } from '../../theme'
 
-const useStyles = makeStyles((theme) =>
+const useStyles = makeStyles(theme =>
   createStyles({
     logTitle: {
       textAlign: 'center !important',
@@ -42,10 +42,10 @@ const useStyles = makeStyles((theme) =>
       bottom: 0
     }
   })
-);
+)
 
-const Login = (props) => {
-  const mode = useSelector((state) => state.toogle.darkMode)
+const Login = props => {
+  const mode = useSelector(state => state.toogle.darkMode)
   const theme = mode === 'true' ? dark : light
   const classes = useStyles()
 
@@ -59,11 +59,13 @@ const Login = (props) => {
     const connectedWalletsLabelArray = connectedWallets.map(
       ({ label }) => label
     )
-    window.localStorage.setItem('connectedWallets', JSON.stringify(connectedWalletsLabelArray))
+    window.localStorage.setItem(
+      'connectedWallets',
+      JSON.stringify(connectedWalletsLabelArray)
+    )
   }, [connectedWallets, wallet])
 
   const handleConnect = async () => {
-    // await connect()
     if (!wallet) {
       await connect()
     } else {
@@ -74,16 +76,49 @@ const Login = (props) => {
   return (
     <>
       {loading && <div className={classes.verify} />}
-      <div className={styles.back} style={{ background: theme.palette.info.main }}>
+      <div
+        className={styles.back}
+        style={{ background: theme.palette.info.main }}
+      >
         <Box className={styles.wrapper}>
           <FlexColumn className={styles.alignCenter}>
-            <img className={classes.logo} src={logo} alt='logo' width={194} height={61} />
-            <Typography className={classes.logTitle} variant='h2' color='common.black' textAlign='center' mt='30px'>Connect a wallet to login.</Typography>
-            <Typography className={styles.subtitle} variant='h4' color='text.primary'>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit
+            <img
+              className={classes.logo}
+              src={logo}
+              alt="logo"
+              width={194}
+              height={61}
+            />
+            <Typography
+              className={classes.logTitle}
+              variant="h2"
+              color="common.black"
+              textAlign="center"
+              mt="30px"
+            >
+              Connect a wallet to login.
             </Typography>
-            <Button variant='contained' fullWidth sx={{ mt: '32px', padding: '10px 18px' }} onClick={() => handleConnect()}>
-              <Typography className={classes.connectBtn} variant='button' color='white'>Connect Wallet</Typography>
+            <Typography
+              className={styles.subtitle}
+              variant="h4"
+              color="text.primary"
+            >
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit ut
+              aliquam, purus sit
+            </Typography>
+            <Button
+              variant="contained"
+              fullWidth
+              sx={{ mt: '32px', padding: '10px 18px' }}
+              onClick={() => handleConnect()}
+            >
+              <Typography
+                className={classes.connectBtn}
+                variant="button"
+                color="white"
+              >
+                Connect Wallet
+              </Typography>
             </Button>
           </FlexColumn>
         </Box>

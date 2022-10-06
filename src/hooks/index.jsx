@@ -1,39 +1,48 @@
-import api from "../apis"
-import { ethers } from "ethers"
-import { NEW_PROJECT_MSG } from "../configs"
-import { useEffect, useState } from "react"
-import { initWeb3Onboard } from "../services"
-import { useConnectWallet } from "@web3-onboard/react"
+import api from '../apis'
+import { ethers } from 'ethers'
+import { NEW_PROJECT_MSG } from '../configs'
+import { useEffect, useState } from 'react'
+import { initWeb3Onboard } from '../services'
+import { useConnectWallet } from '@web3-onboard/react'
 
 export const useVerifySignature = () => {
   const [{ wallet }] = useConnectWallet()
   const [direct, setDirect] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [signature, setSignature] = useState(localStorage.getItem("signature"))
+  const [signature, setSignature] = useState(localStorage.getItem('signature'))
 
-  const requestVerify = async (wallet) => {
+  const requestVerify = async wallet => {
     setLoading(true)
     try {
       const provider = new ethers.providers.Web3Provider(wallet.provider, 'any')
       const signer = provider.getSigner()
       const sign = await signer.signMessage(NEW_PROJECT_MSG)
-      const response = await api.project.verifySignature({ signature: sign, wallet: wallet.accounts[0].address })
+      const response = await api.project.verifySignature({
+        signature: sign,
+        wallet: wallet.accounts[0].address
+      })
       if (response?.data?.success !== true) {
-        setSignature("")
+        setSignature('')
       }
       setSignature(sign)
-      window.localStorage.setItem("signature", sign)
+      window.localStorage.setItem('signature', sign)
     } catch (error) {
-      console.log("error occured in verify:", error)
+      console.log('error occured in verify:', error)
     }
     setDirect(false)
     setLoading(false)
   }
 
   useEffect(() => {
-    if ((wallet || direct) && window.location.pathname.includes('login') && !signature) {
+    if (
+      (wallet || direct) &&
+      window.location.pathname.includes('login') &&
+      !signature
+    ) {
       setLoading(true)
       requestVerify(wallet)
+    } else if (!wallet && signature) {
+      localStorage.removeItem('signature')
     }
   }, [direct, wallet]) // eslint-disable-line
 
@@ -52,20 +61,26 @@ export const useEagerConnect = () => {
   const previousWalletsSerialised = localStorage.getItem('connectedWallets')
   const previousWallets = previousWalletsSerialised
     ? JSON.parse(previousWalletsSerialised)
-    : null;
+    : null
 
   useEffect(() => {
-    if (!wallet && previousWallets && web3Onboard) {
-      setLoading(true)
-      web3Onboard.connectWallet({
-        autoSelect: {
-          label: previousWallets[0],
-          disableModals: true
+    const connectWallet = async () => {
+      if (!wallet && previousWallets && web3Onboard) {
+        setLoading(true)
+        try {
+          await web3Onboard.connectWallet({
+            autoSelect: {
+              label: previousWallets[0],
+              disableModals: true
+            }
+          })
+        } catch (err) {
+          console.log('error connecting wallet:', err)
         }
-      }).then(() => {
         setLoading(false)
-      })
+      }
     }
+    connectWallet()
   }, [wallet, web3Onboard, previousWallets])
 
   return {
