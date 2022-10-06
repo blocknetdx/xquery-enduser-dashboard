@@ -2,13 +2,15 @@ import { createTheme } from "@mui/material/styles"
 
 export const light = createTheme({
   components: {
-    // Name of the component
     MuiButton: {
       styleOverrides: {
         root: {
-          boxShadow: 'none',
+          boxShadow: 'none !important',
           textTransform: 'none',
-          fontWeight: 500
+          fontWeight: 500,
+          '&:hover': {
+            boxShadow: 'none !important'
+        },
         }
       },
     },

@@ -114,15 +114,19 @@
 }
 
 .infoBtn {
-  display: flex;
-  align-items: center;
-  height: 36px;
-  margin: 0 auto;
-  padding: 8px 14px;
-  width: fit-content;
-  border-radius: 6px;
-  background: #7f56d9;
+  // display: flex;
+  // align-items: center;
+  // height: 36px;
+  // margin: 0 auto;
+  // padding: 0;
+  // width: fit-content;
+  // border-radius: 6px;
+  // background: #7f56d9;
   //box-shadow: 0 1px 2px 0 rgba(16, 24, 40, 0.05);
+}
+
+.infoBtnSpace {
+  margin-right: 5px;
 }
 
 .filtSelect {
