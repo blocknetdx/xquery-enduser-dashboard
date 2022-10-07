@@ -488,7 +488,7 @@ const ProjectModal = props => {
                               </Stack>
                             </StyledTableCell>
                             <StyledTableCell align="left" className={classes.sticky}>
-                            <Button variant='contained' onClick={onClickDetail} style={{ padding: '2px 16px', padding: '6px 16px', display: 'flex', alignItems: 'center', height: '40px', margin: '0 auto', width:'150px' }}>
+                            <Button variant='contained' onClick={onClickDetail} style={{ padding: '6px 16px', display: 'flex', alignItems: 'center', height: '40px', margin: '0 auto', width:'150px' }}>
                               <span className={styles.infoBtnSpace}>View details</span>
                               <img src={info} alt='info' />
                             </Button>
