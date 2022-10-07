@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { ThemeProvider } from '@mui/material/styles'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -14,12 +14,6 @@ const App = () => {
   const updateAccountCenter = useAccountCenter()
   updateAccountCenter({ position: 'bottomRight' })
   const mode = useSelector(state => state.toogle.darkMode)
-
-  useEffect(() => {
-    window.ethereum.on('accountsChanged', accounts => {
-      console.log('account changed:', accounts)
-    })
-  })
 
   return (
     <ThemeProvider theme={mode === 'true' ? dark : light}>
