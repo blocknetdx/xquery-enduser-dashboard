@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { useConnectWallet, useWallets } from '@web3-onboard/react'
 import { createStyles, makeStyles } from '@mui/styles'
@@ -7,6 +8,7 @@ import { FlexColumn } from '../../components/Layout'
 import styles from './index.module.scss'
 import logo from '../../assets/logo.svg'
 import { dark, light } from '../../theme'
+import { useEagerConnect, useVerifySignature } from '../../hooks'
 
 const useStyles = makeStyles(theme =>
   createStyles({
@@ -44,14 +46,16 @@ const useStyles = makeStyles(theme =>
   })
 )
 
-const Login = props => {
+const Login = () => {
   const mode = useSelector(state => state.toogle.darkMode)
   const theme = mode === 'true' ? dark : light
   const classes = useStyles()
 
-  const { loading, setDirect } = props
   const [{ wallet }, connect] = useConnectWallet() // eslint-disable-line
   const connectedWallets = useWallets()
+  const { preConnect } = useEagerConnect()
+  const { loading, signature, setDirect } = useVerifySignature()
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (!connectedWallets.length) return
@@ -64,6 +68,12 @@ const Login = props => {
       JSON.stringify(connectedWalletsLabelArray)
     )
   }, [connectedWallets, wallet])
+
+  useEffect(() => {
+    if (!preConnect && !!wallet && !!signature) {
+      navigate('/')
+    }
+  }, [preConnect, wallet, signature, navigate])
 
   const handleConnect = async () => {
     if (!wallet) {

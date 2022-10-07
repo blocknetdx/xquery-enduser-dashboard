@@ -71,9 +71,8 @@ const useStyles = makeStyles(theme =>
       position: 'sticky',
       right: 0,
       //background: theme.palette.info.dark,
-      padding: "10px",
+      padding: '10px',
       background: 'none !important'
-
     },
     cell: {
       width: '86px !important',
@@ -215,6 +214,17 @@ const ProjectModal = props => {
 
   const [toFilter, setToFilter] = useState([])
   const [fromFilter, setFromFilter] = useState(filterlist)
+
+  useEffect(() => {
+    setActive(0)
+    setTabIndex(0)
+    setNewProj(null)
+    setServiceLevel(0)
+    setKeyVisibility(false)
+    setCopyFlag(false)
+    setToFilter([])
+    setFromFilter(filterlist)
+  }, [open])
 
   const handleChange = event => {
     let fromTemp = fromFilter
@@ -487,12 +497,34 @@ const ProjectModal = props => {
                                 </div>
                               </Stack>
                             </StyledTableCell>
-                            <StyledTableCell align="left" className={classes.sticky}>
-                            <Button variant='contained' onClick={onClickDetail} style={{ padding: '6px 16px', display: 'flex', alignItems: 'center', height: '40px', margin: '0 auto', width:'150px' }}>
-                              <span className={styles.infoBtnSpace}>View details</span>
-                              <img src={info} alt='info' />
-                            </Button>
-                            <Button variant='contained' className={styles.infoMobile} onClick={onClickDetail}><img src={info} alt='info' /></Button>
+                            <StyledTableCell
+                              align="left"
+                              className={classes.sticky}
+                            >
+                              <Button
+                                variant="contained"
+                                onClick={onClickDetail}
+                                style={{
+                                  padding: '6px 16px',
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  height: '40px',
+                                  margin: '0 auto',
+                                  width: '150px'
+                                }}
+                              >
+                                <span className={styles.infoBtnSpace}>
+                                  View details
+                                </span>
+                                <img src={info} alt="info" />
+                              </Button>
+                              <Button
+                                variant="contained"
+                                className={styles.infoMobile}
+                                onClick={onClickDetail}
+                              >
+                                <img src={info} alt="info" />
+                              </Button>
                             </StyledTableCell>
                           </StyledTableRow>
                         ))}
