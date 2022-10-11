@@ -55,6 +55,7 @@
   .divider {
     width: 100%;
     height: 1px;
+    background-color: #eaecf0;
     margin: 20px 0px 20px;
   }
 
@@ -111,7 +112,7 @@
 
       .headItem {
         padding: 15px !important;
-        font-size: 12px !important;
+        font-size: 14px !important;
         font-weight: 500 !important;
         color: #344054 !important;
       }
@@ -138,6 +139,8 @@
       .helpIcon {
         margin-left: 5px;
         vertical-align: middle;
+        //temporary
+        display: none !important;
       }
 
       .info {
@@ -340,6 +343,8 @@
         .helpIcon {
           margin-left: 5px;
           vertical-align: middle;
+          //temporary
+          display: none !important;
         }
       }
     }

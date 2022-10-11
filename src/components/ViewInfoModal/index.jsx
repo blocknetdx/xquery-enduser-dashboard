@@ -93,13 +93,15 @@ const ProjectInfoModal = (props) => {
                   <Stack direction='row' justifyContent={'space-between'} className={styles.mobileDisplay}>
                     <Stack direction={'row'} justifyContent='flex-start' alignItems="center" spacing={0.5}>
                       <div style={{ color: '#344054', fontWeight: 500 }}>Project ID: </div>
-                      <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
+                      
+{/* <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} /> */}
                     </Stack>
                     <div>{analyseInfo()?.id}</div>
                   </Stack>
                   <Stack direction='row' justifyContent={'space-between'} className={styles.mobileDisplay}>
                     <Stack direction={'row'} justifyContent='flex-start' alignItems="center" spacing={0.5}>
-                      <div style={{ color: '#344054', fontWeight: 500 }}>Project Status: </div><HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
+                      <div style={{ color: '#344054', fontWeight: 500 }}>Project Status: </div>
+{/* <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} /> */}
                     </Stack>
                     <Chip label={analyseInfo()?.status} size='small' sx={{ color: '#027A48', backgroundColor: '#ECFDF3', padding: '2px 0px', borderRadius: '16px', fontSize: '12px', fontWeight: '500' }} />
                   </Stack>
@@ -108,19 +110,22 @@ const ProjectInfoModal = (props) => {
                   <>
                     <Stack direction={'row'} justifyContent='space-between' className={styles.mobileDisplay}>
                       <Stack direction={'row'} justifyContent='flex-start' alignItems="center" spacing={0.5}>
-                        <div style={{ color: '#344054', fontWeight: 500 }}>Usage: </div><HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
+                        <div style={{ color: '#344054', fontWeight: 500 }}>Usage: </div>
+{/* <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} /> */}
                       </Stack>
                       <div>60%</div>
                     </Stack>
                     <Stack direction={'row'} justifyContent='space-between' className={styles.mobileDisplay}>
                       <Stack direction={'row'} justifyContent='flex-start' alignItems="center" spacing={0.5}>
-                        <div style={{ color: '#344054', fontWeight: 500 }}>Expires: </div><HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
+                        <div style={{ color: '#344054', fontWeight: 500 }}>Expires: </div>
+{/* <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} /> */}
                       </Stack>
                       <div>{analyseInfo()?.expires}</div>
                     </Stack>
                     <Stack direction={'row'} justifyContent='space-between' className={styles.mobileDisplay}>
                       <Stack direction={'row'} justifyContent='flex-start' alignItems="center" spacing={0.5}>
-                        <div style={{ color: '#344054', fontWeight: 500 }}>Supported Networks: </div><HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
+                        <div style={{ color: '#344054', fontWeight: 500 }}>Supported Networks: </div>
+{/* <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} /> */}
                       </Stack>
                       <Stack direction={'row'} justifyContent='flex-end' spacing={1}>
                         {analyseInfo()?.networks.map((network) => {
@@ -141,7 +146,8 @@ const ProjectInfoModal = (props) => {
                     </Stack>
                     <Stack direction={'row'} justifyContent='space-between' className={styles.mobileDisplay}>
                       <Stack direction={'row'} justifyContent='flex-start' alignItems="center" spacing={0.5}>
-                        <div style={{ color: '#344054', fontWeight: 500 }}>Accepted Payment Currencies </div><HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
+                        <div style={{ color: '#344054', fontWeight: 500 }}>Accepted Payment Currencies </div>
+{/* <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} /> */}
                       </Stack>
                       <div>
                         {analyseInfo()?.currencies
@@ -149,13 +155,15 @@ const ProjectInfoModal = (props) => {
                     </Stack>
                     <Stack direction={'row'} justifyContent='space-between' className={styles.mobileDisplay}>
                       <Stack direction={'row'} justifyContent='flex-start' alignItems="center" spacing={0.5}>
-                        <div style={{ color: '#344054', fontWeight: 500 }}>Monthly cost in $USD: </div><HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
+                        <div style={{ color: '#344054', fontWeight: 500 }}>Monthly cost in $USD: </div>
+{/* <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} /> */}
                       </Stack>
                       <div style={{ fontSize: '14px' }}>$200</div>
                     </Stack>
                     <Stack direction={'row'} justifyContent='space-between' className={styles.mobileDisplay}>
                       <Stack direction={'row'} justifyContent='flex-start' alignItems="center" spacing={0.5}>
-                        <div style={{ color: '#344054', fontWeight: 500 }}>Service Level: </div><HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
+                        <div style={{ color: '#344054', fontWeight: 500 }}>Service Level: </div>
+{/* <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} /> */}
                       </Stack>
                       <div style={{ fontSize: '14px' }}>Tier {analyseInfo()?.tier} - 32 million requests / month</div>
                     </Stack>
@@ -171,13 +179,15 @@ const ProjectInfoModal = (props) => {
                 <Stack spacing={2} sx={{ p: 2.5, mt: 1.5, border: 'none', borderRadius: 2, background: theme.palette.warning.dark, color: theme.palette.text.primary }} >
                   <Stack direction='row' justifyContent={'space-between'} className={styles.mobileDisplay}>
                     <Stack direction={'row'} justifyContent='flex-start' alignItems="center" spacing={0.5}>
-                      <div style={{ color: '#344054', fontWeight: 500 }}>Project ID: </div><HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
+                      <div style={{ color: '#344054', fontWeight: 500 }}>Project ID: </div>
+{/* <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} /> */}
                     </Stack>
                     <div>a357ab69-8ddc-4966-833f-4ddc38b8c11</div>
                   </Stack>
                   <Stack direction='row' justifyContent={'space-between'} className={styles.mobileDisplay}>
                     <Stack direction={'row'} justifyContent='flex-start' alignItems="center" spacing={0.5}>
-                      <div style={{ color: '#344054', fontWeight: 500 }}>Project Status: </div><HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
+                      <div style={{ color: '#344054', fontWeight: 500 }}>Project Status: </div>
+{/* <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} /> */}
                     </Stack>
                     <Chip label="Active" size='small' sx={{ color: '#027A48', backgroundColor: '#ECFDF3', padding: '2px 0px', borderRadius: '16px', fontSize: '12px', fontWeight: '500' }} />
                   </Stack>
@@ -187,19 +197,22 @@ const ProjectInfoModal = (props) => {
                       <>
                         <Stack direction={'row'} justifyContent='space-between' className={styles.mobileDisplay}>
                           <Stack direction={'row'} justifyContent='flex-start' alignItems="center" spacing={0.5}>
-                            <div style={{ color: '#344054', fontWeight: 500 }}>Usage: </div><HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
+                            <div style={{ color: '#344054', fontWeight: 500 }}>Usage: </div>
+{/* <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} /> */}
                           </Stack>
                           <div>60%</div>
                         </Stack>
                         <Stack direction={'row'} justifyContent='space-between' className={styles.mobileDisplay}>
                           <Stack direction={'row'} justifyContent='flex-start' alignItems="center" spacing={0.5}>
-                            <div style={{ color: '#344054', fontWeight: 500 }}>Expires: </div><HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
+                            <div style={{ color: '#344054', fontWeight: 500 }}>Expires: </div>
+{/* <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} /> */}
                           </Stack>
                           <div>{analyseInfo(projectInfo?.expiry_time)?.expires}</div>
                         </Stack>
                         <Stack direction={'row'} justifyContent='space-between' className={styles.mobileDisplay}>
                           <Stack direction={'row'} justifyContent='flex-start' alignItems="center" spacing={0.5}>
-                            <div>Supported Networks: </div><HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
+                            <div>Supported Networks: </div>
+{/* <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} /> */}
                           </Stack>
                           <Stack direction={'row'} justifyContent='flex-end' spacing={1}>
                             {analyseInfo()?.networks.map((network) => {
@@ -220,7 +233,8 @@ const ProjectInfoModal = (props) => {
                         </Stack>
                         <Stack direction={'row'} justifyContent='space-between' className={styles.mobileDisplay}>
                           <Stack direction={'row'} justifyContent='flex-start' alignItems="center" spacing={0.5}>
-                            <div style={{ color: '#344054', fontWeight: 500 }}>Accepted Payment Currencies </div><HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
+                            <div style={{ color: '#344054', fontWeight: 500 }}>Accepted Payment Currencies </div>
+{/* <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} /> */}
                           </Stack>
                           <div>
                             {analyseInfo()?.currencies
@@ -228,13 +242,15 @@ const ProjectInfoModal = (props) => {
                         </Stack>
                         <Stack direction={'row'} justifyContent='space-between' className={styles.mobileDisplay}>
                           <Stack direction={'row'} justifyContent='flex-start' alignItems="center" spacing={0.5}>
-                            <div style={{ color: '#344054', fontWeight: 500 }}>Monthly cost in $USD: </div><HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
+                            <div style={{ color: '#344054', fontWeight: 500 }}>Monthly cost in $USD: </div>
+{/* <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} /> */}
                           </Stack>
                           <div style={{ fontSize: '14px' }}>$200</div>
                         </Stack>
                         <Stack direction={'row'} justifyContent='space-between' className={styles.mobileDisplay}>
                           <Stack direction={'row'} justifyContent='flex-start' alignItems="center" spacing={0.5}>
-                            <div style={{ color: '#344054', fontWeight: 500 }}>Service Level: </div><HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
+                            <div style={{ color: '#344054', fontWeight: 500 }}>Service Level: </div>
+{/* <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} /> */}
                           </Stack>
                           <div style={{ fontSize: '14px' }}>Tier {analyseInfo()?.tier} - 32 million requests / month</div>
                         </Stack>
@@ -250,13 +266,15 @@ const ProjectInfoModal = (props) => {
                 <Stack spacing={2} sx={{ padding: 2, borderRadius: 1, border: 'none', mt: 1.5, background: theme.palette.warning.dark, color: theme.palette.text.primary }}>
                   <Stack direction='row' justifyContent={'space-between'} className={styles.mobileDisplay}>
                     <Stack direction={'row'} justifyContent='flex-start' spacing={0.5}>
-                      <div className={styles.left}>Project ID: </div><HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
+                      <div className={styles.left}>Project ID: </div>
+{/* <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} /> */}
                     </Stack>
                     <div>{analyseInfo()?.id}</div>
                   </Stack>
                   <Stack direction='row' justifyContent={'space-between'} className={styles.mobileHidden}>
                     <Stack direction={'row'} justifyContent='flex-start' spacing={0.5}>
-                      <div className={styles.left}>Supported Networks: </div><HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
+                      <div className={styles.left}>Supported Networks: </div>
+{/* <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} /> */}
                     </Stack>
                     <Stack direction={'row'} justifyContent='flex-end' spacing={1}>
                       {analyseInfo()?.networks.map((network) => {
@@ -277,13 +295,15 @@ const ProjectInfoModal = (props) => {
                   </Stack>
                   <Stack direction='row' justifyContent={'space-between'} className={styles.mobileHidden}>
                     <Stack direction={'row'} justifyContent='flex-start' spacing={0.5}>
-                      <div className={styles.left}>Monthly cost in $USD: </div><HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
+                      <div className={styles.left}>Monthly cost in $USD: </div>
+{/* <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} /> */}
                     </Stack>
                     <div style={{ fontSize: '14px' }}>$200</div>
                   </Stack>
                   <Stack direction='row' justifyContent={'space-between'} className={styles.mobileHidden}>
                     <Stack direction={'row'} justifyContent='flex-start' spacing={0.5}>
-                      <div className={styles.left}>Service Level: </div><HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
+                      <div className={styles.left}>Service Level: </div>
+{/* <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} /> */}
                     </Stack>
                     <div style={{ fontSize: '14px' }}>Tier {analyseInfo()?.tier} - 32 million requests / month</div>
                   </Stack>
