@@ -323,7 +323,7 @@ const ProjectInfoModal = (props) => {
                       <div className={`${styles.left}`}>
                         Amount to pay:
                       </div>
-                      <HelpOutline sx={{ fontSize: '16px' }} />
+                      {/* <HelpOutline sx={{ fontSize: '16px' }} /> */}
                     </Stack>
                     <Stack direction='column' justifyContent={'flex-start'} className={styles.payRight} alignItems={'flex-start'}>
                       {
@@ -353,7 +353,8 @@ const ProjectInfoModal = (props) => {
                         color: '#344054'
                       }}
                     >
-                      Payment address: <HelpOutline sx={{ fontSize: '16px' }} />
+                      Payment address:
+                      {/* <HelpOutline sx={{ fontSize: '16px' }} /> */}
                     </Stack>
                     <Stack direction='row' justifyContent={'flex-start'} alignItems='center' className={`${styles.right}`} spacing={1}>
                       {/* <ContentCopy sx={{ cursor: 'pointer' }} /> */}
@@ -365,8 +366,8 @@ const ProjectInfoModal = (props) => {
                       </CopyToClipboard>
                     </Stack>
                   </Stack>
-                  <Typography sx={{ fontStyle: 'italic' }}>
-                    Text content to explain max 1 hour wait for pending tx and what happens next after payment has been made.
+                  <Typography className={styles.desc} color='text.primary'>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus venenatis, lectus magna fringilla urna, porttitor rhoncus dolor purus non.
                   </Typography>
                   {/* </div> */}
                 </Stack>

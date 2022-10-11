@@ -245,18 +245,18 @@ const useStyles = makeStyles(theme =>
 const StyledTable = props => {
   const response = [
     {
-      projectId: '9679a464-cc25-4cd6-85b9-5bff410b248d',
+      projectId: 'ad6b49cc-aaea-4b34-9ed1-24a9365657da',
       status: 'Active',
       usage: 25,
       expires: 'Sep 20, 2022',
-      apiKey: 'gC11OVsEF7Sehve6M2tEDSznc49_FK3gKbxVHfot2TE'
+      apiKey: 'nIa6vPLG-pU2-3HFwsgM505lRK0VyrYcp5mFihipxiI'
     },
     {
-      projectId: 'bf73b40d-034e-4252-a1c1-388198ff9843',
+      projectId: '33d7f1b5-7dad-44d8-9b93-1a7133a528fa ',
       status: 'Pending',
       usage: 0,
       expires: 'Sep 20, 2022',
-      apiKey: 'HSwcdAp-TiADNE_3WXMkvJw_U0KH-aRC7vW2R0yrbgc'
+      apiKey: '2h561K_DKOwiOuu7hwCjJC5G000zYY2RilizXMa24QI'
     },
     {
       projectId: '2260d86f-52cd-4750-8651-89c581106451',
@@ -279,19 +279,6 @@ const StyledTable = props => {
       expires: 'Sep 20, 2022',
       apiKey: 'JGmAd1CYDDRZdTGa1xMwtw3z0RcFw8x1Z_0ih7Qv1l4'
     }
-    // { projectId: 'c9f0f895fb98ab9159f51fd0297e236i', status: 'Active', usage: 25, expires: 'Aug 01, 2022' },
-    // { projectId: 'c9f0f895fb98ab9159f51fd0297e236j', status: 'Active', usage: 25, expires: 'Aug 01, 2022' },
-    // { projectId: 'c9f0f895fb98ab9159f51fd0297e236k', status: 'Active', usage: 25, expires: 'Aug 01, 2022' },
-    // { projectId: 'c9f0f895fb98ab9159f51fd0297e236l', status: 'Active', usage: 25, expires: 'Aug 01, 2022' },
-    // { projectId: 'c9f0f895fb98ab9159f51fd0297e236m', status: 'Active', usage: 25, expires: 'Aug 01, 2022' },
-    // { projectId: 'c9f0f895fb98ab9159f51fd0297e236o', status: 'Active', usage: 25, expires: 'Aug 01, 2022' },
-    // { projectId: 'c9f0f895fb98ab9159f51fd0297e236p', status: 'Pending', usage: 0, expires: '-' },
-    // { projectId: 'c9f0f895fb98ab9159f51fd0297e236q', status: 'Inactive', usage: 100, expires: 'Aug 01, 2022' },
-    // { projectId: 'c9f0f895fb98ab9159f51fd0297e236r', status: 'Inactive', usage: 100, expires: 'Aug 01, 2022' },
-    // { projectId: 'c9f0f895fb98ab9159f51fd0297e236s', status: 'Active', usage: 50, expires: 'Aug 01, 2022' },
-    // { projectId: 'c9f0f895fb98ab9159f51fd0297e236t', status: 'Pending', usage: 0, expires: '-' },
-    // { projectId: 'c9f0f895fb98ab9159f51fd0297e236u', status: 'Active', usage: 25, expires: 'Aug 01, 2022' },
-    // { projectId: 'c9f0f895fb98ab9159f51fd0297e236v', status: 'Active', usage: 25, expires: 'Aug 01, 2022' }
   ]
 
   const { theme, modalOpen, setModalOpen } = props
