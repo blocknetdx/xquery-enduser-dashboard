@@ -24,7 +24,7 @@ import { Avatar } from '@mui/material'
 import {
   FilterList,
   Close,
-  HelpOutline,
+  //HelpOutline,
   CheckCircleOutline,
   RadioButtonUnchecked,
   ArrowForward,
@@ -558,7 +558,7 @@ const ProjectModal = props => {
                     spacing={0.5}
                   >
                     <Typography>Project ID:</Typography>{' '}
-                    <HelpOutline sx={{ fontSize: '20px' }} />
+                    {/* <HelpOutline sx={{ fontSize: '20px' }} /> */}
                   </Stack>
                   <div>{newProj?.project_id}</div>
                 </Stack>
@@ -573,7 +573,7 @@ const ProjectModal = props => {
                     spacing={0.5}
                   >
                     <Typography>API Key:</Typography>{' '}
-                    <HelpOutline sx={{ fontSize: '20px' }} />
+                    {/* <HelpOutline sx={{ fontSize: '20px' }}/> */}
                   </Stack>
                   <Stack direction="row" alignItems="center" spacing={1}>
                     <span className={classes.key}>
@@ -606,7 +606,7 @@ const ProjectModal = props => {
                     spacing={0.5}
                   >
                     <div>Supported Networks: </div>
-                    <HelpOutline sx={{ fontSize: '20px' }} />
+                    {/* <HelpOutline sx={{ fontSize: '20px' }} /> */}
                   </Stack>
                   <Stack
                     direction={'row'}
@@ -644,7 +644,7 @@ const ProjectModal = props => {
                     spacing={0.5}
                   >
                     <Typography>Accepted Payment Currencies:</Typography>{' '}
-                    <HelpOutline sx={{ fontSize: '20px' }} />
+                    {/* <HelpOutline sx={{ fontSize: '20px' }} /> */}
                   </Stack>
                   <div>ETH, aaBLOCK, aBLOCK, BNB, AVAX</div>
                 </Stack>
@@ -660,7 +660,7 @@ const ProjectModal = props => {
                     spacing={0.5}
                   >
                     <Typography>Host Server IP:</Typography>{' '}
-                    <HelpOutline sx={{ fontSize: '20px' }} />
+                    {/* <HelpOutline sx={{ fontSize: '20px' }} /> */}
                   </Stack>
                   <div>65.119.157.65</div>
                 </Stack>
@@ -852,7 +852,7 @@ const ProjectModal = props => {
                     spacing={0.5}
                   >
                     <div>Project ID: </div>
-                    <HelpOutline sx={{ fontSize: '20px' }} />
+                    {/* <HelpOutline sx={{ fontSize: '20px' }} /> */}
                   </Stack>
                   <div>a357ab69-8ddc-4966-833f-4ddc38b8c11</div>
                 </Stack>
@@ -863,7 +863,7 @@ const ProjectModal = props => {
                     spacing={0.5}
                   >
                     <div>Supported Networks: </div>
-                    <HelpOutline sx={{ fontSize: '20px' }} />
+                    {/* <HelpOutline sx={{ fontSize: '20px' }} /> */}
                   </Stack>
                   <Stack
                     direction={'row'}
@@ -901,7 +901,7 @@ const ProjectModal = props => {
                     spacing={0.5}
                   >
                     <div>Monthly cost in $USD: </div>
-                    <HelpOutline sx={{ fontSize: '20px' }} />
+                    {/* <HelpOutline sx={{ fontSize: '20px' }} /> */}
                   </Stack>
                   <div style={{ fontSize: '14px' }}>$200</div>
                 </Stack>
@@ -916,7 +916,7 @@ const ProjectModal = props => {
                     spacing={0.5}
                   >
                     <div>Service Level: </div>
-                    <HelpOutline sx={{ fontSize: '20px' }} />
+                    {/* <HelpOutline sx={{ fontSize: '20px' }} /> */}
                   </Stack>
                   <div style={{ fontSize: '14px' }}>
                     Tier 2 - 32 million requests / month
@@ -962,7 +962,7 @@ const ProjectModal = props => {
                     spacing={1}
                   >
                     <div>Amount to pay:</div>
-                    <HelpOutline sx={{ fontSize: '20px' }} />
+                    {/* <HelpOutline sx={{ fontSize: '20px' }} /> */}
                   </Stack>
                   <Stack
                     direction="column"
@@ -999,7 +999,7 @@ const ProjectModal = props => {
                     spacing={1}
                   >
                     Payment&nbsp;address:{' '}
-                    <HelpOutline sx={{ fontSize: '20px' }} />
+                    {/* <HelpOutline sx={{ fontSize: '20px' }} /> */}
                   </Stack>
                   <Stack
                     direction="row"

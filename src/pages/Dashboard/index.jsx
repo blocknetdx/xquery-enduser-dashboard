@@ -576,26 +576,12 @@ const Dashboard = () => {
                   </FlexRow>
                   <FlexRow className={`${styles.flexStart}`}>
                     <img src={discord} alt="discord" />
-                    <a
-                      className={`${styles.link}`}
-                      href="#"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      Discord
-                    </a>
+                    <a className={`${styles.link}`} href="https://discord.gg/mZ6pTneMx3" target="_blank" rel="noreferrer">Discord</a>
                     {/* eslint-disable-line */}
                   </FlexRow>
                   <FlexRow className={`${styles.flexStart}`}>
                     <img src={telegram} alt="telegram" />
-                    <a
-                      className={`${styles.link}`}
-                      href="#"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      Telegram
-                    </a>
+                    <a className={`${styles.link}`} href="https://t.me/Blocknet" target="_blank" rel="noreferrer">Telegram</a>
                     {/* eslint-disable-line */}
                   </FlexRow>
                 </div>
