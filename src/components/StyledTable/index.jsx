@@ -518,8 +518,7 @@ const StyledTable = props => {
                     </FlexColumn>
                   </TableCell>
                   <TableCell
-                    className={`${classes.cell}`}
-                    padding="0px 10px 0px 0px"
+                    className={`${classes.cell} ${classes.paddingRight}`}
                     align="right"
                   >
                     <Button

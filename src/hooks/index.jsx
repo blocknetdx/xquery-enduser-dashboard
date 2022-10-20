@@ -10,6 +10,7 @@ export const useVerifySignature = () => {
   const [direct, setDirect] = useState(false)
   const [loading, setLoading] = useState(false)
   const [signature, setSignature] = useState(localStorage.getItem('signature'))
+  const [startVerification, setStartVerification] = useState(false)
 
   const requestVerify = async wallet => {
     setLoading(true)
@@ -25,7 +26,7 @@ export const useVerifySignature = () => {
         setSignature('')
       }
       setSignature(sign)
-      window.localStorage.setItem('signature', sign)
+      localStorage.setItem('signature', sign)
     } catch (error) {
       console.log('error occured in verify:', error)
     }
@@ -37,19 +38,19 @@ export const useVerifySignature = () => {
     if (
       (wallet || direct) &&
       window.location.pathname.includes('login') &&
-      !signature
+      !signature &&
+      startVerification
     ) {
       setLoading(true)
       requestVerify(wallet)
-    } else if (!wallet && signature) {
-      localStorage.removeItem('signature')
     }
-  }, [direct, wallet]) // eslint-disable-line
+  }, [direct, wallet, startVerification]) // eslint-disable-line
 
   return {
     loading,
     signature,
-    setDirect
+    setDirect,
+    setStartVerification
   }
 }
 
@@ -57,6 +58,7 @@ export const useEagerConnect = () => {
   const [loading, setLoading] = useState(false)
   const [{ wallet }] = useConnectWallet()
   const [web3Onboard] = useState(initWeb3Onboard)
+  const [startConnect, setStartConnect] = useState(false)
 
   const previousWalletsSerialised = localStorage.getItem('connectedWallets')
   const previousWallets = previousWalletsSerialised
@@ -65,7 +67,7 @@ export const useEagerConnect = () => {
 
   useEffect(() => {
     const connectWallet = async () => {
-      if (!wallet && previousWallets && web3Onboard) {
+      if (!wallet && previousWallets && web3Onboard && startConnect) {
         setLoading(true)
         try {
           await web3Onboard.connectWallet({
@@ -81,9 +83,10 @@ export const useEagerConnect = () => {
       }
     }
     connectWallet()
-  }, [wallet, web3Onboard, previousWallets])
+  }, [wallet, web3Onboard, previousWallets, startConnect])
 
   return {
-    preConnect: loading
+    preConnect: loading,
+    setStartConnect
   }
 }

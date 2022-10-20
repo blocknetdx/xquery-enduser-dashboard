@@ -58,8 +58,9 @@ const Login = () => {
 
   const [{ wallet }, connect] = useConnectWallet() // eslint-disable-line
   const connectedWallets = useWallets()
-  const { preConnect } = useEagerConnect()
-  const { loading, signature, setDirect } = useVerifySignature()
+  const { preConnect, setStartConnect } = useEagerConnect()
+  const { loading, signature, setDirect, setStartVerification } =
+    useVerifySignature()
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -82,11 +83,21 @@ const Login = () => {
 
   const handleConnect = async () => {
     if (!wallet) {
+      setStartConnect(true)
+      setStartVerification(true)
       await connect()
     } else {
+      setStartVerification(true)
       setDirect(true)
     }
+    // if (!wallet) {
+    //   await connect()
+    // } else {
+    //   setDirect(true)
+    // }
   }
+
+  console.log('auth info:', { wallet, signature })
 
   return (
     <>

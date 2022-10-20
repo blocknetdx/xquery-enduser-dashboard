@@ -248,10 +248,14 @@ const Dashboard = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (!preConnect && !signature) {
+    console.log('auth info:', { wallet, signature })
+    if (!preConnect && (!wallet || !signature)) {
       console.log('redirecting:', { preConnect, wallet, signature })
       navigate('/login')
     }
+    // if (!!wallet) {
+    //   connect()
+    // }
   }, [preConnect, wallet, signature, navigate])
 
   const copyClip = () => {
