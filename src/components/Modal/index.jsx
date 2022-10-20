@@ -46,11 +46,6 @@ import Select from '@mui/material/Select'
 import { setProject } from '../../redux/slice/projectSlice'
 // import { useConnectWallet } from '@web3-onboard/react'
 
-const style = {
-  bgcolor: 'background.paper',
-  border: 'none'
-}
-
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.warning.dark,
@@ -60,6 +55,55 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14
   }
+}))
+
+const PaletteDividerBg = styled.div(({ theme }) => ({
+  background: `${theme.palette.divider}`
+}))
+
+const FilterSelect = styled(Select)(({ theme }) => ({
+  boxSizing: 'border-box',
+  color: theme.palette.common.black,
+  borderRadius: '6px',
+  backgroundColor: '#ffffff',
+  width: '133px',
+  height: '36px'
+}))
+
+const ProjectInfoPanel = styled(Stack)(({ theme }) => ({
+  padding: '24px',
+  marginTop: '12px',
+  border: 'none',
+  borderRadius: '8px',
+  background: theme.palette.warning.dark,
+  color: theme.palette.text.primary
+}))
+
+const ServiceLevel = styled(Stack)(({ theme }) => ({
+  marginTop: '12px',
+  color: theme.palette.common.black
+}))
+
+const BlackButton = styled(Button)(({ theme }) => ({
+  color: theme.palette.common.black
+}))
+
+const Step3Outer = styled(Stack)(({ theme }) => ({
+  padding: '24px',
+  marginTop: '12px',
+  border: 'none',
+  borderRadius: '8px',
+  background: theme.palette.warning.dark,
+  color: theme.palette.text.primary
+}))
+
+const PaymentInfo = styled(Stack)(({ theme }) => ({
+  padding: '24px',
+  marginTop: '12px',
+  border: 'none',
+  borderRadius: '8px',
+  background: theme.palette.warning.dark,
+  color: theme.palette.text.primary
 }))
 
 const useStyles = makeStyles(theme =>
@@ -263,25 +307,17 @@ const ProjectModal = props => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
         // scroll={scroll}
-        sx={{ overflowX: 'hidden', overflowY: 'scroll' }}
+        className={styles.verticalScrollModal}
       >
-        <Box sx={style} className={styles.modalNewBox}>
+        <Box className={styles.modalNewBox}>
           <Stack direction="row" justifyContent="flex-end">
-            <Close
-              sx={{
-                fontSize: '24px',
-                cursor: 'pointer',
-                color: '#98a2b3 !important',
-                margin: '-14px -14px 0px 0px'
-              }}
-              onClick={handleClose}
-            />
+            <Close className={styles.closeIcon} onClick={handleClose} />
           </Stack>
           <Typography
             id="modal-modal-title"
             variant="h2"
             component="h2"
-            className={`${styles.title}`}
+            className={styles.title}
             color="common.black"
           >
             {tabIndex === 0
@@ -290,21 +326,13 @@ const ProjectModal = props => {
               ? titles[1]
               : titles[2]}
           </Typography>
-          <div
-            className={`${styles.divider}`}
-            style={{ background: `${theme.palette.divider}` }}
-          />
-          <Typography
-            className={styles.subTitle}
-            color="#344054"
-            sx={{ fontSize: '16px !important', fontWeight: '500 !important' }}
-          >
+          <PaletteDividerBg className={styles.divider} />
+          <Typography className={`${styles.subTitle}`} color="#344054">
             Your Project Details
           </Typography>
           <Typography
-            className={styles.desc}
+            className={`${styles.desc} ${styles.mb10}`}
             color="text.primary"
-            sx={{ mb: '10px' }}
           >
             Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam,
             purus sit amet luctus venenatis, lectus magna fringilla urna,
@@ -326,32 +354,24 @@ const ProjectModal = props => {
                     direction="row"
                     justifyContent="flex-end"
                     alignItems="center"
-                    sx={{ gap: '10px' }}
+                    className={styles.gap}
                   >
                     {toFilter.map(item => (
                       <button className={styles.toModalFilterBtn} key={item}>
                         {item}{' '}
                         <Close
-                          sx={{ cursor: 'pointer', fontSize: '12px' }}
+                          className={styles.smallCloseIcon}
                           onClick={() => handleDelete(item)}
                         />
                       </button>
                     ))}
-                    <Select
+                    <FilterSelect
                       id="demo-simple-select-autowidth"
                       value={0}
                       onChange={handleChange}
                       autoWidth
-                      sx={{
-                        boxSizing: 'border-box',
-                        color: 'common.black',
-                        borderRadius: '6px',
-                        backgroundColor: '#ffffff',
-                        width: '133px',
-                        height: '36px'
-                      }}
                     >
-                      <MenuItem value={0} sx={{ display: 'none' }}>
+                      <MenuItem value={0} className={styles.hide}>
                         <Stack direction="row" gap="8px" alignItems="center">
                           <FilterList />
                           <div>Filters</div>
@@ -361,21 +381,23 @@ const ProjectModal = props => {
                         <MenuItem
                           key={item}
                           value={item}
-                          sx={{ fontFamily: 'Inter', width: '100px' }}
+                          className={styles.menuItem}
                         >
                           {item}
                         </MenuItem>
                       ))}
-                    </Select>
+                    </FilterSelect>
                   </Stack>
                 </div>
 
                 <TableContainer
                   component={Paper}
-                  className={styles.tableBody}
-                  style={{ width: '100%' }}
+                  className={`${styles.tableBody} ${styles.fullWidth}`}
                 >
-                  <Table sx={{ minWidth: 400 }} aria-label="customized table">
+                  <Table
+                    className={styles.projectTable}
+                    aria-label="customized table"
+                  >
                     <TableHead>
                       <TableRow>
                         <StyledTableCell
@@ -426,7 +448,7 @@ const ProjectModal = props => {
                         </StyledTableCell>
                       </TableRow>
                     </TableHead>
-                    <TableBody sx={{ backgroundColor: 'white' }}>
+                    <TableBody className={styles.whiteBg}>
                       {rows
                         .filter(
                           row =>
@@ -435,18 +457,9 @@ const ProjectModal = props => {
                         .map((row, index) => (
                           <StyledTableRow key={index}>
                             <StyledTableCell component="th" scope="row">
-                              <Stack direction={'column'}>
-                                <div
-                                  style={{
-                                    color: '#344054',
-                                    fontWeight: '500'
-                                  }}
-                                >
-                                  {row.ip[0]}
-                                </div>
-                                <div style={{ color: '#667085' }}>
-                                  {row.ip[1]}
-                                </div>
+                              <Stack direction="column">
+                                <div className={styles.ip1}>{row.ip[0]}</div>
+                                <div className={styles.ip2}>{row.ip[1]}</div>
                               </Stack>
                             </StyledTableCell>
                             <StyledTableCell align="left">
@@ -461,17 +474,17 @@ const ProjectModal = props => {
                                   })
                                 } */}
                                 <Chip
-                                  label={'ETH'}
+                                  label="ETH"
                                   size="small"
                                   className={styles.chipEth}
                                 />
                                 <Chip
-                                  label={'AVAX'}
+                                  label="AVAX"
                                   size="small"
                                   className={styles.chipAvax}
                                 />
                                 <Chip
-                                  label={'BSC'}
+                                  label="BSC"
                                   size="small"
                                   className={styles.chipBsc}
                                 />
@@ -479,20 +492,10 @@ const ProjectModal = props => {
                             </StyledTableCell>
                             <StyledTableCell align="left">
                               <Stack direction="column">
-                                <div
-                                  style={{
-                                    color: '#344054',
-                                    whiteSpace: 'nowrap'
-                                  }}
-                                >
+                                <div className={styles.tier}>
                                   Tier 1: ${row.cost[0]}
                                 </div>
-                                <div
-                                  style={{
-                                    color: '#344054',
-                                    whiteSpace: 'nowrap'
-                                  }}
-                                >
+                                <div className={styles.tier}>
                                   Tier 2: ${row.cost[1]}
                                 </div>
                               </Stack>
@@ -503,15 +506,8 @@ const ProjectModal = props => {
                             >
                               <Button
                                 variant="contained"
+                                className={styles.detailsButton}
                                 onClick={onClickDetail}
-                                style={{
-                                  padding: '6px 16px',
-                                  display: 'flex',
-                                  alignItems: 'center',
-                                  height: '40px',
-                                  margin: '0 auto',
-                                  width: '150px'
-                                }}
                               >
                                 <span className={styles.infoBtnSpace}>
                                   View details
@@ -536,25 +532,15 @@ const ProjectModal = props => {
           )}
           {tabIndex === 1 && ( // Step 2
             <div className={styles.tab1}>
-              <Stack
-                sx={{
-                  p: 3,
-                  mt: 1.5,
-                  border: 'none',
-                  borderRadius: 1,
-                  background: theme.palette.warning.dark,
-                  color: theme.palette.text.primary
-                }}
-                spacing={3}
-              >
+              <ProjectInfoPanel spacing={3}>
                 <Stack
                   direction="row"
-                  justifyContent={'space-between'}
+                  justifyContent="space-between"
                   className={styles.mobileDisplay}
                 >
                   <Stack
                     direction="row"
-                    justifyContent={'flex-start'}
+                    justifyContent="flex-start"
                     spacing={0.5}
                   >
                     <Typography>Project ID:</Typography>{' '}
@@ -564,12 +550,12 @@ const ProjectModal = props => {
                 </Stack>
                 <Stack
                   direction="row"
-                  justifyContent={'space-between'}
+                  justifyContent="space-between"
                   className={styles.mobileDisplay}
                 >
                   <Stack
                     direction="row"
-                    justifyContent={'flex-start'}
+                    justifyContent="flex-start"
                     spacing={0.5}
                   >
                     <Typography>API Key:</Typography>{' '}
@@ -583,24 +569,24 @@ const ProjectModal = props => {
                     </span>
                     {keyVisibility ? (
                       <VisibilityOffOutlined
-                        sx={{ cursor: 'pointer' }}
+                        className={styles.cursorPointer}
                         onClick={() => setKeyVisibility(false)}
                       />
                     ) : (
                       <VisibilityOutlined
-                        sx={{ cursor: 'pointer' }}
+                        className={styles.cursorPointer}
                         onClick={() => setKeyVisibility(true)}
                       />
                     )}
                   </Stack>
                 </Stack>
                 <Stack
-                  direction={'row'}
+                  direction="row"
                   justifyContent="space-between"
                   className={styles.mobileDisplay}
                 >
                   <Stack
-                    direction={'row'}
+                    direction="row"
                     justifyContent="flex-start"
                     alignItems="center"
                     spacing={0.5}
@@ -608,39 +594,32 @@ const ProjectModal = props => {
                     <div>Supported Networks: </div>
                     {/* <HelpOutline sx={{ fontSize: '20px' }} /> */}
                   </Stack>
-                  <Stack
-                    direction={'row'}
-                    justifyContent="flex-end"
-                    spacing={1}
-                  >
+                  <Stack direction="row" justifyContent="flex-end" spacing={1}>
                     <Chip
-                      label={'ETH'}
+                      label="ETH"
                       size="small"
-                      sx={{ color: '#175cd3', backgroundColor: '#eff8ff' }}
+                      className={styles.ethBadge}
                     />
                     <Chip
-                      label={'AVAX'}
+                      label="AVAX"
                       size="small"
-                      sx={{ color: '#c01048', backgroundColor: '#fff1f3' }}
+                      className={styles.avaxBadge}
                     />
                     <Chip
-                      label={'BSC'}
+                      label="BSC"
                       size="small"
-                      sx={{
-                        color: '#854a0e',
-                        backgroundColor: '#fef7c3'
-                      }}
+                      className={styles.bscBadge}
                     />
                   </Stack>
                 </Stack>
                 <Stack
                   direction="row"
-                  justifyContent={'space-between'}
+                  justifyContent="space-between"
                   className={styles.mobileDisplay}
                 >
                   <Stack
                     direction="row"
-                    justifyContent={'flex-start'}
+                    justifyContent="flex-start"
                     spacing={0.5}
                   >
                     <Typography>Accepted Payment Currencies:</Typography>{' '}
@@ -650,13 +629,13 @@ const ProjectModal = props => {
                 </Stack>
                 <Stack
                   direction="row"
-                  justifyContent={'space-between'}
-                  flexWrap={'wrap'}
+                  justifyContent="space-between"
+                  flexWrap="wrap"
                   className={styles.apiKey}
                 >
                   <Stack
                     direction="row"
-                    justifyContent={'flex-start'}
+                    justifyContent="flex-start"
                     spacing={0.5}
                   >
                     <Typography>Host Server IP:</Typography>{' '}
@@ -664,37 +643,28 @@ const ProjectModal = props => {
                   </Stack>
                   <div>65.119.157.65</div>
                 </Stack>
-              </Stack>
+              </ProjectInfoPanel>
 
               <Typography
-                className={styles.subTitle}
-                sx={{ mt: 3 }}
+                className={`${styles.subTitle} ${styles.marginTop}`}
                 color="common.black"
               >
                 Choose from one of the following service levels:
               </Typography>
 
-              <Stack
+              <ServiceLevel
                 direction={'row'}
                 justifyContent="space-between"
-                sx={{ mt: 1.5, color: 'common.black' }}
                 className={styles.tierBody}
               >
                 <div className={styles.tier}>
-                  <div
-                    style={{
-                      padding: '8px 16px',
-                      background: '#f9f5ff',
-                      borderTopLeftRadius: '10px',
-                      borderTopRightRadius: '10px'
-                    }}
-                  >
+                  <div className={styles.tierInner}>
                     <Stack
                       direction="row"
                       justifyContent={'space-between'}
                       alignItems="center"
                       onClick={() => setServiceLevel(0)}
-                      sx={{ cursor: 'pointer', borderBottom: '1 px ' }}
+                      className={`${styles.cursorPointer} ${styles.borderBottom1}`}
                     >
                       <Stack
                         direction={'row'}
@@ -714,12 +684,7 @@ const ProjectModal = props => {
                   </div>
 
                   <div
-                    style={{
-                      padding: '8px 16px',
-                      background: '#ffffff',
-                      borderBottomLeftRadius: '10px',
-                      borderBottomRightRadius: '10px'
-                    }}
+                    className={`${styles.padding} ${styles.whitBackground} ${styles.borderBottomRadius}`}
                   >
                     <Stack
                       className={styles.price}
@@ -733,24 +698,25 @@ const ProjectModal = props => {
                       Lorem ipsum dolor sit amet, consectetur adipiscing elit ut
                       aliquam, purus sit.
                     </Typography>
-                    <Stack direction={'row'} spacing={1} sx={{ mt: 3 }}>
+                    <Stack
+                      direction={'row'}
+                      spacing={1}
+                      className={styles.marginTop}
+                    >
                       <Chip
                         label={'ETH'}
                         size="small"
-                        sx={{ color: '#175cd3', backgroundColor: '#eff8ff' }}
+                        className={styles.ethColor}
                       />
                       <Chip
                         label={'AVAX'}
                         size="small"
-                        sx={{ color: '#c01048', backgroundColor: '#fff1f3' }}
+                        className={styles.avaxColor}
                       />
                       <Chip
                         label={'BSC'}
                         size="small"
-                        sx={{
-                          color: '#854a0e',
-                          backgroundColor: '#fef7c3'
-                        }}
+                        className={styles.bscColor}
                       />
                     </Stack>
                   </div>
@@ -758,19 +724,14 @@ const ProjectModal = props => {
 
                 <div className={styles.tier}>
                   <div
-                    style={{
-                      padding: '8px 16px',
-                      background: '#f9f5ff',
-                      borderTopLeftRadius: '10px',
-                      borderTopRightRadius: '10px'
-                    }}
+                    className={`${styles.padding} ${styles.lightDarkBackground} ${styles.borderBottomRadius}`}
                   >
                     <Stack
                       direction="row"
                       justifyContent={'space-between'}
                       alignItems="center"
                       onClick={() => setServiceLevel(1)}
-                      sx={{ cursor: 'pointer' }}
+                      className={styles.cursorPointer}
                     >
                       <Stack
                         direction={'row'}
@@ -788,12 +749,7 @@ const ProjectModal = props => {
                     </Stack>
                   </div>
                   <div
-                    style={{
-                      padding: '8px 16px',
-                      background: '#ffffff',
-                      borderBottomLeftRadius: '10px',
-                      borderBottomRightRadius: '10px'
-                    }}
+                    className={`${styles.padding} ${styles.whitBackground} ${styles.borderBottomRadius}`}
                   >
                     <Stack
                       className={styles.price}
@@ -807,44 +763,35 @@ const ProjectModal = props => {
                       Lorem ipsum dolor sit amet, consectetur adipiscing elit ut
                       aliquam, purus sit.
                     </Typography>
-                    <Stack direction={'row'} spacing={1} sx={{ mt: 3 }}>
+                    <Stack
+                      direction={'row'}
+                      spacing={1}
+                      className={styles.marginTop}
+                    >
                       <Chip
                         label={'ETH'}
                         size="small"
-                        sx={{ color: '#175cd3', backgroundColor: '#eff8ff' }}
+                        className={styles.ethColor}
                       />
                       <Chip
                         label={'AVAX'}
                         size="small"
-                        sx={{ color: '#c01048', backgroundColor: '#fff1f3' }}
+                        className={styles.avaxColor}
                       />
                       <Chip
                         label={'BSC'}
                         size="small"
-                        sx={{
-                          color: '#854a0e',
-                          backgroundColor: '#fef7c3'
-                        }}
+                        className={styles.bscColor}
                       />
                     </Stack>
                   </div>
                 </div>
-              </Stack>
+              </ServiceLevel>
             </div>
           )}
           {tabIndex === 2 && ( // Step 3
             <div className={styles.tab2}>
-              <Stack
-                sx={{
-                  p: 3,
-                  mt: 1.5,
-                  border: 'none',
-                  borderRadius: 1,
-                  background: theme.palette.warning.dark,
-                  color: theme.palette.text.primary
-                }}
-                spacing={3}
-              >
+              <Step3Outer spacing={3}>
                 <Stack direction="row" justifyContent={'space-between'}>
                   <Stack
                     direction={'row'}
@@ -873,20 +820,17 @@ const ProjectModal = props => {
                     <Chip
                       label={'ETH'}
                       size="small"
-                      sx={{ color: '#175cd3', backgroundColor: '#eff8ff' }}
+                      className={styles.ethColor}
                     />
                     <Chip
                       label={'AVAX'}
                       size="small"
-                      sx={{ color: '#c01048', backgroundColor: '#fff1f3' }}
+                      className={styles.avaxColor}
                     />
                     <Chip
                       label={'BSC'}
                       size="small"
-                      sx={{
-                        color: '#854a0e',
-                        backgroundColor: '#fef7c3'
-                      }}
+                      className={styles.bscColor}
                     />
                   </Stack>
                 </Stack>
@@ -903,7 +847,7 @@ const ProjectModal = props => {
                     <div>Monthly cost in $USD: </div>
                     {/* <HelpOutline sx={{ fontSize: '20px' }} /> */}
                   </Stack>
-                  <div style={{ fontSize: '14px' }}>$200</div>
+                  <div className={styles.fontSize14}>$200</div>
                 </Stack>
                 <Stack
                   direction="row"
@@ -918,16 +862,15 @@ const ProjectModal = props => {
                     <div>Service Level: </div>
                     {/* <HelpOutline sx={{ fontSize: '20px' }} /> */}
                   </Stack>
-                  <div style={{ fontSize: '14px' }}>
+                  <div className={styles.fontSize14}>
                     Tier 2 - 32 million requests / month
                   </div>
                 </Stack>
-              </Stack>
+              </Step3Outer>
               <div className={styles.detail}>
                 <Typography
-                  className={styles.subTitle}
+                  className={`${styles.subTitle} ${styles.marginTopHalf}`}
                   color="common.black"
-                  sx={{ mt: 1.5 }}
                 >
                   Payment Info
                 </Typography>
@@ -938,17 +881,7 @@ const ProjectModal = props => {
                 </Typography>
               </div>
 
-              <Stack
-                sx={{
-                  p: 3,
-                  mt: 1.5,
-                  border: 'none',
-                  borderRadius: 1,
-                  background: theme.palette.warning.dark,
-                  color: theme.palette.text.primary
-                }}
-                spacing={3}
-              >
+              <PaymentInfo spacing={3}>
                 {/* <div className={styles.info}> */}
                 <Stack
                   direction={'row'}
@@ -994,8 +927,7 @@ const ProjectModal = props => {
                     direction="row"
                     justifyContent={'flex-start'}
                     alignItems="center"
-                    sx={{ width: '40%' }}
-                    className={styles.left}
+                    className={`${styles.left} ${styles.width40}`}
                     spacing={1}
                   >
                     Payment&nbsp;address:{' '}
@@ -1005,8 +937,7 @@ const ProjectModal = props => {
                     direction="row"
                     justifyContent={'flex-start'}
                     alignItems="center"
-                    sx={{ width: '60%' }}
-                    className={styles.right}
+                    className={`${styles.right} ${styles.width60}`}
                     spacing={1}
                   >
                     {/* <ContentCopy  /> */}
@@ -1019,20 +950,22 @@ const ProjectModal = props => {
                           {newProj?.payment_eth_address || ''}
                         </span>
                         {copyFlag ? (
-                          <CheckCircleOutline sx={{ cursor: 'pointer' }} />
+                          <CheckCircleOutline
+                            className={styles.cursorPointer}
+                          />
                         ) : (
-                          <ContentCopy sx={{ cursor: 'pointer' }} />
+                          <ContentCopy className={styles.cursorPointer} />
                         )}
                       </Stack>
                     </CopyToClipboard>
                   </Stack>
                 </Stack>
-                <Typography sx={{ fontStyle: 'italic' }}>
+                <Typography className={styles.fontItalic}>
                   Text content to explain max 1 hour wait for pending tx and
                   what happens next after payment has been made.
                 </Typography>
                 {/* </div> */}
-              </Stack>
+              </PaymentInfo>
             </div>
           )}
 
@@ -1056,42 +989,34 @@ const ProjectModal = props => {
           </Stack>
 
           {tabIndex === 0 && (
-            <div
-              style={{
-                width: '100%',
-                display: 'flex',
-                justifyContent: 'center'
-              }}
-            >
-              <Button
+            <div className={`${styles.fullWidth} ${styles.contentCenter}`}>
+              <BlackButton
                 className={styles.cancelBtn}
                 variant="outlined"
                 onClick={handleClose}
-                sx={{ color: 'common.black' }}
               >
                 Cancel
-              </Button>
+              </BlackButton>
             </div>
           )}
 
           {tabIndex === 1 && (
             <Stack direction={'row'} justifyContent="space-between">
-              <Button
+              <BlackButton
                 variant="outlined"
                 startIcon={<ArrowBack />}
                 onClick={() => {
                   setTabIndex(0)
                   setActive(0)
                 }}
-                sx={{ color: 'common.black' }}
               >
                 <Typography variant="h4">Go&nbsp;back</Typography>
-              </Button>
+              </BlackButton>
               <Button
                 variant="contained"
                 endIcon={<ArrowForward />}
                 onClick={() => setTabIndex(2)}
-                sx={{ height: '44px' }}
+                className={styles.height44}
               >
                 <Typography variant="h4">
                   Continue&nbsp;to&nbsp;payment
@@ -1104,19 +1029,18 @@ const ProjectModal = props => {
             <Stack
               direction={'row'}
               justifyContent="space-between"
-              sx={{ mt: 3 }}
+              className={styles.marginTop}
             >
-              <Button
+              <BlackButton
                 variant="outlined"
                 startIcon={<ArrowBack />}
-                sx={{ color: 'common.black' }}
                 onClick={() => {
                   setTabIndex(1)
                   setActive(1)
                 }}
               >
                 <Typography variant="h4">Go&nbsp;back</Typography>
-              </Button>
+              </BlackButton>
               <Button
                 variant="contained"
                 endIcon={<ArrowForward />}
@@ -1124,7 +1048,7 @@ const ProjectModal = props => {
                   setTabIndex(0)
                   handleClose()
                 }}
-                sx={{ height: '44px' }}
+                className={styles.height44}
               >
                 <Typography variant="h4">
                   Return&nbsp;to&nbsp;dashboard

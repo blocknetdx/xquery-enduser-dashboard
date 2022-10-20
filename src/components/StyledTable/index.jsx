@@ -46,6 +46,22 @@ const MobileList = styled('ul')({
   justifyContent: 'space-between'
 })
 
+const BlackButton = styled(Button)(({ theme }) => ({
+  color: theme.palette.common.black
+}))
+
+const BlackIconButton = styled(IconButton)(({ theme }) => ({
+  color: theme.palette.common.black
+}))
+
+const PrimaryIconButton = styled(IconButton)(({ theme }) => ({
+  color: theme.palette.text.primary
+}))
+
+const BlackFilterList = styled(FilterList)(({ theme }) => ({
+  color: theme.palette.common.black
+}))
+
 const filterlist = ['Active', 'Inactive', 'Pending']
 
 const StyledPagination = props => {
@@ -59,17 +75,15 @@ const StyledPagination = props => {
     <nav className={`${styles.footer}`}>
       {mobile ? (
         <MobileList>
-          <Button
-            style={{ color: theme.palette.common.black }}
+          <BlackButton
             className={`${styles.arrow}`}
             onClick={() => setPage(curPage <= 1 ? curPage : curPage - 1)}
             startIcon={<img src={backward} alt="backward" />}
-          ></Button>
+          ></BlackButton>
           <Typography variant="p" color="common.black">
             Page {curPage} of {Math.ceil(length / 10) + (length === 0 ? 1 : 0)}
           </Typography>
-          <Button
-            style={{ color: theme.palette.common.black }}
+          <BlackButton
             className={`${styles.arrow}`}
             onClick={() =>
               setPage(
@@ -77,7 +91,7 @@ const StyledPagination = props => {
               )
             }
             startIcon={<img src={forward} alt="forward" />}
-          ></Button>
+          ></BlackButton>
         </MobileList>
       ) : (
         <List>
@@ -86,29 +100,24 @@ const StyledPagination = props => {
 
             if (type === 'start-ellipsis' || type === 'end-ellipsis') {
               children = (
-                <IconButton
-                  style={{ color: theme.palette.common.black }}
-                  className={`${styles.page}`}
-                >
+                <BlackIconButton className={`${styles.page}`}>
                   …
-                </IconButton>
+                </BlackIconButton>
               )
             } else if (type === 'page') {
               children = (
-                <IconButton
-                  style={{ color: theme.palette.text.primary }}
+                <PrimaryIconButton
                   onClick={() => setPage(page)}
                   className={`${styles.page} ${
                     curPage === page && styles.active
                   }`}
                 >
                   {page}
-                </IconButton>
+                </PrimaryIconButton>
               )
             } else {
               children = (
-                <Button
-                  style={{ color: theme.palette.common.black }}
+                <BlackButton
                   className={`${styles.arrow}`}
                   onClick={() =>
                     type === 'previous'
@@ -126,7 +135,7 @@ const StyledPagination = props => {
                         width="21px"
                         height="21px"
                         alt="backward"
-                        style={{ marginBottom: '2px' }}
+                        className={styles.mb2}
                       />
                     )
                   }
@@ -137,7 +146,7 @@ const StyledPagination = props => {
                         width="21px"
                         height="21px"
                         alt="forward"
-                        style={{ marginBottom: '2px' }}
+                        className={styles.mb2}
                       />
                     )
                   }
@@ -147,7 +156,7 @@ const StyledPagination = props => {
                       {type === 'previous' ? 'Previous' : 'Next'}
                     </span>
                   )}
-                </Button>
+                </BlackButton>
               )
             }
 
@@ -335,7 +344,7 @@ const StyledTable = props => {
             <button className={styles.toFilterBtn}>
               {item}{' '}
               <Close
-                sx={{ cursor: 'pointer', width: '20px', height: '20px' }}
+                className={styles.closeIcon}
                 onClick={() => handleDelete(item)}
               />
             </button>
@@ -379,13 +388,10 @@ const StyledTable = props => {
         />
 
         <Stack
-          className={classes.stacks}
+          className={`${classes.stacks} ${styles.gap10}`}
           direction="row"
           justifyContent="flex-end"
           alignItems="center"
-          sx={{
-            gap: '10px'
-          }}
         >
           <div className={styles.tag1}>{filterTags()}</div>
           <Select
@@ -401,12 +407,9 @@ const StyledTable = props => {
               color: 'transparent'
             }}
           >
-            <MenuItem value={0} sx={{ display: 'none' }}>
+            <MenuItem value={0} className={styles.hidden}>
               <div className={`${styles.flexCenter} ${classes.icon}`}>
-                <FilterList
-                  className={classes.filterList}
-                  sx={{ color: theme.palette.common.black }}
-                />
+                <BlackFilterList className={classes.filterList} />
                 <span className={classes.filtText}>Filter</span>
               </div>
             </MenuItem>
@@ -423,11 +426,10 @@ const StyledTable = props => {
       </div>
       {/* </div> */}
 
-      <TableContainer style={{ maxWidth: '860px', width: '100%' }}>
+      <TableContainer className={styles.tableContainer}>
         <Table
-          className={classes.table}
+          className={`${classes.table} ${classes.fixedTable}`}
           aria-label="simple table"
-          style={{ tableLayout: 'fixed' }}
         >
           <TableBody>
             {filteredList
@@ -453,7 +455,7 @@ const StyledTable = props => {
                       <Typography
                         variant="h6"
                         color="#475467"
-                        sx={{ fontWeight: '400 !important' }}
+                        className={styles.fontWeight400}
                       >
                         {data.projectId.slice(0, 8).concat('...')}
                       </Typography>
@@ -523,13 +525,7 @@ const StyledTable = props => {
                     <Button
                       variant="contained"
                       onClick={() => handleGetInfo(data.projectId, data.apiKey)}
-                      style={{
-                        padding: '6px 16px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        height: '40px',
-                        margin: '0 auto'
-                      }}
+                      className={styles.viewProjectInfoBtn}
                     >
                       <span className={styles.infoBtnSpace}>
                         View project info

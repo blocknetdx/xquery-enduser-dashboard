@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import { useMedia } from 'react-use'
 import { useNotifications, useConnectWallet } from '@web3-onboard/react'
 import { Button, IconButton, Typography } from '@mui/material'
+import styled from '@emotion/styled'
 import {
   ApexChart,
   Card,
@@ -57,6 +58,41 @@ const JsonInfo = `{
     "result": "0x16c131ea72" 
 }`
 
+const HeaderContainer = styled.div(({ theme }) => ({
+  background: theme.palette.info.light,
+  borderBottom: `1px solid ${theme.palette.background.paper}`
+}))
+
+const DashboardContainer = styled.div(({ theme }) => ({
+  background: theme.palette.info.main,
+  paddingTop: '48px'
+}))
+
+const CodeTag = styled(Typography)(({ theme }) => ({
+  backgroundColor: theme.palette.warning.main,
+  marginTop: '20px',
+  padding: '16px',
+  borderRadius: '16px',
+  wordBreak: 'break-all',
+  position: 'relative'
+}))
+
+const WhitePre = styled.pre(({ theme }) => ({
+  color: theme.palette.common.white
+}))
+
+const RequestDetails = styled(Typography)(({ theme }) => ({
+  backgroundColor: theme.palette.warning.main,
+  padding: '16px',
+  borderRadius: '16px',
+  wordBreak: 'break-all',
+  position: 'relative'
+}))
+
+const DividerDiv = styled.div(({ theme }) => ({
+  background: `${theme.palette.divider}`
+}))
+
 const Header = ({ signature, customNotification }) => {
   const mode = useSelector(state => state.toogle.darkMode)
   const theme = mode === 'true' ? dark : light
@@ -72,12 +108,7 @@ const Header = ({ signature, customNotification }) => {
   // }
 
   return (
-    <div
-      style={{
-        background: theme.palette.info.light,
-        borderBottom: `1px solid ${theme.palette.background.paper}`
-      }}
-    >
+    <HeaderContainer>
       <div className={`${styles.header}`}>
         <img src={logo} alt="logo" width={115} height={36} />
         <div className={`${styles.innerFlex}`}>
@@ -97,7 +128,7 @@ const Header = ({ signature, customNotification }) => {
         signature={signature}
         handleClose={handleClose}
       />
-    </div>
+    </HeaderContainer>
   )
 }
 
@@ -168,7 +199,7 @@ const Chart = () => {
             // label="Select Period"
             onChange={handleChange}
             IconComponent={props => (
-              <ExpandMoreIcon sx={{ color: '#667085', marginRight: '15px' }} />
+              <ExpandMoreIcon className={styles.expandMoreIcon} />
             )}
             className={classes.formSelect}
           >
@@ -240,10 +271,7 @@ const Dashboard = () => {
   return (
     <>
       <Header signature={signature} customNotification={customNotification} />
-      <div
-        className={`${styles.content}`}
-        style={{ background: theme.palette.info.main, paddingTop: '48px' }}
-      >
+      <DashboardContainer className={`${styles.content}`}>
         <div className={styles.container}>
           <Typography
             className={classes.overview}
@@ -257,11 +285,8 @@ const Dashboard = () => {
             Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam,
             purus sit
           </Typography>
-          <FlexRow style={{ gap: '20px' }} className={styles.subContainer}>
-            <FlexColumn
-              style={{ gap: '20px' }}
-              className={styles.leftSubContainer}
-            >
+          <FlexRow className={`${styles.subContainer} ${styles.gap}`}>
+            <FlexColumn className={`${styles.leftSubContainer} ${styles.gap}`}>
               <Chart />
               <StyledTable
                 theme={theme}
@@ -269,10 +294,7 @@ const Dashboard = () => {
                 setModalOpen={setModalOpen}
               />
             </FlexColumn>
-            <FlexColumn
-              style={{ gap: '20px' }}
-              className={styles.rightSubContainer}
-            >
+            <FlexColumn className={`${styles.rightSubContainer} ${styles.gap}`}>
               <Card className={`${styles.about}`}>
                 <div className={styles.aboutHead}>
                   <Typography
@@ -293,13 +315,7 @@ const Dashboard = () => {
                       href="https://api.blocknet.org/#xquery-api"
                       target="_blank"
                       variant="outlined"
-                      sx={{
-                        width: '48%',
-                        borderRadius: '6px',
-                        border: 'solid 1px #bdb4fe',
-                        backgroundColor: '#f9f5ff',
-                        color: '#6941c6'
-                      }}
+                      className={styles.commonBtn}
                     >
                       <span className="iconBtnSpace">Support docs</span>
                       <img
@@ -313,13 +329,7 @@ const Dashboard = () => {
                       href="https://discord.gg/mZ6pTneMx3"
                       target="_blank"
                       variant="outlined"
-                      sx={{
-                        width: '48%',
-                        borderRadius: '6px',
-                        border: 'solid 1px #bdb4fe',
-                        backgroundColor: '#f9f5ff',
-                        color: '#6941c6'
-                      }}
+                      className={styles.commonBtn}
                     >
                       <span className="iconBtnSpace">Join Discord</span>
                       <img
@@ -333,118 +343,57 @@ const Dashboard = () => {
                 </div>
               </Card>
               <Card className={`${styles.about2}`}>
-                <Accordion
-                  sx={{
-                    bgColor: 'none',
-                    background: 'none',
-                    boxShadow: 'none',
-                    width: '100%',
-                    minWidth: '200px'
-                  }}
-                >
+                <Accordion className={styles.transparentBg}>
                   <AccordionSummary
                     expandIcon={
-                      <ExpandMoreIcon sx={{ color: 'common.black' }} />
+                      <ExpandMoreIcon className={styles.blackColor} />
                     }
                     aria-controls="panel1a-content"
                     id="panel1a-header"
-                    sx={{
-                      padding: 0,
-                      alignItems: 'flex-start',
-                      margin: '0px !important'
-                    }}
+                    className={styles.accordionSummary}
                   >
                     <div>
                       <Typography
                         variant="h4"
                         color="common.black"
-                        className={styles.title}
-                        sx={{ marginBottom: '16px' }}
+                        className={`${styles.title} ${styles.mb16}`}
                       >
                         Your First Request
                       </Typography>
                       <Typography
                         variant="p"
                         color="text.primary"
-                        sx={{ mt: '20px', width: 'calc(100% + 25px)' }}
+                        className={styles.requestText}
                       >
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                         Quis sit facilisi non, suspendisse.
                       </Typography>
                     </div>
                   </AccordionSummary>
-                  <AccordionDetails
-                    sx={{
-                      padding: 0,
-                      minWidth: '200px',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      gap: '20px'
-                    }}
-                  >
+                  <AccordionDetails className={styles.requestDetails}>
                     {/* <Typography sx={{ mb: 2 }} variant='h4' color='text.primary'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quis sit facilisi non, suspendisse.</Typography> */}
-                    <Typography
-                      variant="p"
-                      color="common.white"
-                      sx={{
-                        backgroundColor: theme.palette.warning.main,
-                        mt: '20px',
-                        padding: 2,
-                        borderRadius: 2,
-                        wordBreak: 'break-all',
-                        position: 'relative'
-                      }}
-                    >
-                      <pre
-                        className={styles.codes}
-                        style={{ color: theme.palette.common.white }}
-                      >
-                        {Code}
-                      </pre>
+                    <CodeTag variant="p" color="common.white">
+                      <WhitePre className={styles.codes}>{Code}</WhitePre>
                       {copyFlag ? (
-                        <Check
-                          sx={{
-                            position: 'absolute',
-                            right: '10px',
-                            bottom: '10px'
-                          }}
-                        />
+                        <Check className={styles.check} />
                       ) : (
                         <Button
                           onClick={() => copyClip()}
                           variant="contained"
                           size="small"
-                          sx={{
-                            position: 'absolute',
-                            right: '10px',
-                            bottom: '10px'
-                          }}
+                          className={styles.check}
                         >
-                          <ContentCopy sx={{ fontSize: '16px' }} /> Copy
+                          <ContentCopy className={styles.font16} /> Copy
                         </Button>
                       )}
-                    </Typography>
+                    </CodeTag>
                     <Typography variant="p" color="text.primary">
                       Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                       Quis sit facilisi non, suspendisse.
                     </Typography>
-                    <Typography
-                      variant="p"
-                      sx={{
-                        backgroundColor: theme.palette.warning.main,
-                        padding: 2,
-                        borderRadius: 2,
-                        wordBreak: 'break-all',
-                        position: 'relative'
-                      }}
-                    >
-                      <pre
-                        className={classes.codes}
-                        style={{ color: theme.palette.common.white }}
-                      >
-                        {JsonInfo}
-                      </pre>
-                    </Typography>
+                    <RequestDetails variant="p">
+                      <WhitePre className={classes.codes}>{JsonInfo}</WhitePre>
+                    </RequestDetails>
                   </AccordionDetails>
                 </Accordion>
               </Card>
@@ -495,13 +444,7 @@ const Dashboard = () => {
                 </div>
               </Card>
               <Card className={`${styles.about1}`}>
-                <div
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '20px'
-                  }}
-                >
+                <div className={styles.verticalAlign}>
                   <Typography
                     variant="h4"
                     color="common.black"
@@ -521,18 +464,9 @@ const Dashboard = () => {
                     removing a critical burden of trust from the blockchain
                     stack: centralized data providers.
                   </Typography>
-                  <div
-                    className={`${styles.divider}`}
-                    style={{ background: `${theme.palette.divider}` }}
-                  />
+                  <DividerDiv className={`${styles.divider}`} />
                 </div>
-                <div
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '15px'
-                  }}
-                >
+                <div className={`${styles.verticalAlignSmall}`}>
                   <Typography
                     variant="h4"
                     color="common.black"
@@ -543,7 +477,7 @@ const Dashboard = () => {
                   <Typography
                     variant="p"
                     color="text.primary"
-                    sx={{ lineHeight: '1.43 !important' }}
+                    className={styles.blocknet}
                   >
                     Dolor enim eu tortor urna sed duis nulla. Aliquam
                     vestibulum, nulla odio nisl vitae. In aliquet pellentesque
@@ -576,12 +510,26 @@ const Dashboard = () => {
                   </FlexRow>
                   <FlexRow className={`${styles.flexStart}`}>
                     <img src={discord} alt="discord" />
-                    <a className={`${styles.link}`} href="https://discord.gg/mZ6pTneMx3" target="_blank" rel="noreferrer">Discord</a>
+                    <a
+                      className={`${styles.link}`}
+                      href="https://discord.gg/mZ6pTneMx3"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Discord
+                    </a>
                     {/* eslint-disable-line */}
                   </FlexRow>
                   <FlexRow className={`${styles.flexStart}`}>
                     <img src={telegram} alt="telegram" />
-                    <a className={`${styles.link}`} href="https://t.me/Blocknet" target="_blank" rel="noreferrer">Telegram</a>
+                    <a
+                      className={`${styles.link}`}
+                      href="https://t.me/Blocknet"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Telegram
+                    </a>
                     {/* eslint-disable-line */}
                   </FlexRow>
                 </div>
@@ -589,7 +537,7 @@ const Dashboard = () => {
             </FlexColumn>
           </FlexRow>
         </div>
-      </div>
+      </DashboardContainer>
     </>
   )
 }

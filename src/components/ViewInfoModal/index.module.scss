@@ -1,3 +1,96 @@
+.verticalOverflow {
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.closeIcon {
+  font-size: 25px;
+  cursor: pointer;
+  color: #98a2b3;
+  margin: -14px -14px 0px 0px;
+}
+
+.title {
+  font-size: 20px;
+  margin-top: -10px !important;
+}
+
+.projectDetails {
+  font-size: 16px !important;
+  font-weight: 500 !important;
+}
+
+.label {
+  color: #344054;
+  font-weight: 500;
+}
+
+.analysisInfo {
+  color: #027A48;
+  background-color: #ECFDF3;
+  padding: 2px 0px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.font14 {
+  font-size: 14px;
+}
+
+.mt12 {
+  margin-top: 12px;
+}
+
+.paymentAddress {
+  font-size: 14px;
+  font-weight: 600;
+  width: 35%;
+  color: #344054;
+}
+
+.cursorPointer {
+  cursor: pointer;
+}
+
+.cancelProjectBtn {
+  height: 44px;
+  border-radius: 6px;
+  border: solid 1px #d0d5dd;
+  background-color: #fff;
+  color: #344054;
+}
+
+.extendProjectBtn {
+  height: 44px;
+  border-radius: 6px;
+}
+
+.mt3 {
+  margin-top: 24px;
+}
+
+.gap {
+  gap: 10px;
+}
+
+.height44 {
+  height: 44px;
+}
+
+.createNewProjectBtn {
+  height: 44px;
+  border-radius: 6px;
+  border: solid 1px #d0d5dd;
+  background-color: #fff;
+  color: #344054;
+}
+
+.returnToDashboardBtn {
+  height: 44px;
+  border-radius: 6px;
+}
+
 .modalBox {
   position: relative;
   margin-top: 20px;

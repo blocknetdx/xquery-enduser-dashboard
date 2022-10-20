@@ -4,11 +4,16 @@ import { useSelector } from 'react-redux'
 import { useConnectWallet, useWallets } from '@web3-onboard/react'
 import { createStyles, makeStyles } from '@mui/styles'
 import { Box, Button, Typography } from '@mui/material'
+import styled from '@emotion/styled'
 import { FlexColumn } from '../../components/Layout'
 import styles from './index.module.scss'
 import logo from '../../assets/logo.svg'
 import { dark, light } from '../../theme'
 import { useEagerConnect, useVerifySignature } from '../../hooks'
+
+const MainDiv = styled.div(({ theme }) => ({
+  background: `${theme.palette.info.main}`
+}))
 
 const useStyles = makeStyles(theme =>
   createStyles({
@@ -86,10 +91,7 @@ const Login = () => {
   return (
     <>
       {loading && <div className={classes.verify} />}
-      <div
-        className={styles.back}
-        style={{ background: theme.palette.info.main }}
-      >
+      <MainDiv className={styles.back}>
         <Box className={styles.wrapper}>
           <FlexColumn className={styles.alignCenter}>
             <img
@@ -119,7 +121,7 @@ const Login = () => {
             <Button
               variant="contained"
               fullWidth
-              sx={{ mt: '32px', padding: '10px 18px' }}
+              className={styles.connectWalletButton}
               onClick={() => handleConnect()}
             >
               <Typography
@@ -132,7 +134,7 @@ const Login = () => {
             </Button>
           </FlexColumn>
         </Box>
-      </div>
+      </MainDiv>
     </>
   )
 }

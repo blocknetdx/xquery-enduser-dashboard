@@ -3,9 +3,8 @@
 A repository to xquery end-user dashboard
 For detailed documentation, head to [docs.blocknative.com](https://docs.blocknative.com)
 
-
 <div align="center">
-  <img style="border-radius: 8px" width="75%" src="assets/xquery-dashboard.png">
+  <img style="border-radius: 8px" width="75%" src="public/assets/xquery-dashboard.png">
 </div>
 
 View live demo [here](https://xquery-v1.vercel.app/)!
