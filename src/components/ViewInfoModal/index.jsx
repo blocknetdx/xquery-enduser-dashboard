@@ -218,7 +218,7 @@ const ProjectInfoModal = props => {
                       <div className={styles.label}>Usage: </div>
                       {/* <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} /> */}
                     </Stack>
-                    <div>60%</div>
+                    <div>{projectInfo?.usage?.toFixed(0)}%</div>
                   </Stack>
                   <Stack
                     direction={'row'}
