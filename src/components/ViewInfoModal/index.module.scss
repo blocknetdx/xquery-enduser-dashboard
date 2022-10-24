@@ -34,12 +34,28 @@
   font-weight: 500;
 }
 
+.supportedNetworks {
+  margin-top: 2px !important;
+}
+
 .font14 {
   font-size: 14px;
 }
 
 .mt12 {
   margin-top: 12px;
+}
+
+.mt10 {
+  margin-top: 10px !important;
+}
+
+.mb10 {
+  margin-bottom: 10px !important;
+}
+
+.mt30 {
+  margin-top: 30px !important;
 }
 
 .paymentAddress {
@@ -91,6 +107,18 @@
   border-radius: 6px;
 }
 
+.gap20 {
+  gap: 20px !important;
+}
+
+.subTItle {
+  text-align: left;
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 500;
+  margin-top: 30px !important;
+}
+
 .modalBox {
   position: relative;
   margin-top: 20px;
@@ -124,13 +152,7 @@
     margin-top: 19px;
   }
 
-  .subTItle {
-    text-align: left;
-    font-family: Inter;
-    font-size: 16px;
-    font-weight: 500;
-    margin-top: 30px;
-  }
+
 
   .bold {
     font-weight: 500;
@@ -227,8 +249,7 @@
 
   .tab3 {
     .projectInfo {
-      padding: 20px 15px;
-      border-radius: 8px;
+      gap: 20px;
     }
 
     font-size: 14px !important;
@@ -274,6 +295,21 @@
   font-size: 14px !important;
 }
 
+.dotsBody {
+  padding: 7px 0;
+  background: none;
+
+  .dot {
+    outline: none;
+    border: none;
+    width: 30px;
+    height: 6px;
+    background: #e9d7fe;
+    border-radius: 2px;
+    cursor: pointer;
+  }
+}
+
 @media (max-width: 576px) {
   .modalBox {
     position: relative;
@@ -291,7 +327,7 @@
       font-size: 14px !important;
       flex-direction: column;
       justify-content: flex-start;
-      align-items: flex-start;
+      align-items: center;
       gap: 10px;
     }
 
@@ -320,6 +356,7 @@
 
     .mobileHidden {
       display: none;
+      align-items: center;
     }
 
     .mobilePay {
