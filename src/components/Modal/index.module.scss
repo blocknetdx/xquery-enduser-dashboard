@@ -19,6 +19,18 @@
   margin-bottom: 10px;
 }
 
+.mb30 {
+  margin-bottom: 30px !important;
+}
+
+.mt20 {
+  margin-top: 20px !important;
+}
+
+.m0 {
+  margin: 0 !important;
+}
+
 .gap {
   gap: 10px;
 }
@@ -34,7 +46,7 @@
 
 .smallCloseIcon {
   cursor: pointer;
-  font-size: 12px;
+  font-size: 12px !important;
 }
 
 .fullWidth {
@@ -59,12 +71,35 @@
 }
 
 .detailsButton {
-  padding: 6px 16px;
+  padding: 8px 14px !important;
   display: flex;
   align-items: center;
   height: 40px;
   margin: 0 auto;
   width: 150px;
+}
+
+.projectInfoPanel {
+  padding: 15px !important;
+}
+
+.projectInfoLabel {
+  color: #344054 !important;
+  font-weight: 500 !important;
+  font-size: 14px !important;
+}
+
+.unchecked {
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  border: 1px solid #d0d5dd;
+  background-color: #fff;
+}
+
+.checked {
+  color: #7f56d9 !important;
+  font-size: 20px !important;
 }
 
 .whiteBg {
@@ -112,10 +147,14 @@
 }
 
 .tierInner {
+  display: flex;
+  align-items: center;
+  height: 64px !important;
   padding: 8px 16px;
-  background: #f9f5ff;
+  background: #fff;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+  border-bottom: 1px solid #eaecf0;
 }
 
 .borderBottom1 {
@@ -124,6 +163,32 @@
 
 .padding {
   padding: 8px 16px;
+}
+
+.tierPadding {
+  padding: 15px;
+}
+
+.layersAvatar {
+  width: 20px !important;
+  height: 20px !important;
+}
+
+.tierTitle {
+  display: flex;
+  justify-content: space-between;
+  flex-grow: 1;
+}
+
+.avatarContainer {
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 20px !important;
+  background: #f4ebff !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 0;
 }
 
 .ethColor {
@@ -166,6 +231,50 @@
   height: 44px;
 }
 
+.mixBlendMode {
+  mix-blend-mode: multiply;
+}
+
+.selectedTier {
+  border: 1px solid #d6bbfb !important;
+}
+
+.selectedTierInner {
+  border-bottom: 1px solid #d6bbfb !important;
+}
+
+.selectedTierTitle {
+  font-weight: 500 !important;
+}
+
+.tierInServiceLevel {
+  font-weight: 600 !important;
+}
+
+.serviceLevel {
+  display: flex;
+  flex-direction: row;
+}
+
+.chooseLabel {
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  text-align: left;
+  color: #344054;
+}
+
+.amountLeft {
+  width: 40%;
+}
+
+.amountRight {
+  width: 60%;
+}
+
 .modalNewBox {
   position: relative;
   margin-top: 20px;
@@ -202,6 +311,27 @@
     font-weight: 500 !important;
   }
 
+  .darkChipEth {
+    color: #175cd3 !important;
+    background-color: #eff8ff;
+    width: fit-content !important;
+    font-weight: 500 !important;
+  }
+
+  .darkChipAvax {
+    color: #c01048 !important;
+    background-color: #fff1f3;
+    width: fit-content !important;
+    font-weight: 500 !important;
+  }
+
+  .darkChipBsc {
+    color: #854a0e !important;
+    background-color: #fef7c3;
+    width: fit-content !important;
+    font-weight: 500 !important;
+  }
+
   .chipSys {
     color: #0e6185 !important;
     background-color: #c3d3fe !important;
@@ -232,9 +362,11 @@
   .subTItle {
     text-align: left;
     font-family: Inter;
+    font-style: normal !important;
     font-size: 16px !important;
     font-weight: 500 !important;
     margin-top: 30px;
+    color: #344054 !important;
   }
 
   .desc {
@@ -249,7 +381,7 @@
   }
 
   .infoBtnSpace {
-    margin-right: 5px;
+    margin-right: 10px;
   }
 
   .tab0 {
@@ -264,8 +396,9 @@
       padding: 7px 10px;
       border-radius: 16px;
       font-family: Inter;
-      font-size: 12px;
+      font-size: 12px !important;
       font-weight: 500;
+      padding: 2px 6px 2px 8px;
     }
 
     .tableBox {
@@ -278,6 +411,7 @@
         justify-content: flex-end;
         align-items: center;
         padding: 10px;
+        background-color: #f2f4f7;
       }
 
       .headItem {
@@ -339,7 +473,7 @@
 
       .tier {
         padding: 0px;
-        border: solid 1px #d6bbfb;
+        border: solid 1px #eaecf0;
         width: 49%;
         border-radius: 10px;
         color: #000 !important;
@@ -355,16 +489,24 @@
         }
 
         .price {
-          font-family: Inter;
-          font-size: 14px;
+          font-family: Inter !important;
+          font-size: 14px !important;
           line-height: 1.43;
           text-align: left;
+          font-weight: normal !important;
+          color: #667085;
+          margin-bottom: 8px !important;
 
           span {
-            font-size: 24px;
-            font-weight: 500;
-            margin-right: 10px;
+            font-size: 24px !important;
+            font-weight: 500 !important;
+            margin-right: 10px !important;
+            color: #344054 !important;
           }
+        }
+
+        .description {
+          color: #667085 !important;
         }
       }
     }
@@ -377,7 +519,7 @@
     }
 
     .amount {
-      flex-direction: column;
+      flex-direction: row;
 
       .amountLeft {
         width: 40%;
@@ -478,6 +620,9 @@
           }
 
           .infoMobile {
+            font-size: 14px;
+            line-height: 1.43;
+            height: 20px;
             display: flex;
           }
         }

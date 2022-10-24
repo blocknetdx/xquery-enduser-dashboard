@@ -24,14 +24,15 @@ import { Avatar } from '@mui/material'
 import {
   FilterList,
   Close,
-  //HelpOutline,
+  HelpOutline,
   CheckCircleOutline,
   RadioButtonUnchecked,
   ArrowForward,
   ArrowBack,
   ContentCopy,
   VisibilityOutlined,
-  VisibilityOffOutlined
+  VisibilityOffOutlined,
+  CheckCircle
 } from '@mui/icons-material'
 
 // local file
@@ -327,7 +328,7 @@ const ProjectModal = props => {
               : titles[2]}
           </Typography>
           <PaletteDividerBg className={styles.divider} />
-          <Typography className={`${styles.subTitle}`} color="#344054">
+          <Typography className={`${styles.chooseLabel}`}>
             Your Project Details
           </Typography>
           <Typography
@@ -512,14 +513,24 @@ const ProjectModal = props => {
                                 <span className={styles.infoBtnSpace}>
                                   View details
                                 </span>
-                                <img src={info} alt="info" />
+                                <img
+                                  src={info}
+                                  alt="info"
+                                  width={20}
+                                  height={20}
+                                />
                               </Button>
                               <Button
                                 variant="contained"
                                 className={styles.infoMobile}
                                 onClick={onClickDetail}
                               >
-                                <img src={info} alt="info" />
+                                <img
+                                  src={info}
+                                  alt="info"
+                                  width={15.7}
+                                  height={15.7}
+                                />
                               </Button>
                             </StyledTableCell>
                           </StyledTableRow>
@@ -532,7 +543,10 @@ const ProjectModal = props => {
           )}
           {tabIndex === 1 && ( // Step 2
             <div className={styles.tab1}>
-              <ProjectInfoPanel spacing={3}>
+              <ProjectInfoPanel
+                spacing={3}
+                className={`${styles.projectInfoPanel} ${styles.mb30}`}
+              >
                 <Stack
                   direction="row"
                   justifyContent="space-between"
@@ -541,12 +555,15 @@ const ProjectModal = props => {
                   <Stack
                     direction="row"
                     justifyContent="flex-start"
+                    alignItems="center"
                     spacing={0.5}
                   >
-                    <Typography>Project ID:</Typography>{' '}
-                    {/* <HelpOutline sx={{ fontSize: '20px' }} /> */}
+                    <Typography className={styles.projectInfoLabel}>
+                      Project ID:
+                    </Typography>
+                    <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                   </Stack>
-                  <div>{newProj?.project_id}</div>
+                  <div>{1231212}</div>
                 </Stack>
                 <Stack
                   direction="row"
@@ -556,10 +573,13 @@ const ProjectModal = props => {
                   <Stack
                     direction="row"
                     justifyContent="flex-start"
+                    alignItems="center"
                     spacing={0.5}
                   >
-                    <Typography>API Key:</Typography>{' '}
-                    {/* <HelpOutline sx={{ fontSize: '20px' }}/> */}
+                    <Typography className={styles.projectInfoLabel}>
+                      API Key:
+                    </Typography>
+                    <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                   </Stack>
                   <Stack direction="row" alignItems="center" spacing={1}>
                     <span className={classes.key}>
@@ -591,24 +611,31 @@ const ProjectModal = props => {
                     alignItems="center"
                     spacing={0.5}
                   >
-                    <div>Supported Networks: </div>
-                    {/* <HelpOutline sx={{ fontSize: '20px' }} /> */}
+                    <Typography className={styles.projectInfoLabel}>
+                      Supported Networks:
+                    </Typography>
+                    <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                   </Stack>
-                  <Stack direction="row" justifyContent="flex-end" spacing={1}>
+                  <Stack
+                    direction="row"
+                    justifyContent="flex-end"
+                    spacing={1}
+                    className={styles.mixBlendMode}
+                  >
                     <Chip
                       label="ETH"
                       size="small"
-                      className={styles.ethBadge}
+                      className={styles.darkChipEth}
                     />
                     <Chip
                       label="AVAX"
                       size="small"
-                      className={styles.avaxBadge}
+                      className={styles.darkChipAvax}
                     />
                     <Chip
                       label="BSC"
                       size="small"
-                      className={styles.bscBadge}
+                      className={styles.darkChipBsc}
                     />
                   </Stack>
                 </Stack>
@@ -620,10 +647,13 @@ const ProjectModal = props => {
                   <Stack
                     direction="row"
                     justifyContent="flex-start"
+                    alignItems="center"
                     spacing={0.5}
                   >
-                    <Typography>Accepted Payment Currencies:</Typography>{' '}
-                    {/* <HelpOutline sx={{ fontSize: '20px' }} /> */}
+                    <Typography className={styles.projectInfoLabel}>
+                      Accepted Payment Currencies:
+                    </Typography>
+                    <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                   </Stack>
                   <div>ETH, aaBLOCK, aBLOCK, BNB, AVAX</div>
                 </Stack>
@@ -636,17 +666,20 @@ const ProjectModal = props => {
                   <Stack
                     direction="row"
                     justifyContent="flex-start"
+                    alignItems="center"
                     spacing={0.5}
                   >
-                    <Typography>Host Server IP:</Typography>{' '}
-                    {/* <HelpOutline sx={{ fontSize: '20px' }} /> */}
+                    <Typography className={styles.projectInfoLabel}>
+                      Host Server IP:
+                    </Typography>
+                    <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                   </Stack>
                   <div>65.119.157.65</div>
                 </Stack>
               </ProjectInfoPanel>
 
               <Typography
-                className={`${styles.subTitle} ${styles.marginTop}`}
+                className={`${styles.chooseLabel} ${styles.marginTop}`}
                 color="common.black"
               >
                 Choose from one of the following service levels:
@@ -657,34 +690,51 @@ const ProjectModal = props => {
                 justifyContent="space-between"
                 className={styles.tierBody}
               >
-                <div className={styles.tier}>
-                  <div className={styles.tierInner}>
+                <div
+                  className={`${styles.tier} ${
+                    serviceLevel === 0 ? styles.selectedTier : ''
+                  }`}
+                >
+                  <div
+                    className={`${styles.tierInner} ${
+                      serviceLevel === 0 ? styles.selectedTierInner : ''
+                    } ${serviceLevel === 0 ? styles.selectedTierTitle : ''}`}
+                  >
                     <Stack
                       direction="row"
                       justifyContent={'space-between'}
                       alignItems="center"
                       onClick={() => setServiceLevel(0)}
-                      className={`${styles.cursorPointer} ${styles.borderBottom1}`}
+                      className={`${styles.cursorPointer} ${styles.borderBottom1} ${styles.fullWidth}`}
                     >
                       <Stack
                         direction={'row'}
-                        justifyContent="flex-start"
+                        justifyContent="space-between"
                         alignItems={'center'}
                         spacing={2}
+                        className={styles.fullWidth}
                       >
-                        <Avatar alt="tie" src={layer2} />{' '}
-                        <div className={styles.tierLetter}>Tier1</div>
+                        <div className={styles.avatarContainer}>
+                          <Avatar
+                            alt="tie"
+                            src={layer2}
+                            className={styles.layersAvatar}
+                          />{' '}
+                        </div>
+                        <div className={styles.tierTitle}>
+                          <div className={styles.tierLetter}>Tier 1</div>
+                          {serviceLevel === 1 ? (
+                            <div className={styles.unchecked} />
+                          ) : (
+                            <CheckCircle className={styles.checked} />
+                          )}
+                        </div>
                       </Stack>
-                      {serviceLevel === 1 ? (
-                        <RadioButtonUnchecked />
-                      ) : (
-                        <CheckCircleOutline />
-                      )}
                     </Stack>
                   </div>
 
                   <div
-                    className={`${styles.padding} ${styles.whitBackground} ${styles.borderBottomRadius}`}
+                    className={`${styles.tierPadding} ${styles.whitBackground} ${styles.borderBottomRadius}`}
                   >
                     <Stack
                       className={styles.price}
@@ -694,62 +744,85 @@ const ProjectModal = props => {
                     >
                       <span>$35</span> 6 million calls
                     </Stack>
-                    <Typography>
+                    <Typography clasName={styles.description}>
                       Lorem ipsum dolor sit amet, consectetur adipiscing elit ut
                       aliquam, purus sit.
                     </Typography>
                     <Stack
-                      direction={'row'}
-                      spacing={1}
-                      className={styles.marginTop}
+                      display="flex"
+                      gap="5px"
+                      flexDirection="row"
+                      className={styles.mt20}
                     >
+                      {/* {
+                                  row.networks.map((network) => {
+                                    return <Chip key={network} label={network} size='small' color="primary" />
+                                  })
+                                } */}
                       <Chip
-                        label={'ETH'}
+                        label="ETH"
                         size="small"
-                        className={styles.ethColor}
+                        className={styles.chipEth}
                       />
                       <Chip
-                        label={'AVAX'}
+                        label="AVAX"
                         size="small"
-                        className={styles.avaxColor}
+                        className={styles.chipAvax}
                       />
                       <Chip
-                        label={'BSC'}
+                        label="BSC"
                         size="small"
-                        className={styles.bscColor}
+                        className={styles.chipBsc}
                       />
                     </Stack>
                   </div>
                 </div>
 
-                <div className={styles.tier}>
+                <div
+                  className={`${styles.tier} ${
+                    serviceLevel === 1 ? styles.selectedTier : ''
+                  }`}
+                >
                   <div
-                    className={`${styles.padding} ${styles.lightDarkBackground} ${styles.borderBottomRadius}`}
+                    className={`${styles.tierInner} ${
+                      serviceLevel === 1 ? styles.selectedTierInner : ''
+                    } ${serviceLevel === 1 ? styles.selectedTierTitle : ''}`}
                   >
                     <Stack
                       direction="row"
                       justifyContent={'space-between'}
                       alignItems="center"
                       onClick={() => setServiceLevel(1)}
-                      className={styles.cursorPointer}
+                      className={`${styles.cursorPointer} ${styles.borderBottom1} ${styles.fullWidth}`}
                     >
                       <Stack
                         direction={'row'}
-                        justifyContent="flex-start"
+                        justifyContent="space-between"
                         alignItems={'center'}
                         spacing={2}
+                        className={styles.fullWidth}
                       >
-                        <Avatar alt="tie" src={layer2} /> <div>Tier2</div>
+                        <div className={styles.avatarContainer}>
+                          <Avatar
+                            alt="tie"
+                            src={layer2}
+                            className={styles.layersAvatar}
+                          />{' '}
+                        </div>
+                        <div className={styles.tierTitle}>
+                          <div className={styles.tierLetter}>Tier 2</div>
+                          {serviceLevel === 0 ? (
+                            <div className={styles.unchecked} />
+                          ) : (
+                            <CheckCircle className={styles.checked} />
+                          )}
+                        </div>
                       </Stack>
-                      {serviceLevel === 0 ? (
-                        <RadioButtonUnchecked />
-                      ) : (
-                        <CheckCircleOutline />
-                      )}
                     </Stack>
                   </div>
+
                   <div
-                    className={`${styles.padding} ${styles.whitBackground} ${styles.borderBottomRadius}`}
+                    className={`${styles.tierPadding} ${styles.whitBackground} ${styles.borderBottomRadius}`}
                   >
                     <Stack
                       className={styles.price}
@@ -759,29 +832,35 @@ const ProjectModal = props => {
                     >
                       <span>$200</span> 32 million calls
                     </Stack>
-                    <Typography>
+                    <Typography clasName={styles.description}>
                       Lorem ipsum dolor sit amet, consectetur adipiscing elit ut
                       aliquam, purus sit.
                     </Typography>
                     <Stack
-                      direction={'row'}
-                      spacing={1}
-                      className={styles.marginTop}
+                      display="flex"
+                      gap="5px"
+                      flexDirection="row"
+                      className={styles.mt20}
                     >
+                      {/* {
+                                  row.networks.map((network) => {
+                                    return <Chip key={network} label={network} size='small' color="primary" />
+                                  })
+                                } */}
                       <Chip
-                        label={'ETH'}
+                        label="ETH"
                         size="small"
-                        className={styles.ethColor}
+                        className={styles.chipEth}
                       />
                       <Chip
-                        label={'AVAX'}
+                        label="AVAX"
                         size="small"
-                        className={styles.avaxColor}
+                        className={styles.chipAvax}
                       />
                       <Chip
-                        label={'BSC'}
+                        label="BSC"
                         size="small"
-                        className={styles.bscColor}
+                        className={styles.chipBsc}
                       />
                     </Stack>
                   </div>
@@ -791,82 +870,108 @@ const ProjectModal = props => {
           )}
           {tabIndex === 2 && ( // Step 3
             <div className={styles.tab2}>
-              <Step3Outer spacing={3}>
-                <Stack direction="row" justifyContent={'space-between'}>
+              <ProjectInfoPanel
+                spacing={3}
+                className={`${styles.projectInfoPanel} ${styles.mb30}`}
+              >
+                <Stack
+                  direction="row"
+                  justifyContent="space-between"
+                  className={styles.mobileDisplay}
+                >
                   <Stack
-                    direction={'row'}
+                    direction="row"
                     justifyContent="flex-start"
+                    alignItems="center"
                     spacing={0.5}
                   >
-                    <div>Project ID: </div>
-                    {/* <HelpOutline sx={{ fontSize: '20px' }} /> */}
+                    <Typography className={styles.projectInfoLabel}>
+                      Project ID:
+                    </Typography>
+                    <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                   </Stack>
-                  <div>a357ab69-8ddc-4966-833f-4ddc38b8c11</div>
+                  <div>{1231212}</div>
                 </Stack>
-                <Stack direction="row" justifyContent={'space-between'}>
+                <Stack
+                  direction="row"
+                  justifyContent="space-between"
+                  className={styles.mobileDisplay}
+                >
                   <Stack
-                    direction={'row'}
+                    direction="row"
                     justifyContent="flex-start"
+                    alignItems="center"
                     spacing={0.5}
                   >
-                    <div>Supported Networks: </div>
-                    {/* <HelpOutline sx={{ fontSize: '20px' }} /> */}
+                    <Typography className={styles.projectInfoLabel}>
+                      Supported Networks:
+                    </Typography>
+                    <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                   </Stack>
                   <Stack
-                    direction={'row'}
+                    direction="row"
                     justifyContent="flex-end"
                     spacing={1}
+                    className={styles.mixBlendMode}
                   >
                     <Chip
-                      label={'ETH'}
+                      label="ETH"
                       size="small"
-                      className={styles.ethColor}
+                      className={styles.darkChipEth}
                     />
                     <Chip
-                      label={'AVAX'}
+                      label="AVAX"
                       size="small"
-                      className={styles.avaxColor}
+                      className={styles.darkChipAvax}
                     />
                     <Chip
-                      label={'BSC'}
+                      label="BSC"
                       size="small"
-                      className={styles.bscColor}
+                      className={styles.darkChipBsc}
                     />
                   </Stack>
                 </Stack>
                 <Stack
                   direction="row"
-                  justifyContent={'space-between'}
+                  justifyContent="space-between"
                   className={styles.mobileDisplay}
                 >
                   <Stack
-                    direction={'row'}
+                    direction="row"
                     justifyContent="flex-start"
+                    alignItems="center"
                     spacing={0.5}
                   >
-                    <div>Monthly cost in $USD: </div>
-                    {/* <HelpOutline sx={{ fontSize: '20px' }} /> */}
+                    <Typography className={styles.projectInfoLabel}>
+                      Monthly cost in $USD:
+                    </Typography>
+                    <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                   </Stack>
-                  <div className={styles.fontSize14}>$200</div>
+                  <div>$200</div>
                 </Stack>
                 <Stack
                   direction="row"
-                  justifyContent={'space-between'}
-                  className={styles.mobileDisplay}
+                  justifyContent="space-between"
+                  flexWrap="wrap"
+                  className={styles.apiKey}
                 >
                   <Stack
-                    direction={'row'}
+                    direction="row"
                     justifyContent="flex-start"
+                    alignItems="center"
                     spacing={0.5}
                   >
-                    <div>Service Level: </div>
-                    {/* <HelpOutline sx={{ fontSize: '20px' }} /> */}
+                    <Typography className={styles.projectInfoLabel}>
+                      Service Level:
+                    </Typography>
+                    <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                   </Stack>
-                  <div className={styles.fontSize14}>
-                    Tier 2 - 32 million requests / month
+                  <div className={styles.serviceLevel}>
+                    <div className={styles.tierInServiceLevel}>Tier 2</div> - 32
+                    million requests / month
                   </div>
                 </Stack>
-              </Step3Outer>
+              </ProjectInfoPanel>
               <div className={styles.detail}>
                 <Typography
                   className={`${styles.subTitle} ${styles.marginTopHalf}`}
@@ -894,8 +999,10 @@ const ProjectModal = props => {
                     className={styles.amountLeft}
                     spacing={1}
                   >
-                    <div>Amount to pay:</div>
-                    {/* <HelpOutline sx={{ fontSize: '20px' }} /> */}
+                    <div className={`${styles.subTItle} ${styles.m0}`}>
+                      Amount to pay:
+                    </div>
+                    <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                   </Stack>
                   <Stack
                     direction="column"
@@ -927,17 +1034,19 @@ const ProjectModal = props => {
                     direction="row"
                     justifyContent={'flex-start'}
                     alignItems="center"
-                    className={`${styles.left} ${styles.width40}`}
+                    className={styles.amountLeft}
                     spacing={1}
                   >
-                    Payment&nbsp;address:{' '}
+                    <div className={`${styles.subTItle} ${styles.m0}`}>
+                      Payment address:
+                    </div>
                     {/* <HelpOutline sx={{ fontSize: '20px' }} /> */}
                   </Stack>
                   <Stack
                     direction="row"
                     justifyContent={'flex-start'}
                     alignItems="center"
-                    className={`${styles.right} ${styles.width60}`}
+                    className={`${styles.amountRight} ${styles.fullWidth}`}
                     spacing={1}
                   >
                     {/* <ContentCopy  /> */}
@@ -945,9 +1054,15 @@ const ProjectModal = props => {
                       text={newProj?.payment_eth_address || ''}
                       onCopy={() => setCopyFlag(true)}
                     >
-                      <Stack direction="row" alignItems="center" spacing={1}>
+                      <Stack
+                        direction="row"
+                        alignItems="center"
+                        justifyContent="space-between"
+                        spacing={1}
+                        className={styles.fullWidth}
+                      >
                         <span className={classes.key}>
-                          {newProj?.payment_eth_address || ''}
+                          0x1576E561F2636e090cb855277eBA
                         </span>
                         {copyFlag ? (
                           <CheckCircleOutline
@@ -960,9 +1075,12 @@ const ProjectModal = props => {
                     </CopyToClipboard>
                   </Stack>
                 </Stack>
-                <Typography className={styles.fontItalic}>
-                  Text content to explain max 1 hour wait for pending tx and
-                  what happens next after payment has been made.
+                <Typography className={`${styles.fontItalic}`}>
+                  Text content to explain{' '}
+                  <b className={styles.tierInServiceLevel}>
+                    max 1 hour wait for pending tx
+                  </b>{' '}
+                  and what happens next after payment has been made.
                 </Typography>
                 {/* </div> */}
               </PaymentInfo>
