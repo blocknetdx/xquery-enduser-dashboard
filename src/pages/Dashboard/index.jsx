@@ -321,7 +321,7 @@ const Dashboard = () => {
                       variant="outlined"
                       className={styles.commonBtn}
                     >
-                      <span className="iconBtnSpace">Support docs</span>
+                      <span className={styles.iconBtnSpace}>Support docs</span>
                       <img
                         src={launch}
                         width="20px"
@@ -335,7 +335,7 @@ const Dashboard = () => {
                       variant="outlined"
                       className={styles.commonBtn}
                     >
-                      <span className="iconBtnSpace">Join Discord</span>
+                      <span className={styles.iconBtnSpace}>Join Discord</span>
                       <img
                         src={launch}
                         width="20px"

@@ -114,6 +114,10 @@ const ProjectInfoModal = props => {
     }
   }
 
+  const dots = [0, 1, 2]
+
+  const [active, setActive] = useState(0)
+
   const [tabIndex, setTabIndex] = useState(0)
   const [title, setTitle] = useState(titles[0])
   const [copyFlag, setCopyFlag] = useState(false)
@@ -218,7 +222,7 @@ const ProjectInfoModal = props => {
                       <div className={styles.label}>Usage: </div>
                       {/* <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} /> */}
                     </Stack>
-                    <div>60%</div>
+                    <div>{projectInfo?.usage?.toFixed(0)}%</div>
                   </Stack>
                   <Stack
                     direction={'row'}
@@ -244,10 +248,13 @@ const ProjectInfoModal = props => {
                     <Stack
                       direction={'row'}
                       justifyContent="flex-start"
-                      alignItems="center"
                       spacing={0.5}
                     >
-                      <div className={styles.label}>Supported Networks: </div>
+                      <div
+                        className={`${styles.label} ${styles.supportedNetworks}`}
+                      >
+                        Supported Networks:{' '}
+                      </div>
                       {/* <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} /> */}
                     </Stack>
                     <Stack
@@ -432,7 +439,9 @@ const ProjectInfoModal = props => {
                         alignItems="center"
                         spacing={0.5}
                       >
-                        <div>Supported Networks: </div>
+                        <div className={`${styles.supportedNetworks}`}>
+                          Supported Networks:{' '}
+                        </div>
                         {/* <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} /> */}
                       </Stack>
                       <Stack
@@ -533,7 +542,7 @@ const ProjectInfoModal = props => {
             </div>
           ) : (
             <div className={styles.tab2}>
-              <SmallOuter spacing={2}>
+              <SmallOuter className={styles.gap20}>
                 <Stack
                   direction="row"
                   justifyContent={'space-between'}
@@ -559,7 +568,11 @@ const ProjectInfoModal = props => {
                     justifyContent="flex-start"
                     spacing={0.5}
                   >
-                    <div className={styles.left}>Supported Networks: </div>
+                    <div
+                      className={`${styles.left} ${styles.supportedNetworks} `}
+                    >
+                      Supported Networks:{' '}
+                    </div>
                     {/* <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} /> */}
                   </Stack>
                   <Stack
@@ -628,10 +641,7 @@ const ProjectInfoModal = props => {
                 </Stack>
               </SmallOuter>
 
-              <Typography
-                className={`${styles.subTitle} ${styles.mt12}`}
-                color="common.black"
-              >
+              <Typography className={`${styles.subTItle}`} color="common.black">
                 Payment Info
               </Typography>
               <Typography className={styles.desc} color="text.primary">
@@ -733,6 +743,27 @@ const ProjectInfoModal = props => {
             ): 
             ) : 
           } */}
+
+          {tabIndex === 3 && (
+            <Stack
+              direction={'row'}
+              justifyContent="center"
+              gap="10px"
+              className={`${styles.dotsBody} ${styles.mt30} ${styles.mb10}`}
+            >
+              {dots.map((item, index) => {
+                return (
+                  <button
+                    key={index}
+                    className={styles.dot}
+                    style={{
+                      backgroundColor: index === active ? '#b692f6' : '#e9d7fe'
+                    }}
+                  ></button>
+                )
+              })}
+            </Stack>
+          )}
 
           {tabIndex === 0 && ( // Title Project Info
             <TitleProjectInfo

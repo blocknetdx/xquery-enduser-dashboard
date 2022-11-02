@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { toast } from 'react-toastify'
 import usePagination from '@mui/material/usePagination'
 import { useSelector } from 'react-redux'
@@ -252,43 +252,43 @@ const useStyles = makeStyles(theme =>
 )
 
 const StyledTable = props => {
-  const response = [
+  const [response, setResponse] = useState([
     {
       projectId: 'bb7873e8-e1e7-4016-9bed-c187db349a1d',
       apiKey: 'mr_KQrNOKzTCHJzmnXJxTw6peHhRmUG7MlE3A6jBGfY',
       expires: 'Nov 23, 2022',
       status: 'Active',
-      usage: 10
+      usage: 0
     },
     {
-      projectId: 'e52e9d47-a1cc-4394-ab69-7c9f5a3e16ac',
-      apiKey: 'Ext1NXJ4KNlN3t_HbXI00uaFtRolW5jY-TSozmOJl_c',
-      expires: 'Oct 20, 2022',
+      projectId: 'a9cf3da8-e961-4b6a-b25e-9033f7be4373',
+      apiKey: 'jMg5YijTX_AP1DZEzxGIOip6jEbfEr7POcmxWT3q7dE',
+      expires: 'Oct 24, 2022',
       status: 'Inactive',
-      usage: 65
+      usage: 0
     },
     {
-      projectId: 'dd303a07-7e4b-488b-ab2f-d4fd5628d27c',
-      apiKey: 'Cq11KRFi03IgN-CsyrluuqXVafg2R1KwFtwXiebL8Hs',
-      expires: 'Oct 20, 2022',
+      projectId: '3bae6363-165b-4dad-b16e-4733b0c87269',
+      apiKey: 'W87N-dup9i4RI7IP0mwIdAA9JVVaxkJQ93UOKvLuJTc',
+      expires: 'Oct 24, 2022',
       status: 'Pending',
-      usage: 5
+      usage: 0
     },
     {
-      projectId: '9c592698-0858-4a65-8f0d-475dcc96797a',
-      apiKey: 'SdBCes8Mzc7uENy5js48k0aszT2qS-1dOQmi7RnJPh8',
-      expires: 'Oct 20, 2022',
+      projectId: '812021e5-5f1a-43d1-928e-aec4840a36fd',
+      apiKey: 'tmYoUe970v4ObI_vZsWL2Wvv_IS0XxvkYNGB1XXTMuw',
+      expires: 'Oct 24, 2022',
       status: 'Pending',
-      usage: 25
+      usage: 0
     },
     {
-      projectId: '3a6c30ef-1d73-43ae-8b7b-b937dd59f625',
-      apiKey: '45382LajTmEHgwt4UyTGIghH4Yr6IZPrN6CYkZD4Rv0',
-      expires: 'Oct 20, 2022',
+      projectId: '356a186a-baec-431d-80a2-2d3f7b1cb841',
+      apiKey: 'Xbl-IN-e85mH0woZi4kzvBfjBJ4L9srmQtyWLRGSMbM',
+      expires: 'Oct 24, 2022',
       status: 'Active',
-      usage: 40
+      usage: 0
     }
-  ]
+  ])
 
   const { theme, modalOpen, setModalOpen } = props
   const [search, setSearch] = useState('')
@@ -305,6 +305,32 @@ const StyledTable = props => {
   })
   const [page, setPage] = useState(1)
   const [projectInfo, setProjectInfo] = useState(null)
+
+  useEffect(() => {
+    const init = async () => {
+      let newResponse = await Promise.all(
+        response.map(async (project, index) => {
+          const { api_tokens, api_tokens_used } = (
+            await api.project.getProjectStats({
+              projectId: project.projectId,
+              apiKey: project.apiKey
+            })
+          ).data.result
+          console.log('api tokens:', { api_tokens, api_tokens_used })
+          if (api_tokens !== 'N/A' && api_tokens_used !== 'N/A') {
+            return {
+              ...project,
+              usage: (Number(api_tokens_used) * 100) / Number(api_tokens)
+            }
+          }
+          return project
+        })
+      )
+      console.log('response:', newResponse)
+      setResponse([...newResponse])
+    }
+    init()
+  }, [])
 
   const handleChange = event => {
     let fromTemp = fromFilter
