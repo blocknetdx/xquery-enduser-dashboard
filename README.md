@@ -1,7 +1,6 @@
 # Xquery dashboard
 
-A repository to xquery end-user dashboard
-For detailed documentation, head to [docs.blocknative.com](https://docs.blocknative.com)
+A repository to xquery end-user dashboard.
 
 <div align="center">
   <img style="border-radius: 8px" width="75%" src="public/assets/xquery-dashboard.png">
