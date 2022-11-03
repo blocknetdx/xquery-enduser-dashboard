@@ -1,11 +1,11 @@
-import React from "react"
+import React from 'react'
 import ReactApexChart from 'react-apexcharts'
 import moment from 'moment'
 import { useSelector } from 'react-redux'
 import { light, dark } from '../../theme'
 
-import styles from "./index.module.scss"
-import { useMedia } from "react-use"
+import styles from './index.module.scss'
+import { useMedia } from 'react-use'
 
 const ApexChart = () => {
   const dataSet = [
@@ -14,12 +14,13 @@ const ApexChart = () => {
   ]
 
   const isMobile = useMedia('(max-width: 768px)')
-  const mode = useSelector((state) => state.toogle.darkMode)
+  const mode = useSelector(state => state.toogle.darkMode)
   const theme = mode === 'true' ? dark : light
 
   const series = [
     { name: 'This period', data: dataSet[0] },
-    { name: 'Previous period', data: dataSet[1] }]
+    { name: 'Previous period', data: dataSet[1] }
+  ]
 
   const options = {
     colors: [theme.palette.success.dark, theme.palette.success.light],
@@ -33,7 +34,7 @@ const ApexChart = () => {
       },
       toolbar: {
         show: false
-      },
+      }
     },
     dataLabels: {
       enabled: false
@@ -46,7 +47,7 @@ const ApexChart = () => {
         opacityFrom: 0.45,
         opacityTo: 0.05,
         stops: [20, 100, 100, 100]
-      },
+      }
     },
     grid: {
       padding: {
@@ -72,11 +73,11 @@ const ApexChart = () => {
         },
         offsetX: 0,
         formatter: function (val) {
-          return val;
-        },
+          return val
+        }
       },
       axisBorder: {
-        show: false,
+        show: false
       },
       axisTicks: {
         show: false
@@ -93,7 +94,11 @@ const ApexChart = () => {
           fontWeight: 500
         }
       },
-      categories: [1643493740000, 1646085740000, 1648677740000, 1651269740000, 1653861740000, 1656453740000, 1659045740000, 1661637740000, 1664229740000, 1666821740000, 1669413740000, 1672005740000],
+      categories: [
+        1643493740000, 1646085740000, 1648677740000, 1651269740000,
+        1653861740000, 1656453740000, 1659045740000, 1661637740000,
+        1664229740000, 1666821740000, 1669413740000, 1672005740000
+      ],
       labels: {
         style: {
           colors: theme.palette.text.primary,
@@ -102,7 +107,7 @@ const ApexChart = () => {
         },
         offsetX: 5,
         formatter: function (val, timestamp) {
-          return moment(new Date(timestamp)).format("MMM")
+          return moment(new Date(timestamp)).format('MMM')
         }
       }
     },
@@ -133,14 +138,20 @@ const ApexChart = () => {
             }
           }
         }
-      },
+      }
     ]
   }
 
   return (
-    <div id="chart" style={{ width: '100%' }}>
+    <div id="chart" className={styles.fullWidth}>
       {/* @ts-ignore */}
-      <ReactApexChart className={styles.chartBody} options={options} series={series} type="area" height={isMobile ? "230" : "385"} />
+      <ReactApexChart
+        className={styles.chartBody}
+        options={options}
+        series={series}
+        type="area"
+        height={isMobile ? '230' : '385'}
+      />
     </div>
   )
 }

@@ -46,12 +46,12 @@ const OutsideWrapper = styled(Button)`
   }
 `
 
-export const OutsideButton = ({ children }) => {
+export const OutsideButton = ({ onClick, children }) => {
   const mode = useSelector((state) => state.toogle.darkMode)
   const theme = mode === 'true' ? dark : light
 
   return (
-    <OutsideWrapper theme={theme}>
+    <OutsideWrapper theme={theme} onClick={onClick}>
       {children}
     </OutsideWrapper>
   )

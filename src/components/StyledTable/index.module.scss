@@ -8,9 +8,42 @@
   gap: 0px !important;
 }
 
+.mb2 {
+  margin-bottom: 2px;
+}
+
+.gap10 {
+  gap: 10px;
+}
+
 .header {
   padding: 20px;
   border-bottom: 1px solid #D0D5DD;
+}
+
+.tableContainer {
+  max-width: 860px;
+  width: 100%;
+}
+
+.fixedTable {
+  table-layout: fixed;
+}
+
+.fontWeight400 {
+  font-weight: 400 !important;
+}
+
+.paddingRight {
+  padding: 0px 10px 0px 0px;
+}
+
+.viewProjectInfoBtn {
+  padding: 6px 16px !important;
+  display: flex !important;
+  align-items: center !important;
+  height: 40px !important;
+  margin: 0 auto !important;
 }
 
 .filter {
@@ -114,15 +147,19 @@
 }
 
 .infoBtn {
-  display: flex;
-  align-items: center;
-  height: 36px;
-  margin: 0 auto;
-  padding: 8px 14px;
-  width: fit-content;
-  border-radius: 6px;
-  background: #7f56d9;
-  box-shadow: 0 1px 2px 0 rgba(16, 24, 40, 0.05);
+  // display: flex;
+  // align-items: center;
+  // height: 36px;
+  // margin: 0 auto;
+  // padding: 0;
+  // width: fit-content;
+  // border-radius: 6px;
+  // background: #7f56d9;
+  //box-shadow: 0 1px 2px 0 rgba(16, 24, 40, 0.05);
+}
+
+.infoBtnSpace {
+  margin-right: 5px;
 }
 
 .filtSelect {
@@ -142,6 +179,16 @@
 }
 
 .tag2 {
+  display: none;
+}
+
+.closeIcon {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+}
+
+.hidden {
   display: none;
 }
 

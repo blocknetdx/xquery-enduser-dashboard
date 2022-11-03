@@ -8,7 +8,7 @@ const Wrapper = styled(FlexColumn)`
   gap: 20px;
   border: 1px solid ${({ theme }) => theme.palette.background.default};
   padding: 12px;
-  padding-top: 16px;
+  padding-top: 20px;
   border-radius: 12px;
   justify-content: flex-start;
   background-color: ${({ theme }) => theme.palette.info.dark};
