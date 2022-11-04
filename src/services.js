@@ -119,11 +119,11 @@ export const initWeb3Onboard = init({
       { name: 'Coinbase', url: 'https://wallet.coinbase.com/' },
       { name: 'MetaMask', url: 'https://metamask.io' }
     ],
-    agreement: {
-      version: '1.0.0'
+    // agreement: {
+      // version: '1.0.0'
       // termsUrl: 'https://www.blocknative.com/terms-conditions',
       // privacyUrl: 'https://www.blocknative.com/privacy-policy'
-    }
+    // }
     // gettingStartedGuide: 'https://blocknative.com',
     // explore: 'https://blocknative.com'
   },
