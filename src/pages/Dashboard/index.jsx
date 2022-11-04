@@ -186,13 +186,13 @@ const Chart = () => {
   return (
     <Card className={`${styles.chart}`}>
       <Typography variant="h3" color="common.black">
-        Data Usage Summary
+        Chart data coming soon...
       </Typography>
       <div className={styles.mobileSelect}>
         <FormControl className={classes.formControl}>
           <DateRangeOutlined className={classes.dateIcon} />
 
-          <Select
+          <Select disabled
             labelId="demo-simple-select-helper-label"
             id="demo-simple-select-helper"
             value={value}
@@ -220,7 +220,8 @@ const Chart = () => {
               <CustomMenuItem
                 key={index}
                 variant="contained"
-                active={activeStatus === index ? 'true' : 'false'}
+                // active={activeStatus === index ? 'true' : 'false'}
+                active="false"
                 onClick={() => changeStatus(index)}
               >
                 {duration}
@@ -291,7 +292,7 @@ const Dashboard = () => {
           </Typography>
           <FlexRow className={`${styles.subContainer} ${styles.gap}`}>
             <FlexColumn className={`${styles.leftSubContainer} ${styles.gap}`}>
-              <Chart />
+              <Chart />            
               <StyledTable
                 theme={theme}
                 modalOpen={modalOpen}
