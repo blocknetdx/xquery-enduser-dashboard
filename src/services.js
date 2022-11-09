@@ -1,5 +1,5 @@
-import blocknativeLogo from './icons/blocknative-logo'
-import blocknativeIcon from './icons/blocknative-icon'
+import blocknetLogo from './icons/blocknet-logo'
+import blocknetIcon from './icons/blocknet-icon'
 
 import { init } from '@web3-onboard/react'
 import injectedModule from '@web3-onboard/injected-wallets'
@@ -112,8 +112,8 @@ export const initWeb3Onboard = init({
   ],
   appMetadata: {
     name: 'Blocknative Web3-Onboard',
-    icon: blocknativeIcon,
-    logo: blocknativeLogo,
+    icon: blocknetIcon,
+    logo: blocknetLogo,
     description: 'Web3-Onboard',
     recommendedInjectedWallets: [
       { name: 'Coinbase', url: 'https://wallet.coinbase.com/' },
