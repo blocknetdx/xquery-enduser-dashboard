@@ -29,7 +29,7 @@ import website from '../../assets/icons/website.svg'
 // import lightIcon from "../../assets/icons/light.svg"
 // import avatar1 from "../../assets/avatar/avatar1.png"
 
-import ProjectModal from '../../components/Modal'
+import ProjectModal from '../../components/CreateProjectModal'
 
 // mui select
 import FormControl from '@mui/material/FormControl'
