@@ -16,7 +16,7 @@ import coinbaseModule from '@web3-onboard/coinbase'
 // import web3authModule from '@web3-onboard/web3auth'
 
 // Replace with your DApp's Infura ID
-const INFURA_ID = 'cea9deb6467748b0b81b920b005c10c1'
+const INFURA_ID = '08f02448970246a9a2a82ad997458959'
 
 const dappId = '1730eff0-9d50-4382-a3fe-89f0d34a2070'
 

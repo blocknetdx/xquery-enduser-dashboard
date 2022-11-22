@@ -22,6 +22,8 @@ Navigate to the project directory:
 cd xquery-enduser-dashboard
 ```
 
+Install Yarn
+
 Install the dependencies:
 
 ```bash
