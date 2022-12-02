@@ -139,8 +139,13 @@ const ProjectInfoModal = props => {
           <Stack direction="row" justifyContent="flex-end">
             <Close
               className={styles.closeIcon}
-              onClick={() => setModalOpen(false)}
-              false
+              //onClick={() => setModalOpen(false)}
+              //false
+              onClick={() => {
+                setModalOpen(false)
+                setTabIndex(0)
+                setActive(0)
+              }}
             />
           </Stack>
           <Typography
