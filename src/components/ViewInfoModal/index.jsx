@@ -70,7 +70,7 @@ const ConfirmCancelButton = styled(Button)`
   background-color: #d92d20;
   height: 44px;
   border-radius: 6px;
-  &:hover: {
+  &:hover {
     background-color: '#c9665f';
   }
 `
