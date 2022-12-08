@@ -858,7 +858,7 @@ const ProjectInfoModal = props => {
             <Stack
               direction={'row'}
               justifyContent="space-between"
-              clasName={styles.mt3}
+              className={styles.mt3}
             >
               <Button
                 variant="outlined"
