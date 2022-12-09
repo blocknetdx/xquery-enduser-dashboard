@@ -254,8 +254,8 @@ const useStyles = makeStyles(theme =>
 const StyledTable = props => {
   const [response, setResponse] = useState([
     {
-      projectId: '39570ad7-9f53-46ad-a552-c15d440139fb',
-      apiKey: 'UQbNVAE2h2WYKa-CU4BIMKP6Zj-ivnw_ErBg6rIq0to',
+      projectId: 'd6f6bdde-5840-4aa8-9c22-c79321c4fd7b',
+      apiKey: 'W0rbHV0s5Bf1jgiUDQkUbn-cVlIfuD2VOAGvkAKrrQI',
       expires: 'Nov 23, 2022',
       status: 'Active',
       usage: 0
