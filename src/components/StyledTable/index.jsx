@@ -315,8 +315,8 @@ const StyledTable = props => {
               projectId: project.projectId,
               apiKey: project.apiKey
             })
-          ).data.result
-          console.log('api tokens:', { api_tokens, api_tokens_used })
+          )?.data?.result || {}
+          // console.log('api tokens:', { api_tokens, api_tokens_used })
           if (api_tokens !== 'N/A' && api_tokens_used !== 'N/A') {
             return {
               ...project,
@@ -326,7 +326,6 @@ const StyledTable = props => {
           return project
         })
       )
-      console.log('response:', newResponse)
       setResponse([...newResponse])
     }
     init()
@@ -354,6 +353,9 @@ const StyledTable = props => {
 
   const handleGetInfo = async (projectId, apiKey) => {
     try {
+      const projectId = '39570ad7-9f53-46ad-a552-c15d440139fb';
+      const apiKey = 'UQbNVAE2h2WYKa-CU4BIMKP6Zj-ivnw_ErBg6rIq0to';
+  
       const response = await api.project.getProjectStats({ projectId, apiKey })
       setProjectInfo(response.data.result)
       setModalOpen(true)

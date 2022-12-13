@@ -30,8 +30,6 @@ import {
   ArrowForward,
   ArrowBack,
   ContentCopy,
-  VisibilityOutlined,
-  VisibilityOffOutlined,
   CheckCircle
 } from '@mui/icons-material'
 
@@ -45,6 +43,11 @@ import Stack from '@mui/material/Stack'
 import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
 import { setProject } from '../../redux/slice/projectSlice'
+
+import ApiKeySection from '../ApiKeySection'
+import { currencyNames } from '../../configs/constants';
+import { filterMinAmount, getAcceptedCurrencyNames } from '../../utils/helper'
+import ExpiryTimeCountdown from '../ExpiryTimeCountdown'
 // import { useConnectWallet } from '@web3-onboard/react'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -220,7 +223,13 @@ const ProjectModal = props => {
   const [tabIndex, setTabIndex] = useState(0)
   const [newProj, setNewProj] = useState(null)
   const [serviceLevel, setServiceLevel] = useState(0)
-  const [keyVisibility, setKeyVisibility] = useState(false)
+  const [projectDetail, setProjectDetail] = useState(null);
+
+  const [state, setState] = useState({
+    costApiCall: '$0.0002',
+    acceptedCurrencies: [],
+    quoteExpiryTime: null,
+  })
 
   // const [scroll, setScroll] = React.useState<DialogProps['scroll']>('body');
 
@@ -239,13 +248,41 @@ const ProjectModal = props => {
         setNewProj(result?.data?.result)
         setTabIndex(1)
       } catch (error) {
-        console.log(typeof error?.message)
+        // console.log(typeof error?.message)
         toast(`Backend server error occured: ${error?.message}`)
       }
     }
   }
 
   const [copyFlag, setCopyFlag] = useState(false)
+
+  useEffect(() => {
+    createProject(); // at the moment  get project
+  }, [])
+
+  const createProject = async () => {
+    const projectId = '39570ad7-9f53-46ad-a552-c15d440139fb';
+    const apiKey = 'UQbNVAE2h2WYKa-CU4BIMKP6Zj-ivnw_ErBg6rIq0to';
+
+    const response = await api.project.getProjectStats({
+      projectId: projectId,
+      apiKey: apiKey
+    })
+
+    const { data } = response; 
+
+    if (!data?.success) {
+      toast(`Something went wrong`);
+      return;
+    }
+
+    setProjectDetail(data?.result);
+
+    setState(pre => ({
+      ...pre,
+      acceptedCurrencies: filterMinAmount(data?.result),
+    }))
+  }
 
   useEffect(() => {
     if (tabIndex === 0) {
@@ -265,7 +302,6 @@ const ProjectModal = props => {
     setTabIndex(0)
     setNewProj(null)
     setServiceLevel(0)
-    setKeyVisibility(false)
     setCopyFlag(false)
     setToFilter([])
     setFromFilter(filterlist)
@@ -290,15 +326,6 @@ const ProjectModal = props => {
     toTemp = toFilter.filter(item => item !== newValue)
     setToFilter(toTemp)
   }
-
-  const recover = len => {
-    const ch = '*'
-    let pass = ''
-    for (let i = 0; i < len; i++) pass += ch
-    return pass
-  }
-
-  console.log('rows:', rows, toFilter)
 
   return (
     <div>
@@ -563,43 +590,9 @@ const ProjectModal = props => {
                     </Typography>
                     <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                   </Stack>
-                  <div>{1231212}</div>
+                  <div>{projectDetail?.project_id}</div>
                 </Stack>
-                <Stack
-                  direction="row"
-                  justifyContent="space-between"
-                  className={styles.mobileDisplay}
-                >
-                  <Stack
-                    direction="row"
-                    justifyContent="flex-start"
-                    alignItems="center"
-                    spacing={0.5}
-                  >
-                    <Typography className={styles.projectInfoLabel}>
-                      API Key:
-                    </Typography>
-                    <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
-                  </Stack>
-                  <Stack direction="row" alignItems="center" spacing={1}>
-                    <span className={classes.key}>
-                      {keyVisibility
-                        ? newProj?.api_key
-                        : recover(newProj?.api_key?.length)}
-                    </span>
-                    {keyVisibility ? (
-                      <VisibilityOffOutlined
-                        className={styles.cursorPointer}
-                        onClick={() => setKeyVisibility(false)}
-                      />
-                    ) : (
-                      <VisibilityOutlined
-                        className={styles.cursorPointer}
-                        onClick={() => setKeyVisibility(true)}
-                      />
-                    )}
-                  </Stack>
-                </Stack>
+                <ApiKeySection apiKey={projectDetail?.api_key} />
                 <Stack
                   direction="row"
                   justifyContent="space-between"
@@ -655,7 +648,7 @@ const ProjectModal = props => {
                     </Typography>
                     <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                   </Stack>
-                  <div>ETH, aaBLOCK, aBLOCK, BNB, AVAX</div>
+                  <div>{ getAcceptedCurrencyNames(state?.acceptedCurrencies) }</div>
                 </Stack>
                 <Stack
                   direction="row"
@@ -676,6 +669,25 @@ const ProjectModal = props => {
                   </Stack>
                   <div>65.119.157.65</div>
                 </Stack>
+                <Stack
+                  direction="row"
+                  justifyContent="space-between"
+                  className={styles.mobileDisplay}
+                >
+                  <Stack
+                    direction="row"
+                    justifyContent="flex-start"
+                    alignItems="center"
+                    spacing={0.5}
+                  >
+                    <Typography className={styles.projectInfoLabel}>
+                      Project ID:
+                    </Typography>
+                    <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
+                  </Stack>
+                  <div>{state?.costApiCall}</div>
+                </Stack>
+                <ExpiryTimeCountdown expiryTime={projectDetail?.quote_expiry_time} />
               </ProjectInfoPanel>
 
               <Typography
@@ -744,7 +756,7 @@ const ProjectModal = props => {
                     >
                       <span>$35</span> 6 million calls
                     </Stack>
-                    <Typography clasName={styles.description}>
+                    <Typography className={styles.description}>
                       Lorem ipsum dolor sit amet, consectetur adipiscing elit ut
                       aliquam, purus sit.
                     </Typography>
@@ -832,7 +844,7 @@ const ProjectModal = props => {
                     >
                       <span>$200</span> 32 million calls
                     </Stack>
-                    <Typography clasName={styles.description}>
+                    <Typography className={styles.description}>
                       Lorem ipsum dolor sit amet, consectetur adipiscing elit ut
                       aliquam, purus sit.
                     </Typography>
@@ -870,108 +882,6 @@ const ProjectModal = props => {
           )}
           {tabIndex === 2 && ( // Step 3
             <div className={styles.tab2}>
-              <ProjectInfoPanel
-                spacing={3}
-                className={`${styles.projectInfoPanel} ${styles.mb30}`}
-              >
-                <Stack
-                  direction="row"
-                  justifyContent="space-between"
-                  className={styles.mobileDisplay}
-                >
-                  <Stack
-                    direction="row"
-                    justifyContent="flex-start"
-                    alignItems="center"
-                    spacing={0.5}
-                  >
-                    <Typography className={styles.projectInfoLabel}>
-                      Project ID:
-                    </Typography>
-                    <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
-                  </Stack>
-                  <div>{1231212}</div>
-                </Stack>
-                <Stack
-                  direction="row"
-                  justifyContent="space-between"
-                  className={styles.mobileDisplay}
-                >
-                  <Stack
-                    direction="row"
-                    justifyContent="flex-start"
-                    alignItems="center"
-                    spacing={0.5}
-                  >
-                    <Typography className={styles.projectInfoLabel}>
-                      Supported Networks:
-                    </Typography>
-                    <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
-                  </Stack>
-                  <Stack
-                    direction="row"
-                    justifyContent="flex-end"
-                    spacing={1}
-                    className={styles.mixBlendMode}
-                  >
-                    <Chip
-                      label="ETH"
-                      size="small"
-                      className={styles.darkChipEth}
-                    />
-                    <Chip
-                      label="AVAX"
-                      size="small"
-                      className={styles.darkChipAvax}
-                    />
-                    <Chip
-                      label="BSC"
-                      size="small"
-                      className={styles.darkChipBsc}
-                    />
-                  </Stack>
-                </Stack>
-                <Stack
-                  direction="row"
-                  justifyContent="space-between"
-                  className={styles.mobileDisplay}
-                >
-                  <Stack
-                    direction="row"
-                    justifyContent="flex-start"
-                    alignItems="center"
-                    spacing={0.5}
-                  >
-                    <Typography className={styles.projectInfoLabel}>
-                      Monthly cost in $USD:
-                    </Typography>
-                    <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
-                  </Stack>
-                  <div>$200</div>
-                </Stack>
-                <Stack
-                  direction="row"
-                  justifyContent="space-between"
-                  flexWrap="wrap"
-                  className={styles.apiKey}
-                >
-                  <Stack
-                    direction="row"
-                    justifyContent="flex-start"
-                    alignItems="center"
-                    spacing={0.5}
-                  >
-                    <Typography className={styles.projectInfoLabel}>
-                      Service Level:
-                    </Typography>
-                    <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
-                  </Stack>
-                  <div className={styles.serviceLevel}>
-                    <div className={styles.tierInServiceLevel}>Tier 2</div> - 32
-                    million requests / month
-                  </div>
-                </Stack>
-              </ProjectInfoPanel>
               <div className={styles.detail}>
                 <Typography
                   className={`${styles.subTitle} ${styles.marginTopHalf}`}
@@ -985,7 +895,6 @@ const ProjectModal = props => {
                   fringilla urna, porttitor rhoncus dolor purus non.
                 </Typography>
               </div>
-
               <PaymentInfo spacing={3}>
                 {/* <div className={styles.info}> */}
                 <Stack
@@ -1006,24 +915,20 @@ const ProjectModal = props => {
                   </Stack>
                   <Stack
                     direction="column"
-                    justifyContent={'flex-start'}
+                    justifyContent={'flex-end'}
                     className={styles.amountRight}
-                    alignItems={'flex-start'}
+                    alignItems={'flex-end'}
                   >
-                    <div>
-                      <span>aaBlock: 19.652</span>includes a 10% discount
-                    </div>
-                    <div>
-                      <span>aaBlock: 21.342</span>includes a 10% discount
-                    </div>
-                    <div>
-                      <span>aaBlock: 0.23</span>includes a 10% discount
-                    </div>
-                    <div>
-                      <span>aaBlock: 0.21</span>includes a 10% discount
-                    </div>
+                    {
+                      state?.acceptedCurrencies.map(currency => (
+                        <div key={currency}>
+                          <span>{`${projectDetail[currency]} ${currencyNames[currency]}`}</span>
+                        </div>
+                      ))
+                    }
                   </Stack>
                 </Stack>
+                <ExpiryTimeCountdown expiryTime={projectDetail?.quote_expiry_time} />
                 <Stack
                   direction="row"
                   justifyContent={'space-between'}
@@ -1084,6 +989,87 @@ const ProjectModal = props => {
                 </Typography>
                 {/* </div> */}
               </PaymentInfo>
+              <ProjectInfoPanel
+                spacing={3}
+                className={`${styles.projectInfoPanel} ${styles.mb30}`}
+              >
+                <Stack
+                  direction="row"
+                  justifyContent="space-between"
+                  className={styles.mobileDisplay}
+                >
+                  <Stack
+                    direction="row"
+                    justifyContent="flex-start"
+                    alignItems="center"
+                    spacing={0.5}
+                  >
+                    <Typography className={styles.projectInfoLabel}>
+                      Project ID:
+                    </Typography>
+                    <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
+                  </Stack>
+                  <div>{projectDetail?.project_id}</div>
+                </Stack>
+                <ApiKeySection apiKey={projectDetail?.api_key} />
+                <Stack
+                  direction="row"
+                  justifyContent="space-between"
+                  className={styles.mobileDisplay}
+                >
+                  <Stack
+                    direction="row"
+                    justifyContent="flex-start"
+                    alignItems="center"
+                    spacing={0.5}
+                  >
+                    <Typography className={styles.projectInfoLabel}>
+                      Supported Networks:
+                    </Typography>
+                    <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
+                  </Stack>
+                  <Stack
+                    direction="row"
+                    justifyContent="flex-end"
+                    spacing={1}
+                    className={styles.mixBlendMode}
+                  >
+                    <Chip
+                      label="ETH"
+                      size="small"
+                      className={styles.darkChipEth}
+                    />
+                    <Chip
+                      label="AVAX"
+                      size="small"
+                      className={styles.darkChipAvax}
+                    />
+                    <Chip
+                      label="BSC"
+                      size="small"
+                      className={styles.darkChipBsc}
+                    />
+                  </Stack>
+                </Stack>
+                <Stack
+                  direction="row"
+                  justifyContent="space-between"
+                  className={styles.mobileDisplay}
+                >
+                  <Stack
+                    direction="row"
+                    justifyContent="flex-start"
+                    alignItems="center"
+                    spacing={0.5}
+                  >
+                    <Typography className={styles.projectInfoLabel}>
+                      Cost per 1000 API calls:
+                    </Typography>
+                    <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
+                  </Stack>
+                  <div>{state?.costApiCall}</div>
+                </Stack>
+              </ProjectInfoPanel>
             </div>
           )}
 

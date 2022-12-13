@@ -249,7 +249,7 @@ const Dashboard = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    console.log('auth info:', { wallet, signature })
+    // console.log('auth info:', { wallet, signature })
     if (!preConnect && (!wallet || !signature)) {
       console.log('redirecting:', { preConnect, wallet, signature })
       navigate('/login')
