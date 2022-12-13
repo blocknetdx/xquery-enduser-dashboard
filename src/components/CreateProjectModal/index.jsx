@@ -453,7 +453,7 @@ const ProjectModal = props => {
                             alt="help"
                           />
                         </StyledTableCell>
-                        <StyledTableCell
+                        {/* <StyledTableCell
                           align="left"
                           className={`${styles.headItem} ${styles.headItem3}`}
                         >
@@ -465,7 +465,7 @@ const ProjectModal = props => {
                             height="16px"
                             alt="help"
                           />
-                        </StyledTableCell>
+                        </StyledTableCell> */}
                         <StyledTableCell
                           align="left"
                           className={`${`${styles.headItem} ${styles.headItem4}`} ${
@@ -518,7 +518,7 @@ const ProjectModal = props => {
                                 />
                               </Stack>
                             </StyledTableCell>
-                            <StyledTableCell align="left">
+                            {/* <StyledTableCell align="left">
                               <Stack direction="column">
                                 <div className={styles.tier}>
                                   Tier 1: ${row.cost[0]}
@@ -527,7 +527,7 @@ const ProjectModal = props => {
                                   Tier 2: ${row.cost[1]}
                                 </div>
                               </Stack>
-                            </StyledTableCell>
+                            </StyledTableCell> */}
                             <StyledTableCell
                               align="left"
                               className={classes.sticky}
