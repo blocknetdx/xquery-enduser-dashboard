@@ -25,15 +25,6 @@
   font-weight: 500;
 }
 
-.analysisInfo {
-  color: #027A48;
-  background-color: #ECFDF3;
-  padding: 2px 0px;
-  border-radius: 16px;
-  font-size: 12px;
-  font-weight: 500;
-}
-
 .supportedNetworks {
   margin-top: 2px !important;
 }
@@ -309,6 +300,24 @@
     cursor: pointer;
   }
 }
+
+.mobileDisplay .analysisInfo {
+  padding: 2px 0px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.mobileDisplay .status-active {
+  background-color: #edfdf3;
+  color: #10794a
+}
+
+.mobileDisplay .status-inactive {
+  background-color: rgb(254, 243, 242);
+  color: rgb(144, 33, 29)
+}
+
 
 @media (max-width: 576px) {
   .modalBox {

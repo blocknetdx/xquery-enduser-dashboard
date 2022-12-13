@@ -1,0 +1,47 @@
+.expired-notice {
+  text-align: center;
+  padding: 2rem;
+  border: 1px solid #ebebeb;
+  border-radius: 0.25rem;
+  margin: 0.5rem;
+}
+
+.expired-notice > span {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: red;
+}
+
+.expired-notice > p {
+  font-size: 1.5rem;
+}
+
+.show-counter {
+  padding: 0;
+}
+
+.show-counter .countdown-link {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  line-height: 1.75rem;
+  border: 1px solid #ebebeb;
+  border-radius: 0.25rem;
+  text-decoration: none;
+}
+
+.show-counter .countdown {
+  line-height: 1.25rem;
+  padding: 0 0.25rem 0 0.25rem;
+  align-items: flex-end;
+  display: flex;
+}
+
+.show-counter .countdown.danger {
+  color: #ff0000;
+}
+
+.show-counter .countdown > p {
+  margin: 0;
+}

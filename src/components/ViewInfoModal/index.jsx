@@ -1,15 +1,14 @@
-import * as React from 'react'
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import styled from '@emotion/styled'
+import moment from 'moment'
+
 // mui
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
-
-import { light, dark } from '../../theme'
 import {
   Close,
   CheckCircleOutline,
@@ -18,10 +17,16 @@ import {
   ContentCopy,
   RocketLaunch
 } from '@mui/icons-material'
-
-import styles from './index.module.scss'
 import Chip from '@mui/material/Chip'
 import Stack from '@mui/material/Stack'
+
+import { light, dark } from '../../theme'
+
+import ApiKeySection from '../ApiKeySection'
+import { capitalizeFirstLetter, filterMinAmount, getAcceptedCurrencyNames } from '../../utils/helper'
+import { currencyNames } from '../../configs/constants'
+
+import styles from './index.module.scss'
 
 const titles = [
   'Title - Project Info',
@@ -81,36 +86,39 @@ const TitleProjectInfo = styled(Stack)(({ theme }) => ({
   color: theme.palette.common.black
 }))
 
+const supportNetworks = {
+  payment_avax_address: 'AVAX',
+  payment_eth_address: 'ETH',
+  payment_nevm_address: 'NEVM',
+}
+
 const ProjectInfoModal = props => {
   const { projectInfo, modalOpen, setModalOpen } = props
   const mode = useSelector(state => state.toogle.darkMode)
   const theme = mode === 'true' ? dark : light
 
+  const {
+    project_id: projectId,
+    api_tokens_used: tokensUsed,
+    api_tokens: tokens,
+    status = '',
+    api_key: apiKey,
+  } = projectInfo || {};
+
+  const filterMinAmountData = filterMinAmount(projectInfo || {});
+
+  const acceptedCurrencies = getAcceptedCurrencyNames(filterMinAmountData)
+  const costApiCalls = '$0.0002';
+
   const analyseInfo = () => {
     if (!projectInfo) return null
-    const date = new Date(projectInfo?.expiry_time)
     const networks = Object.keys(projectInfo).filter(
-      key => key.includes('_address') && !!projectInfo[key]
+      key => key.includes('_address') && !!projectInfo[key] && key.includes('payment_')
     )
-    // .map((key) => key.split("_")[0])
-    const currencies = Object.keys(projectInfo).filter(
-      key => key.includes('amount_') && Number(projectInfo[key]) > 0
-    )
-    // .map((key) => key.split("_")[key.split("_").length - 1])
 
     return {
-      id: projectInfo?.project_id,
-      status: projectInfo?.status,
-      usage: 'unknown',
-      expires:
-        date?.getHours() +
-        ':' +
-        date?.getMinutes() +
-        ', ' +
-        date?.toDateString()?.slice(4),
+      expires: moment(projectInfo?.quote_expiry_time || new Date()).format('HH:MM, MMM DD, YYYY'),
       networks: networks,
-      currencies: currencies,
-      tier: projectInfo?.tier
     }
   }
 
@@ -125,6 +133,166 @@ const ProjectInfoModal = props => {
   useEffect(() => {
     setTitle(titles[tabIndex])
   }, [tabIndex])
+
+  function renderSupportedNetworks(rootClass = 'mobileDisplay') {
+    return (
+      <Stack
+        direction={'row'}
+        justifyContent="space-between"
+        className={styles[rootClass]}
+      >
+        <Stack
+          direction={'row'}
+          justifyContent="flex-start"
+          spacing={0.5}
+        >
+          <div
+            className={`${styles.label} ${styles.supportedNetworks}`}
+          >
+            Supported Networks:{' '}
+          </div>
+        </Stack>
+        <Stack
+          direction={'row'}
+          justifyContent="flex-end"
+          spacing={1}
+        >
+          {analyseInfo()?.networks.map((network, index) => {
+            const colors = {
+              ETH: '#175cd3',
+              AVAX: '#c01048',
+              BSC: '#854a0e',
+              NEVM: '#854a0e'
+            }
+            const bgColors = {
+              ETH: '#eff8ff',
+              AVAX: '#fff1f3',
+              BSC: '#fef7c3',
+              NEVM: '#fef7c3'
+            }
+            return (
+              <Chip
+                size="small"
+                key={`${supportNetworks[network]} - ${index}`}
+                label={supportNetworks[network]}
+                sx={{
+                  color: colors[supportNetworks[network]],
+                  backgroundColor: bgColors[supportNetworks[network]]
+                }}
+              />
+            )
+          })}
+        </Stack>
+      </Stack>
+    )
+  }
+
+  const renderProjectDetailCard = () => {
+    return (
+      <ProjectOuter spacing={2}>
+        <Stack
+          direction="row"
+          justifyContent={'space-between'}
+          className={styles.mobileDisplay}
+        >
+          <Stack
+            direction={'row'}
+            justifyContent="flex-start"
+            alignItems="center"
+            spacing={0.5}
+          >
+            <div className={styles.label}>Project ID: </div>
+          </Stack>
+          <div>{projectId}</div>
+        </Stack>
+        <ApiKeySection apiKey={apiKey || ''} />
+        <Stack
+          direction="row"
+          justifyContent={'space-between'}
+          className={styles.mobileDisplay}
+        >
+          <Stack
+            direction={'row'}
+            justifyContent="flex-start"
+            alignItems="center"
+            spacing={0.5}
+          >
+            <div className={styles.label}>Project Status: </div>
+          </Stack>
+          <Chip
+            label={capitalizeFirstLetter(status)}
+            size="small"
+            className={`${[styles.analysisInfo, styles[`status-${status}`]]}`}
+          />
+        </Stack>
+        <>
+          <Stack
+            direction={'row'}
+            justifyContent="space-between"
+            className={styles.mobileDisplay}
+          >
+            <Stack
+              direction={'row'}
+              justifyContent="flex-start"
+              alignItems="center"
+              spacing={0.5}
+            >
+              <div className={styles.label}>Expires: </div>
+            </Stack>
+            <div>{analyseInfo()?.expires}</div>
+          </Stack>
+          <Stack
+            direction={'row'}
+            justifyContent="space-between"
+            className={styles.mobileDisplay}
+          >
+            <Stack
+              direction={'row'}
+              justifyContent="flex-start"
+              alignItems="center"
+              spacing={0.5}
+            >
+              <div className={styles.label}>Usage: </div>
+            </Stack>
+            <div>{`${(tokensUsed * 100 / tokens).toFixed()}%`}</div>
+          </Stack>
+          { renderSupportedNetworks() }
+          <Stack
+            direction={'row'}
+            justifyContent="space-between"
+            className={styles.mobileDisplay}
+          >
+            <Stack
+              direction={'row'}
+              justifyContent="flex-start"
+              alignItems="center"
+              spacing={0.5}
+            >
+              <div className={styles.label}>Cost per 1000 API calls </div>
+            </Stack>
+            <div className={styles.font14}>{costApiCalls}</div>
+          </Stack>
+          <Stack
+            direction={'row'}
+            justifyContent="space-between"
+            className={styles.mobileDisplay}
+          >
+            <Stack
+              direction={'row'}
+              justifyContent="flex-start"
+              alignItems="center"
+              spacing={0.5}
+            >
+              <div className={styles.label}>
+                Accepted Payment Currencies{' '}
+              </div>
+            </Stack>
+            <div>{acceptedCurrencies}</div>
+          </Stack>
+        </>
+      </ProjectOuter>
+    );
+  }
 
   return (
     <div>
@@ -158,206 +326,32 @@ const ProjectInfoModal = props => {
             {title}
           </Typography>
           <DividerDiv className={`${styles.divider}`} />
-          <Typography
-            className={`${styles.subTitle} ${styles.projectDetails}`}
-            color="common.black"
-          >
-            {tabIndex === 0 ? 'Your Project Details' : 'Section title'}
-          </Typography>
-          <Typography className={styles.desc} color="text.primary">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam,
-            purus sit amet luctus venenatis, lectus magna fringilla urna,
-            porttitor rhoncus dolor purus non.
-          </Typography>
+          {
+            tabIndex !== 3 &&
+            <React.Fragment>
+              <Typography
+                className={`${styles.subTitle} ${styles.projectDetails}`}
+                color="common.black"
+              >
+                {tabIndex === 0 ? 'Your Project Details' : 'Section title'}
+              </Typography>
+              <Typography className={styles.desc} color="text.primary">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam,
+                purus sit amet luctus venenatis, lectus magna fringilla urna,
+                porttitor rhoncus dolor purus non.
+              </Typography>
+            </React.Fragment>
+          }
 
           {tabIndex === 0 ? ( // project info
             <div className={styles.tab3}>
-              <ProjectOuter spacing={2}>
-                <Stack
-                  direction="row"
-                  justifyContent={'space-between'}
-                  className={styles.mobileDisplay}
-                >
-                  <Stack
-                    direction={'row'}
-                    justifyContent="flex-start"
-                    alignItems="center"
-                    spacing={0.5}
-                  >
-                    <div className={styles.label}>Project ID: </div>
-
-                    {/* <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} /> */}
-                  </Stack>
-                  <div>{analyseInfo()?.id}</div>
-                </Stack>
-                <Stack
-                  direction="row"
-                  justifyContent={'space-between'}
-                  className={styles.mobileDisplay}
-                >
-                  <Stack
-                    direction={'row'}
-                    justifyContent="flex-start"
-                    alignItems="center"
-                    spacing={0.5}
-                  >
-                    <div className={styles.label}>Project Status: </div>
-                    {/* <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} /> */}
-                  </Stack>
-                  <Chip
-                    label={analyseInfo()?.status}
-                    size="small"
-                    className={styles.analysisInfo}
-                  />
-                </Stack>
-                {/* {
-                    (projectInfoIndex === 1 || projectInfoIndex === 2) && ( */}
-                <>
-                  <Stack
-                    direction={'row'}
-                    justifyContent="space-between"
-                    className={styles.mobileDisplay}
-                  >
-                    <Stack
-                      direction={'row'}
-                      justifyContent="flex-start"
-                      alignItems="center"
-                      spacing={0.5}
-                    >
-                      <div className={styles.label}>Usage: </div>
-                      {/* <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} /> */}
-                    </Stack>
-                    <div>{projectInfo?.usage?.toFixed(0)}%</div>
-                  </Stack>
-                  <Stack
-                    direction={'row'}
-                    justifyContent="space-between"
-                    className={styles.mobileDisplay}
-                  >
-                    <Stack
-                      direction={'row'}
-                      justifyContent="flex-start"
-                      alignItems="center"
-                      spacing={0.5}
-                    >
-                      <div className={styles.label}>Expires: </div>
-                      {/* <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} /> */}
-                    </Stack>
-                    <div>{analyseInfo()?.expires}</div>
-                  </Stack>
-                  <Stack
-                    direction={'row'}
-                    justifyContent="space-between"
-                    className={styles.mobileDisplay}
-                  >
-                    <Stack
-                      direction={'row'}
-                      justifyContent="flex-start"
-                      spacing={0.5}
-                    >
-                      <div
-                        className={`${styles.label} ${styles.supportedNetworks}`}
-                      >
-                        Supported Networks:{' '}
-                      </div>
-                      {/* <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} /> */}
-                    </Stack>
-                    <Stack
-                      direction={'row'}
-                      justifyContent="flex-end"
-                      spacing={1}
-                    >
-                      {analyseInfo()?.networks.map(network => {
-                        const colors = {
-                          eth: '#175cd3',
-                          avax: '#c01048',
-                          bsc: '#854a0e',
-                          nevm: '#854a0e'
-                        }
-                        const bgColors = {
-                          eth: '#eff8ff',
-                          avax: '#fff1f3',
-                          bsc: '#fef7c3',
-                          nevm: '#fef7c3'
-                        }
-                        return (
-                          <Chip
-                            size="small"
-                            key={network.split('_')[0]}
-                            label={network.split('_')[0].toUpperCase()}
-                            sx={{
-                              color: colors[network.split('_')[0]],
-                              backgroundColor: bgColors[network.split('_')[0]]
-                            }}
-                          />
-                        )
-                      })}
-                    </Stack>
-                  </Stack>
-                  <Stack
-                    direction={'row'}
-                    justifyContent="space-between"
-                    className={styles.mobileDisplay}
-                  >
-                    <Stack
-                      direction={'row'}
-                      justifyContent="flex-start"
-                      alignItems="center"
-                      spacing={0.5}
-                    >
-                      <div className={styles.label}>
-                        Accepted Payment Currencies{' '}
-                      </div>
-                      {/* <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} /> */}
-                    </Stack>
-                    <div>
-                      {analyseInfo()
-                        ?.currencies.map(
-                          key => key.split('_')[key.split('_').length - 1]
-                        )
-                        ?.join(', ')}
-                    </div>
-                  </Stack>
-                  <Stack
-                    direction={'row'}
-                    justifyContent="space-between"
-                    className={styles.mobileDisplay}
-                  >
-                    <Stack
-                      direction={'row'}
-                      justifyContent="flex-start"
-                      alignItems="center"
-                      spacing={0.5}
-                    >
-                      <div className={styles.label}>Monthly cost in $USD: </div>
-                      {/* <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} /> */}
-                    </Stack>
-                    <div className={styles.font14}>$200</div>
-                  </Stack>
-                  <Stack
-                    direction={'row'}
-                    justifyContent="space-between"
-                    className={styles.mobileDisplay}
-                  >
-                    <Stack
-                      direction={'row'}
-                      justifyContent="flex-start"
-                      alignItems="center"
-                      spacing={0.5}
-                    >
-                      <div className={styles.label}>Service Level: </div>
-                      {/* <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} /> */}
-                    </Stack>
-                    <div className={styles.font14}>
-                      Tier {analyseInfo()?.tier} - 32 million requests / month
-                    </div>
-                  </Stack>
-                </>
-                {/* )
-                 } */}
-              </ProjectOuter>
+              { renderProjectDetailCard() }
             </div>
-          ) : tabIndex === 1 || tabIndex === 2 ? (
+          ) : tabIndex === 1 ? (
+            <div className={styles.tab3}>
+              { renderProjectDetailCard() }
+            </div>
+          ) : tabIndex === 2 ? (
             <div className={styles.tab3}>
               <ProjectOuter spacing={2}>
                 <Stack
@@ -372,9 +366,8 @@ const ProjectInfoModal = props => {
                     spacing={0.5}
                   >
                     <div className={styles.label}>Project ID: </div>
-                    {/* <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} /> */}
                   </Stack>
-                  <div>a357ab69-8ddc-4966-833f-4ddc38b8c11</div>
+                  <div>{projectId}</div>
                 </Stack>
                 <Stack
                   direction="row"
@@ -388,264 +381,22 @@ const ProjectInfoModal = props => {
                     spacing={0.5}
                   >
                     <div className={styles.label}>Project Status: </div>
-                    {/* <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} /> */}
                   </Stack>
                   <Chip
-                    label="Active"
+                    label={capitalizeFirstLetter(status)}
                     size="small"
-                    className={styles.analysisInfo}
+                    className={`${[styles.analysisInfo, styles[`status-${status}`]]}`}
                   />
                 </Stack>
-
-                {tabIndex === 1 && (
-                  <>
-                    <Stack
-                      direction={'row'}
-                      justifyContent="space-between"
-                      className={styles.mobileDisplay}
-                    >
-                      <Stack
-                        direction={'row'}
-                        justifyContent="flex-start"
-                        alignItems="center"
-                        spacing={0.5}
-                      >
-                        <div className={styles.label}>Usage: </div>
-                        {/* <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} /> */}
-                      </Stack>
-                      <div>60%</div>
-                    </Stack>
-                    <Stack
-                      direction={'row'}
-                      justifyContent="space-between"
-                      className={styles.mobileDisplay}
-                    >
-                      <Stack
-                        direction={'row'}
-                        justifyContent="flex-start"
-                        alignItems="center"
-                        spacing={0.5}
-                      >
-                        <div className={styles.label}>Expires: </div>
-                        {/* <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} /> */}
-                      </Stack>
-                      <div>
-                        {analyseInfo(projectInfo?.expiry_time)?.expires}
-                      </div>
-                    </Stack>
-                    <Stack
-                      direction={'row'}
-                      justifyContent="space-between"
-                      className={styles.mobileDisplay}
-                    >
-                      <Stack
-                        direction={'row'}
-                        justifyContent="flex-start"
-                        alignItems="center"
-                        spacing={0.5}
-                      >
-                        <div className={`${styles.supportedNetworks}`}>
-                          Supported Networks:{' '}
-                        </div>
-                        {/* <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} /> */}
-                      </Stack>
-                      <Stack
-                        direction={'row'}
-                        justifyContent="flex-end"
-                        spacing={1}
-                      >
-                        {analyseInfo()?.networks.map(network => {
-                          const colors = {
-                            eth: '#175cd3',
-                            avax: '#c01048',
-                            bsc: '#854a0e',
-                            nevm: '#854a0e'
-                          }
-                          const bgColors = {
-                            eth: '#eff8ff',
-                            avax: '#fff1f3',
-                            bsc: '#fef7c3',
-                            nevm: '#fef7c3'
-                          }
-                          return (
-                            <Chip
-                              size="small"
-                              key={network.split('_')[0]}
-                              label={network.split('_')[0].toUpperCase()}
-                              sx={{
-                                color: colors[network.split('_')[0]],
-                                backgroundColor: bgColors[network.split('_')[0]]
-                              }}
-                            />
-                          )
-                        })}
-                      </Stack>
-                    </Stack>
-                    <Stack
-                      direction={'row'}
-                      justifyContent="space-between"
-                      className={styles.mobileDisplay}
-                    >
-                      <Stack
-                        direction={'row'}
-                        justifyContent="flex-start"
-                        alignItems="center"
-                        spacing={0.5}
-                      >
-                        <div className={styles.label}>
-                          Accepted Payment Currencies{' '}
-                        </div>
-                        {/* <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} /> */}
-                      </Stack>
-                      <div>
-                        {analyseInfo()
-                          ?.currencies.map(
-                            key => key.split('_')[key.split('_').length - 1]
-                          )
-                          ?.join(', ')}
-                      </div>
-                    </Stack>
-                    <Stack
-                      direction={'row'}
-                      justifyContent="space-between"
-                      className={styles.mobileDisplay}
-                    >
-                      <Stack
-                        direction={'row'}
-                        justifyContent="flex-start"
-                        alignItems="center"
-                        spacing={0.5}
-                      >
-                        <div className={styles.label}>
-                          Monthly cost in $USD:{' '}
-                        </div>
-                        {/* <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} /> */}
-                      </Stack>
-                      <div className={styles.font14}>$200</div>
-                    </Stack>
-                    <Stack
-                      direction={'row'}
-                      justifyContent="space-between"
-                      className={styles.mobileDisplay}
-                    >
-                      <Stack
-                        direction={'row'}
-                        justifyContent="flex-start"
-                        alignItems="center"
-                        spacing={0.5}
-                      >
-                        <div className={styles.label}>Service Level: </div>
-                        {/* <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} /> */}
-                      </Stack>
-                      <div className={styles.font14}>
-                        Tier {analyseInfo()?.tier} - 32 million requests / month
-                      </div>
-                    </Stack>
-                  </>
-                )}
+                <Typography className={styles.desc} color="text.primary">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit ut
+                  aliquam, purus sit amet luctus venenatis, lectus magna fringilla
+                  urna, porttitor rhoncus dolor purus non.
+                </Typography>
               </ProjectOuter>
             </div>
           ) : (
             <div className={styles.tab2}>
-              <SmallOuter className={styles.gap20}>
-                <Stack
-                  direction="row"
-                  justifyContent={'space-between'}
-                  className={styles.mobileDisplay}
-                >
-                  <Stack
-                    direction={'row'}
-                    justifyContent="flex-start"
-                    spacing={0.5}
-                  >
-                    <div className={styles.left}>Project ID: </div>
-                    {/* <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} /> */}
-                  </Stack>
-                  <div>{analyseInfo()?.id}</div>
-                </Stack>
-                <Stack
-                  direction="row"
-                  justifyContent={'space-between'}
-                  className={styles.mobileHidden}
-                >
-                  <Stack
-                    direction={'row'}
-                    justifyContent="flex-start"
-                    spacing={0.5}
-                  >
-                    <div
-                      className={`${styles.left} ${styles.supportedNetworks} `}
-                    >
-                      Supported Networks:{' '}
-                    </div>
-                    {/* <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} /> */}
-                  </Stack>
-                  <Stack
-                    direction={'row'}
-                    justifyContent="flex-end"
-                    spacing={1}
-                  >
-                    {analyseInfo()?.networks.map(network => {
-                      const colors = {
-                        eth: '#175cd3',
-                        avax: '#c01048',
-                        bsc: '#854a0e',
-                        nevm: '#854a0e'
-                      }
-                      const bgColors = {
-                        eth: '#eff8ff',
-                        avax: '#fff1f3',
-                        bsc: '#fef7c3',
-                        nevm: '#fef7c3'
-                      }
-                      return (
-                        <Chip
-                          size="small"
-                          key={network.split('_')[0]}
-                          label={network.split('_')[0].toUpperCase()}
-                          sx={{
-                            color: colors[network.split('_')[0]],
-                            backgroundColor: bgColors[network.split('_')[0]]
-                          }}
-                        />
-                      )
-                    })}
-                  </Stack>
-                </Stack>
-                <Stack
-                  direction="row"
-                  justifyContent={'space-between'}
-                  className={styles.mobileHidden}
-                >
-                  <Stack
-                    direction={'row'}
-                    justifyContent="flex-start"
-                    spacing={0.5}
-                  >
-                    <div className={styles.left}>Monthly cost in $USD: </div>
-                    {/* <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} /> */}
-                  </Stack>
-                  <div className={styles.font14}>$200</div>
-                </Stack>
-                <Stack
-                  direction="row"
-                  justifyContent={'space-between'}
-                  className={styles.mobileHidden}
-                >
-                  <Stack
-                    direction={'row'}
-                    justifyContent="flex-start"
-                    spacing={0.5}
-                  >
-                    <div className={styles.left}>Service Level: </div>
-                    {/* <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} /> */}
-                  </Stack>
-                  <div className={styles.font14}>
-                    Tier {analyseInfo()?.tier} - 32 million requests / month
-                  </div>
-                </Stack>
-              </SmallOuter>
-
               <Typography className={`${styles.subTItle}`} color="common.black">
                 Payment Info
               </Typography>
@@ -674,21 +425,15 @@ const ProjectInfoModal = props => {
                     direction="column"
                     justifyContent={'flex-start'}
                     className={styles.payRight}
-                    alignItems={'flex-start'}
+                    alignItems={'flex-end'}
                   >
-                    {analyseInfo()?.currencies.map(currency => {
-                      return (
+                    {
+                      filterMinAmountData.map(currency => (
                         <div key={currency}>
-                          <span className={styles.right}>
-                            {currency
-                              .split('_')
-                              [currency.split('_').length - 1].toUpperCase()}
-                            :&nbsp;
-                          </span>
-                          {projectInfo[currency]}
+                          <span>{`${projectInfo[currency]} ${currencyNames[currency]}`}</span>
                         </div>
-                      )
-                    })}
+                      ))
+                    }
                   </Stack>
                 </Stack>
                 <Stack
@@ -739,6 +484,51 @@ const ProjectInfoModal = props => {
                 </Typography>
                 {/* </div> */}
               </BigOuter>
+
+              <Typography className={`${styles.subTItle}`} color="common.black">
+                Your Project Summary
+              </Typography>
+              <Typography className={styles.desc} color="text.primary">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam,
+                purus sit amet luctus venenatis, lectus magna fringilla urna,
+                porttitor rhoncus dolor purus non.
+              </Typography>
+              <SmallOuter className={styles.gap20}>
+                <Stack
+                  direction="row"
+                  justifyContent={'space-between'}
+                  className={styles.mobileDisplay}
+                >
+                  <Stack
+                    direction={'row'}
+                    justifyContent="flex-start"
+                    spacing={0.5}
+                  >
+                    <div className={styles.left}>Project ID: </div>
+                    {/* <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} /> */}
+                  </Stack>
+                  <div>{projectId || ''}</div>
+                </Stack>
+                <ApiKeySection apiKey={apiKey || ''} />
+                { renderSupportedNetworks('mobileHidden') }
+                <Stack
+                  direction="row"
+                  justifyContent={'space-between'}
+                  className={styles.mobileHidden}
+                >
+                  <Stack
+                    direction={'row'}
+                    justifyContent="flex-start"
+                    spacing={0.5}
+                  >
+                    <div className={styles.left}>Cost per 1000 API calls </div>
+                    {/* <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} /> */}
+                  </Stack>
+                  <div className={styles.font14}>{costApiCalls}</div>
+                </Stack>
+              </SmallOuter>
+
+
             </div>
           )}
 
