@@ -254,8 +254,8 @@ const useStyles = makeStyles(theme =>
 const StyledTable = props => {
   const [response, setResponse] = useState([
     {
-      projectId: '39570ad7-9f53-46ad-a552-c15d440139fb',
-      apiKey: 'UQbNVAE2h2WYKa-CU4BIMKP6Zj-ivnw_ErBg6rIq0to',
+      projectId: 'd6f6bdde-5840-4aa8-9c22-c79321c4fd7b',
+      apiKey: 'W0rbHV0s5Bf1jgiUDQkUbn-cVlIfuD2VOAGvkAKrrQI',
       expires: 'Nov 23, 2022',
       status: 'Active',
       usage: 0
@@ -353,8 +353,8 @@ const StyledTable = props => {
 
   const handleGetInfo = async (projectId, apiKey) => {
     try {
-      const projectId = '39570ad7-9f53-46ad-a552-c15d440139fb';
-      const apiKey = 'UQbNVAE2h2WYKa-CU4BIMKP6Zj-ivnw_ErBg6rIq0to';
+      const projectId = 'd6f6bdde-5840-4aa8-9c22-c79321c4fd7b';
+      const apiKey = 'W0rbHV0s5Bf1jgiUDQkUbn-cVlIfuD2VOAGvkAKrrQI';
   
       const response = await api.project.getProjectStats({ projectId, apiKey })
       setProjectInfo(response.data.result)
