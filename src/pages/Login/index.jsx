@@ -97,7 +97,7 @@ const Login = () => {
     // }
   }
 
-  console.log('auth info:', { wallet, signature })
+  // console.log('auth info:', { wallet, signature })
 
   return (
     <>
