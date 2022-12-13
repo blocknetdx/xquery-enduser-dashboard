@@ -204,6 +204,10 @@ const hasNetwork = (row, filters) => {
   return false
 }
 
+const capitalizeFirstLetter = (string = '') => {
+  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+}
+
 const ProjectModal = props => {
   const { open, signature, handleClose } = props
   // const [{ wallet }] = useConnectWallet()
@@ -221,12 +225,29 @@ const ProjectModal = props => {
   const [newProj, setNewProj] = useState(null)
   const [serviceLevel, setServiceLevel] = useState(0)
   const [keyVisibility, setKeyVisibility] = useState(false)
+  const [snodes, setSnodes] = useState([]);
+  const [selectedNodeIndex, setSelectedNodeIndex] = useState(null);
 
   // const [scroll, setScroll] = React.useState<DialogProps['scroll']>('body');
 
   // const [loading, setLoading] = useState(false)
 
-  const onClickDetail = async () => {
+  useEffect(() => {
+    getSNodes();
+  }, [props])
+
+  async function getSNodes() {
+    try {
+      const response = await api.project.getSNodes();
+      console.log('CreateProjectModal response: ', response);
+      setSnodes(response.data?.data || []);
+    } catch (error) {
+      toast(`Backend server error occured: ${error?.message}`)
+    }
+  }
+
+  const onClickDetail = async (index) => {
+    // console.log('onClickDetail', index);
     if (signature) {
       const body = {
         id: 1,
@@ -237,6 +258,7 @@ const ProjectModal = props => {
         const result = await api.project.createProject(body)
         dispatch(setProject(result?.data?.result))
         setNewProj(result?.data?.result)
+        setSelectedNodeIndex(index);
         setTabIndex(1)
       } catch (error) {
         console.log(typeof error?.message)
@@ -450,7 +472,7 @@ const ProjectModal = props => {
                       </TableRow>
                     </TableHead>
                     <TableBody className={styles.whiteBg}>
-                      {rows
+                      {snodes
                         .filter(
                           row =>
                             toFilter.length === 0 || hasNetwork(row, toFilter)
@@ -469,26 +491,11 @@ const ProjectModal = props => {
                                 gap="5px"
                                 flexDirection="row"
                               >
-                                {/* {
+                                {
                                   row.networks.map((network) => {
-                                    return <Chip key={network} label={network} size='small' color="primary" />
+                                    return <Chip key={network} label={network} size='small' className={styles[`chip${capitalizeFirstLetter(network)}`]} />
                                   })
-                                } */}
-                                <Chip
-                                  label="ETH"
-                                  size="small"
-                                  className={styles.chipEth}
-                                />
-                                <Chip
-                                  label="AVAX"
-                                  size="small"
-                                  className={styles.chipAvax}
-                                />
-                                <Chip
-                                  label="BSC"
-                                  size="small"
-                                  className={styles.chipBsc}
-                                />
+                                }
                               </Stack>
                             </StyledTableCell>
                             {/* <StyledTableCell align="left">
@@ -508,7 +515,7 @@ const ProjectModal = props => {
                               <Button
                                 variant="contained"
                                 className={styles.detailsButton}
-                                onClick={onClickDetail}
+                                onClick={() => onClickDetail(index)}
                               >
                                 <span className={styles.infoBtnSpace}>
                                   View details
@@ -523,7 +530,7 @@ const ProjectModal = props => {
                               <Button
                                 variant="contained"
                                 className={styles.infoMobile}
-                                onClick={onClickDetail}
+                                onClick={() => onClickDetail(index)}
                               >
                                 <img
                                   src={info}
@@ -622,21 +629,12 @@ const ProjectModal = props => {
                     spacing={1}
                     className={styles.mixBlendMode}
                   >
-                    <Chip
-                      label="ETH"
-                      size="small"
-                      className={styles.darkChipEth}
-                    />
-                    <Chip
-                      label="AVAX"
-                      size="small"
-                      className={styles.darkChipAvax}
-                    />
-                    <Chip
-                      label="BSC"
-                      size="small"
-                      className={styles.darkChipBsc}
-                    />
+                    {
+                      snodes.length > 0 && snodes.length > selectedNodeIndex &&
+                      snodes[selectedNodeIndex]?.networks.map(network => (
+                        <Chip key={network} label={network} size='small' className={styles[`darkChip${capitalizeFirstLetter(network)}`]} />
+                      ))
+                    }
                   </Stack>
                 </Stack>
                 <Stack
@@ -674,7 +672,7 @@ const ProjectModal = props => {
                     </Typography>
                     <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                   </Stack>
-                  <div>65.119.157.65</div>
+                  <div>{snodes.length > selectedNodeIndex && snodes[selectedNodeIndex]?.ip[0]}</div>
                 </Stack>
               </ProjectInfoPanel>
 
@@ -744,7 +742,7 @@ const ProjectModal = props => {
                     >
                       <span>$35</span> 6 million calls
                     </Stack>
-                    <Typography clasName={styles.description}>
+                    <Typography className={styles.description}>
                       Lorem ipsum dolor sit amet, consectetur adipiscing elit ut
                       aliquam, purus sit.
                     </Typography>
@@ -832,7 +830,7 @@ const ProjectModal = props => {
                     >
                       <span>$200</span> 32 million calls
                     </Stack>
-                    <Typography clasName={styles.description}>
+                    <Typography className={styles.description}>
                       Lorem ipsum dolor sit amet, consectetur adipiscing elit ut
                       aliquam, purus sit.
                     </Typography>
@@ -842,26 +840,12 @@ const ProjectModal = props => {
                       flexDirection="row"
                       className={styles.mt20}
                     >
-                      {/* {
-                                  row.networks.map((network) => {
-                                    return <Chip key={network} label={network} size='small' color="primary" />
-                                  })
-                                } */}
-                      <Chip
-                        label="ETH"
-                        size="small"
-                        className={styles.chipEth}
-                      />
-                      <Chip
-                        label="AVAX"
-                        size="small"
-                        className={styles.chipAvax}
-                      />
-                      <Chip
-                        label="BSC"
-                        size="small"
-                        className={styles.chipBsc}
-                      />
+                      {
+                        snodes.length > 0 && snodes.length > selectedNodeIndex &&
+                        snodes[selectedNodeIndex]?.networks.map(network => (
+                          <Chip key={network} label={network} size='small' className={styles[`chip${capitalizeFirstLetter(network)}`]} />
+                        ))
+                      }
                     </Stack>
                   </div>
                 </div>

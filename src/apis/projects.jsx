@@ -3,6 +3,7 @@ import { ENDPOINT } from '../configs'
 
 const projectEndpoint = `${ENDPOINT}/projects`
 const localEndpoint = `${ENDPOINT}/sign`
+const sNodesEndpoint = `${ENDPOINT}/snodes`
 
 const projectApi = {
   createProject: (param) => axios.post(projectEndpoint, param),
@@ -19,7 +20,8 @@ const projectApi = {
         "method": "get_project_stats",
         "params": []
       }
-    })
+    }),
+  getSNodes: () => axios.get(sNodesEndpoint)
 }
 
 export default projectApi
