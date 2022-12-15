@@ -528,24 +528,6 @@ const StyledTable = props => {
                     </FlexColumn>
                   </TableCell>
                   <TableCell
-                    className={classes.cell}
-                    padding="none"
-                    align="right"
-                  >
-                    <FlexColumn className={`${styles.column}`}>
-                      <Typography
-                        className={`${styles.title}`}
-                        color="common.black"
-                        variant="h6"
-                      >
-                        Expires
-                      </Typography>
-                      <Typography variant="h6" color="#475467">
-                        {data.expires}
-                      </Typography>
-                    </FlexColumn>
-                  </TableCell>
-                  <TableCell
                     className={`${classes.cell} ${classes.paddingRight}`}
                     align="right"
                   >
