@@ -260,7 +260,7 @@ const ProjectInfoModal = props => {
             >
               <div className={styles.label}>Usage: </div>
             </Stack>
-            <div>{`${ apiUsage || calcualteApiUsage(tokens, tokensUsed)}%`}</div>
+            <div>{`${ apiUsage || calcualteApiUsage(tokensUsed, tokens)}%`}</div>
           </Stack>
           { renderSupportedNetworks() }
           <Stack
