@@ -23,10 +23,11 @@ import Stack from '@mui/material/Stack'
 import { light, dark } from '../../theme'
 
 import ApiKeySection from '../ApiKeySection'
-import { capitalizeFirstLetter, filterMinAmount, getAcceptedCurrencyNames } from '../../utils/helper'
+import { calcualteApiUsage, capitalizeFirstLetter, filterMinAmount, getAcceptedCurrencyNames } from '../../utils/helper'
 import { currencyNames } from '../../configs/constants'
 
 import styles from './index.module.scss'
+import useApiUsage from '../../hooks/useApiUsage'
 
 const titles = [
   'Title - Project Info',
@@ -104,6 +105,11 @@ const ProjectInfoModal = props => {
     status = '',
     api_key: apiKey,
   } = projectInfo || {};
+
+  const [apiUsage] = useApiUsage({
+    projectId,
+    apiKey
+  });
 
   const filterMinAmountData = filterMinAmount(projectInfo || {});
 
@@ -254,7 +260,7 @@ const ProjectInfoModal = props => {
             >
               <div className={styles.label}>Usage: </div>
             </Stack>
-            <div>{`${(tokensUsed * 100 / tokens).toFixed()}%`}</div>
+            <div>{`${ apiUsage || calcualteApiUsage(tokens, tokensUsed)}%`}</div>
           </Stack>
           { renderSupportedNetworks() }
           <Stack

@@ -24,8 +24,13 @@ function capitalizeFirstLetter(str  = '') {
     return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 }
 
+function calcualteApiUsage(tokensUsed, tokens) {
+  return (parseInt(tokensUsed) * 100 / parseInt(tokens)).toFixed()
+}
+
 export {
     filterMinAmount,
     getAcceptedCurrencyNames,
     capitalizeFirstLetter,
+    calcualteApiUsage,
 }
