@@ -28,6 +28,7 @@ import OutlinedInput from '@mui/material/OutlinedInput'
 // custom components
 import ProjectInfoModal from '../ViewInfoModal'
 import api from '../../apis'
+import ProjectTableRow from './ProjectTableRow'
 
 const List = styled('ul')({
   listStyle: 'none',
@@ -463,86 +464,12 @@ const StyledTable = props => {
             {filteredList
               .slice((page - 1) * 10, page * 10)
               .map((data, index) => (
-                <TableRow className={classes.rowInline} key={index}>
-                  <TableCell
-                    className={classes.cell}
-                    padding="none"
-                    component="th"
-                    scope="row"
-                  >
-                    <FlexColumn
-                      className={`${styles.column} ${styles.flexStart}`}
-                    >
-                      <Typography
-                        className={`${styles.title}`}
-                        color="common.black"
-                        variant="h6"
-                      >
-                        Project ID
-                      </Typography>
-                      <Typography
-                        variant="h6"
-                        color="#475467"
-                        className={styles.fontWeight400}
-                      >
-                        {data.projectId.slice(0, 8).concat('...')}
-                      </Typography>
-                    </FlexColumn>
-                  </TableCell>
-                  <TableCell
-                    className={classes.cell}
-                    padding="none"
-                    align="right"
-                  >
-                    <FlexColumn
-                      className={`${styles.column} ${styles.flexStart}`}
-                    >
-                      <Typography
-                        className={`${styles.title}`}
-                        color="common.black"
-                        variant="h6"
-                      >
-                        Status
-                      </Typography>
-                      <Typography variant="h6" color="#475467">
-                        {data.status}
-                      </Typography>
-                    </FlexColumn>
-                  </TableCell>
-                  <TableCell
-                    className={classes.cell}
-                    padding="none"
-                    align="right"
-                  >
-                    <FlexColumn
-                      className={`${styles.column} ${styles.flexStart}`}
-                    >
-                      <Typography
-                        className={`${styles.title}`}
-                        color="common.black"
-                        variant="h6"
-                      >
-                        Usage
-                      </Typography>
-                      <ProgressBar process={data.usage} />
-                    </FlexColumn>
-                  </TableCell>
-                  <TableCell
-                    className={`${classes.cell} ${classes.paddingRight}`}
-                    align="right"
-                  >
-                    <Button
-                      variant="contained"
-                      onClick={() => handleGetInfo(data.projectId, data.apiKey)}
-                      className={styles.viewProjectInfoBtn}
-                    >
-                      <span className={styles.infoBtnSpace}>
-                        View project info
-                      </span>
-                      <img src={info} alt="info" />
-                    </Button>
-                  </TableCell>
-                </TableRow>
+                <ProjectTableRow 
+                  data={data} 
+                  index={index} 
+                  handleGetInfo={handleGetInfo}
+                  useStyles={useStyles}
+                />
               ))}
           </TableBody>
         </Table>
