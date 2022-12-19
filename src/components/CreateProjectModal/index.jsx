@@ -225,7 +225,6 @@ const ProjectModal = props => {
 
   const [active, setActive] = useState(0)
   const [tabIndex, setTabIndex] = useState(0)
-  const [newProj, setNewProj] = useState(null)
   const [serviceLevel, setServiceLevel] = useState(0)
 
   const [projectDetail, setProjectDetail] = useState(null);
@@ -235,10 +234,8 @@ const ProjectModal = props => {
     acceptedCurrencies: [],
     quoteExpiryTime: null,
   })
-  const [keyVisibility, setKeyVisibility] = useState(false)
   const [snodes, setSnodes] = useState([]);
   const [selectedNodeIndex, setSelectedNodeIndex] = useState(null);
-
 
   // const [scroll, setScroll] = React.useState<DialogProps['scroll']>('body');
 
@@ -264,13 +261,19 @@ const ProjectModal = props => {
       const body = {
         id: 1,
         method: 'request_project',
-        params: []
+        params: [{"XQuery": "True"}]
       }
       try {
         const result = await api.project.createProject(body)
+        console.log('create project modal result: ', result);
         dispatch(setProject(result?.data?.result))
-        setNewProj(result?.data?.result)
         setSelectedNodeIndex(index);
+        setProjectDetail(result?.data?.result);
+
+        setState(pre => ({
+          ...pre,
+          acceptedCurrencies: filterMinAmount(result?.data?.result),
+        }))
         setTabIndex(1)
       } catch (error) {
         // console.log(typeof error?.message)
@@ -280,34 +283,6 @@ const ProjectModal = props => {
   }
 
   const [copyFlag, setCopyFlag] = useState(false)
-
-  useEffect(() => {
-    createProject(); // at the moment  get project
-  }, [])
-
-  const createProject = async () => {
-    const projectId = 'd6f6bdde-5840-4aa8-9c22-c79321c4fd7b';
-    const apiKey = 'W0rbHV0s5Bf1jgiUDQkUbn-cVlIfuD2VOAGvkAKrrQI';
-
-    const response = await api.project.getProjectStats({
-      projectId: projectId,
-      apiKey: apiKey
-    })
-
-    const { data } = response; 
-
-    if (!data?.success) {
-      toast(`Something went wrong`);
-      return;
-    }
-
-    setProjectDetail(data?.result);
-
-    setState(pre => ({
-      ...pre,
-      acceptedCurrencies: filterMinAmount(data?.result),
-    }))
-  }
 
   useEffect(() => {
     if (tabIndex === 0) {
@@ -325,7 +300,6 @@ const ProjectModal = props => {
   useEffect(() => {
     setActive(0)
     setTabIndex(0)
-    setNewProj(null)
     setServiceLevel(0)
     setCopyFlag(false)
     setToFilter([])
@@ -682,7 +656,7 @@ const ProjectModal = props => {
                     spacing={0.5}
                   >
                     <Typography className={styles.projectInfoLabel}>
-                      Project ID:
+                      Cost per 1000 API calls:
                     </Typography>
                     <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                   </Stack>
@@ -943,7 +917,7 @@ const ProjectModal = props => {
                   >
                     {/* <ContentCopy  /> */}
                     <CopyToClipboard
-                      text={newProj?.payment_eth_address || ''}
+                      text={projectDetail?.payment_eth_address || ''}
                       onCopy={() => setCopyFlag(true)}
                     >
                       <Stack
@@ -954,7 +928,7 @@ const ProjectModal = props => {
                         className={styles.fullWidth}
                       >
                         <span className={classes.key}>
-                          0x1576E561F2636e090cb855277eBA
+                          {`${projectDetail?.payment_eth_address?.slice(0, 25)} ...`}
                         </span>
                         {copyFlag ? (
                           <CheckCircleOutline

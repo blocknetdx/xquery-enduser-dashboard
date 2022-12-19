@@ -353,8 +353,8 @@ const StyledTable = props => {
 
   const handleGetInfo = async (projectId, apiKey) => {
     try {
-      const projectId = 'd6f6bdde-5840-4aa8-9c22-c79321c4fd7b';
-      const apiKey = 'W0rbHV0s5Bf1jgiUDQkUbn-cVlIfuD2VOAGvkAKrrQI';
+      const projectId = '918e10cf-5876-43f4-b359-eff084925c7d';
+      const apiKey = '09e3Twjxwyv-gWd2LONxocL5hynXd17sNxTn0PRU0BE';
   
       const response = await api.project.getProjectStats({ projectId, apiKey })
       setProjectInfo(response.data.result)
