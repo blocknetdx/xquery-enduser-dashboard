@@ -28,6 +28,7 @@ import OutlinedInput from '@mui/material/OutlinedInput'
 // custom components
 import ProjectInfoModal from '../ViewInfoModal'
 import api from '../../apis'
+import ProjectTableRow from './ProjectTableRow'
 
 const List = styled('ul')({
   listStyle: 'none',
@@ -254,8 +255,8 @@ const useStyles = makeStyles(theme =>
 const StyledTable = props => {
   const [response, setResponse] = useState([
     {
-      projectId: '39570ad7-9f53-46ad-a552-c15d440139fb',
-      apiKey: 'UQbNVAE2h2WYKa-CU4BIMKP6Zj-ivnw_ErBg6rIq0to',
+      projectId: 'd6f6bdde-5840-4aa8-9c22-c79321c4fd7b',
+      apiKey: 'W0rbHV0s5Bf1jgiUDQkUbn-cVlIfuD2VOAGvkAKrrQI',
       expires: 'Nov 23, 2022',
       status: 'Active',
       usage: 0
@@ -353,8 +354,8 @@ const StyledTable = props => {
 
   const handleGetInfo = async (projectId, apiKey) => {
     try {
-      const projectId = '39570ad7-9f53-46ad-a552-c15d440139fb';
-      const apiKey = 'UQbNVAE2h2WYKa-CU4BIMKP6Zj-ivnw_ErBg6rIq0to';
+      const projectId = 'd6f6bdde-5840-4aa8-9c22-c79321c4fd7b';
+      const apiKey = 'W0rbHV0s5Bf1jgiUDQkUbn-cVlIfuD2VOAGvkAKrrQI';
   
       const response = await api.project.getProjectStats({ projectId, apiKey })
       setProjectInfo(response.data.result)
@@ -463,104 +464,12 @@ const StyledTable = props => {
             {filteredList
               .slice((page - 1) * 10, page * 10)
               .map((data, index) => (
-                <TableRow className={classes.rowInline} key={index}>
-                  <TableCell
-                    className={classes.cell}
-                    padding="none"
-                    component="th"
-                    scope="row"
-                  >
-                    <FlexColumn
-                      className={`${styles.column} ${styles.flexStart}`}
-                    >
-                      <Typography
-                        className={`${styles.title}`}
-                        color="common.black"
-                        variant="h6"
-                      >
-                        Project ID
-                      </Typography>
-                      <Typography
-                        variant="h6"
-                        color="#475467"
-                        className={styles.fontWeight400}
-                      >
-                        {data.projectId.slice(0, 8).concat('...')}
-                      </Typography>
-                    </FlexColumn>
-                  </TableCell>
-                  <TableCell
-                    className={classes.cell}
-                    padding="none"
-                    align="right"
-                  >
-                    <FlexColumn
-                      className={`${styles.column} ${styles.flexStart}`}
-                    >
-                      <Typography
-                        className={`${styles.title}`}
-                        color="common.black"
-                        variant="h6"
-                      >
-                        Status
-                      </Typography>
-                      <Typography variant="h6" color="#475467">
-                        {data.status}
-                      </Typography>
-                    </FlexColumn>
-                  </TableCell>
-                  <TableCell
-                    className={classes.cell}
-                    padding="none"
-                    align="right"
-                  >
-                    <FlexColumn
-                      className={`${styles.column} ${styles.flexStart}`}
-                    >
-                      <Typography
-                        className={`${styles.title}`}
-                        color="common.black"
-                        variant="h6"
-                      >
-                        Usage
-                      </Typography>
-                      <ProgressBar process={data.usage} />
-                    </FlexColumn>
-                  </TableCell>
-                  <TableCell
-                    className={classes.cell}
-                    padding="none"
-                    align="right"
-                  >
-                    <FlexColumn className={`${styles.column}`}>
-                      <Typography
-                        className={`${styles.title}`}
-                        color="common.black"
-                        variant="h6"
-                      >
-                        Expires
-                      </Typography>
-                      <Typography variant="h6" color="#475467">
-                        {data.expires}
-                      </Typography>
-                    </FlexColumn>
-                  </TableCell>
-                  <TableCell
-                    className={`${classes.cell} ${classes.paddingRight}`}
-                    align="right"
-                  >
-                    <Button
-                      variant="contained"
-                      onClick={() => handleGetInfo(data.projectId, data.apiKey)}
-                      className={styles.viewProjectInfoBtn}
-                    >
-                      <span className={styles.infoBtnSpace}>
-                        View project info
-                      </span>
-                      <img src={info} alt="info" />
-                    </Button>
-                  </TableCell>
-                </TableRow>
+                <ProjectTableRow 
+                  data={data} 
+                  index={index} 
+                  handleGetInfo={handleGetInfo}
+                  useStyles={useStyles}
+                />
               ))}
           </TableBody>
         </Table>

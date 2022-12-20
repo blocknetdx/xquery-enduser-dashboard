@@ -207,6 +207,10 @@ const hasNetwork = (row, filters) => {
   return false
 }
 
+const capitalizeFirstLetter = (string = '') => {
+  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+}
+
 const ProjectModal = props => {
   const { open, signature, handleClose } = props
   // const [{ wallet }] = useConnectWallet()
@@ -223,6 +227,7 @@ const ProjectModal = props => {
   const [tabIndex, setTabIndex] = useState(0)
   const [newProj, setNewProj] = useState(null)
   const [serviceLevel, setServiceLevel] = useState(0)
+
   const [projectDetail, setProjectDetail] = useState(null);
 
   const [state, setState] = useState({
@@ -230,12 +235,31 @@ const ProjectModal = props => {
     acceptedCurrencies: [],
     quoteExpiryTime: null,
   })
+  const [keyVisibility, setKeyVisibility] = useState(false)
+  const [snodes, setSnodes] = useState([]);
+  const [selectedNodeIndex, setSelectedNodeIndex] = useState(null);
+
 
   // const [scroll, setScroll] = React.useState<DialogProps['scroll']>('body');
 
   // const [loading, setLoading] = useState(false)
 
-  const onClickDetail = async () => {
+  useEffect(() => {
+    getSNodes();
+  }, [props])
+
+  async function getSNodes() {
+    try {
+      const response = await api.project.getSNodes();
+      console.log('CreateProjectModal response: ', response);
+      setSnodes(response.data?.data || []);
+    } catch (error) {
+      toast(`Backend server error occured: ${error?.message}`)
+    }
+  }
+
+  const onClickDetail = async (index) => {
+    // console.log('onClickDetail', index);
     if (signature) {
       const body = {
         id: 1,
@@ -246,6 +270,7 @@ const ProjectModal = props => {
         const result = await api.project.createProject(body)
         dispatch(setProject(result?.data?.result))
         setNewProj(result?.data?.result)
+        setSelectedNodeIndex(index);
         setTabIndex(1)
       } catch (error) {
         // console.log(typeof error?.message)
@@ -261,8 +286,8 @@ const ProjectModal = props => {
   }, [])
 
   const createProject = async () => {
-    const projectId = '39570ad7-9f53-46ad-a552-c15d440139fb';
-    const apiKey = 'UQbNVAE2h2WYKa-CU4BIMKP6Zj-ivnw_ErBg6rIq0to';
+    const projectId = 'd6f6bdde-5840-4aa8-9c22-c79321c4fd7b';
+    const apiKey = 'W0rbHV0s5Bf1jgiUDQkUbn-cVlIfuD2VOAGvkAKrrQI';
 
     const response = await api.project.getProjectStats({
       projectId: projectId,
@@ -477,7 +502,7 @@ const ProjectModal = props => {
                       </TableRow>
                     </TableHead>
                     <TableBody className={styles.whiteBg}>
-                      {rows
+                      {snodes
                         .filter(
                           row =>
                             toFilter.length === 0 || hasNetwork(row, toFilter)
@@ -496,26 +521,11 @@ const ProjectModal = props => {
                                 gap="5px"
                                 flexDirection="row"
                               >
-                                {/* {
+                                {
                                   row.networks.map((network) => {
-                                    return <Chip key={network} label={network} size='small' color="primary" />
+                                    return <Chip key={network} label={network} size='small' className={styles[`chip${capitalizeFirstLetter(network)}`]} />
                                   })
-                                } */}
-                                <Chip
-                                  label="ETH"
-                                  size="small"
-                                  className={styles.chipEth}
-                                />
-                                <Chip
-                                  label="AVAX"
-                                  size="small"
-                                  className={styles.chipAvax}
-                                />
-                                <Chip
-                                  label="BSC"
-                                  size="small"
-                                  className={styles.chipBsc}
-                                />
+                                }
                               </Stack>
                             </StyledTableCell>
                             {/* <StyledTableCell align="left">
@@ -535,7 +545,7 @@ const ProjectModal = props => {
                               <Button
                                 variant="contained"
                                 className={styles.detailsButton}
-                                onClick={onClickDetail}
+                                onClick={() => onClickDetail(index)}
                               >
                                 <span className={styles.infoBtnSpace}>
                                   View details
@@ -550,7 +560,7 @@ const ProjectModal = props => {
                               <Button
                                 variant="contained"
                                 className={styles.infoMobile}
-                                onClick={onClickDetail}
+                                onClick={() => onClickDetail(index)}
                               >
                                 <img
                                   src={info}
@@ -615,21 +625,12 @@ const ProjectModal = props => {
                     spacing={1}
                     className={styles.mixBlendMode}
                   >
-                    <Chip
-                      label="ETH"
-                      size="small"
-                      className={styles.darkChipEth}
-                    />
-                    <Chip
-                      label="AVAX"
-                      size="small"
-                      className={styles.darkChipAvax}
-                    />
-                    <Chip
-                      label="BSC"
-                      size="small"
-                      className={styles.darkChipBsc}
-                    />
+                    {
+                      snodes.length > 0 && snodes.length > selectedNodeIndex &&
+                      snodes[selectedNodeIndex]?.networks.map(network => (
+                        <Chip key={network} label={network} size='small' className={styles[`darkChip${capitalizeFirstLetter(network)}`]} />
+                      ))
+                    }
                   </Stack>
                 </Stack>
                 <Stack
@@ -667,7 +668,7 @@ const ProjectModal = props => {
                     </Typography>
                     <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                   </Stack>
-                  <div>65.119.157.65</div>
+                  <div>{snodes.length > selectedNodeIndex && snodes[selectedNodeIndex]?.ip[0]}</div>
                 </Stack>
                 <Stack
                   direction="row"
@@ -854,26 +855,12 @@ const ProjectModal = props => {
                       flexDirection="row"
                       className={styles.mt20}
                     >
-                      {/* {
-                                  row.networks.map((network) => {
-                                    return <Chip key={network} label={network} size='small' color="primary" />
-                                  })
-                                } */}
-                      <Chip
-                        label="ETH"
-                        size="small"
-                        className={styles.chipEth}
-                      />
-                      <Chip
-                        label="AVAX"
-                        size="small"
-                        className={styles.chipAvax}
-                      />
-                      <Chip
-                        label="BSC"
-                        size="small"
-                        className={styles.chipBsc}
-                      />
+                      {
+                        snodes.length > 0 && snodes.length > selectedNodeIndex &&
+                        snodes[selectedNodeIndex]?.networks.map(network => (
+                          <Chip key={network} label={network} size='small' className={styles[`chip${capitalizeFirstLetter(network)}`]} />
+                        ))
+                      }
                     </Stack>
                   </div>
                 </div>
