@@ -228,7 +228,7 @@ const ProjectInfoModal = props => {
           <Chip
             label={capitalizeFirstLetter(status)}
             size="small"
-            className={`${[styles.analysisInfo, styles[`status-${status}`]]}`}
+            className={`${styles.analysisInfo, styles[`status-${status}`]}`}
           />
         </Stack>
         <>
