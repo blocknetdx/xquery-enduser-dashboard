@@ -380,17 +380,22 @@ const ProjectModal = props => {
               : titles[2]}
           </Typography>
           <PaletteDividerBg className={styles.divider} />
-          <Typography className={`${styles.chooseLabel}`}>
-            Your Project Details
-          </Typography>
-          <Typography
-            className={`${styles.desc} ${styles.mb10}`}
-            color="text.primary"
-          >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam,
-            purus sit amet luctus venenatis, lectus magna fringilla urna,
-            porttitor rhoncus dolor purus non.
-          </Typography>
+          {
+            tabIndex !== 2 &&
+            <React.Fragment>            
+              <Typography className={`${styles.chooseLabel}`}>
+                Your Project Details
+              </Typography>
+              <Typography
+                className={`${styles.desc} ${styles.mb10}`}
+                color="text.primary"
+              >
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam,
+                purus sit amet luctus venenatis, lectus magna fringilla urna,
+                porttitor rhoncus dolor purus non.
+              </Typography>
+            </React.Fragment>
+          }
           {tabIndex === 0 && (
             <div className={styles.tab0}>
               <div className={styles.tableBox}>
@@ -587,7 +592,8 @@ const ProjectModal = props => {
                 <Stack
                   direction="row"
                   justifyContent="space-between"
-                  className={styles.mobileDisplay}
+                  flexWrap="wrap"
+                  className={styles.apiKey}
                 >
                   <Stack
                     direction="row"
@@ -596,13 +602,12 @@ const ProjectModal = props => {
                     spacing={0.5}
                   >
                     <Typography className={styles.projectInfoLabel}>
-                      Project ID:
+                      Host Server IP:
                     </Typography>
                     <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                   </Stack>
-                  <div>{projectDetail?.project_id}</div>
+                  <div>{snodes.length > selectedNodeIndex && snodes[selectedNodeIndex]?.ip[0]}</div>
                 </Stack>
-                <ApiKeySection apiKey={projectDetail?.api_key} />
                 <Stack
                   direction="row"
                   justifyContent="space-between"
@@ -654,8 +659,7 @@ const ProjectModal = props => {
                 <Stack
                   direction="row"
                   justifyContent="space-between"
-                  flexWrap="wrap"
-                  className={styles.apiKey}
+                  className={styles.mobileDisplay}
                 >
                   <Stack
                     direction="row"
@@ -664,11 +668,11 @@ const ProjectModal = props => {
                     spacing={0.5}
                   >
                     <Typography className={styles.projectInfoLabel}>
-                      Host Server IP:
+                      Cost per 1000 API calls:
                     </Typography>
                     <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                   </Stack>
-                  <div>{snodes.length > selectedNodeIndex && snodes[selectedNodeIndex]?.ip[0]}</div>
+                  <div>{state?.costApiCall}</div>
                 </Stack>
                 <Stack
                   direction="row"
@@ -686,185 +690,19 @@ const ProjectModal = props => {
                     </Typography>
                     <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                   </Stack>
-                  <div>{state?.costApiCall}</div>
+                  <div>{projectDetail?.project_id}</div>
                 </Stack>
+                <ApiKeySection apiKey={projectDetail?.api_key} />
                 <ExpiryTimeCountdown expiryTime={projectDetail?.quote_expiry_time} />
               </ProjectInfoPanel>
-
-              <Typography
-                className={`${styles.chooseLabel} ${styles.marginTop}`}
-                color="common.black"
-              >
-                Choose from one of the following service levels:
-              </Typography>
-
-              <ServiceLevel
-                direction={'row'}
-                justifyContent="space-between"
-                className={styles.tierBody}
-              >
-                <div
-                  className={`${styles.tier} ${
-                    serviceLevel === 0 ? styles.selectedTier : ''
-                  }`}
-                >
-                  <div
-                    className={`${styles.tierInner} ${
-                      serviceLevel === 0 ? styles.selectedTierInner : ''
-                    } ${serviceLevel === 0 ? styles.selectedTierTitle : ''}`}
-                  >
-                    <Stack
-                      direction="row"
-                      justifyContent={'space-between'}
-                      alignItems="center"
-                      onClick={() => setServiceLevel(0)}
-                      className={`${styles.cursorPointer} ${styles.borderBottom1} ${styles.fullWidth}`}
-                    >
-                      <Stack
-                        direction={'row'}
-                        justifyContent="space-between"
-                        alignItems={'center'}
-                        spacing={2}
-                        className={styles.fullWidth}
-                      >
-                        <div className={styles.avatarContainer}>
-                          <Avatar
-                            alt="tie"
-                            src={layer2}
-                            className={styles.layersAvatar}
-                          />{' '}
-                        </div>
-                        <div className={styles.tierTitle}>
-                          <div className={styles.tierLetter}>Tier 1</div>
-                          {serviceLevel === 1 ? (
-                            <div className={styles.unchecked} />
-                          ) : (
-                            <CheckCircle className={styles.checked} />
-                          )}
-                        </div>
-                      </Stack>
-                    </Stack>
-                  </div>
-
-                  <div
-                    className={`${styles.tierPadding} ${styles.whitBackground} ${styles.borderBottomRadius}`}
-                  >
-                    <Stack
-                      className={styles.price}
-                      direction="row"
-                      alignItems="center"
-                      justifyContent={'flex-start'}
-                    >
-                      <span>$35</span> 6 million calls
-                    </Stack>
-                    <Typography className={styles.description}>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit ut
-                      aliquam, purus sit.
-                    </Typography>
-                    <Stack
-                      display="flex"
-                      gap="5px"
-                      flexDirection="row"
-                      className={styles.mt20}
-                    >
-                      {/* {
-                                  row.networks.map((network) => {
-                                    return <Chip key={network} label={network} size='small' color="primary" />
-                                  })
-                                } */}
-                      <Chip
-                        label="ETH"
-                        size="small"
-                        className={styles.chipEth}
-                      />
-                      <Chip
-                        label="AVAX"
-                        size="small"
-                        className={styles.chipAvax}
-                      />
-                      <Chip
-                        label="BSC"
-                        size="small"
-                        className={styles.chipBsc}
-                      />
-                    </Stack>
-                  </div>
-                </div>
-
-                <div
-                  className={`${styles.tier} ${
-                    serviceLevel === 1 ? styles.selectedTier : ''
-                  }`}
-                >
-                  <div
-                    className={`${styles.tierInner} ${
-                      serviceLevel === 1 ? styles.selectedTierInner : ''
-                    } ${serviceLevel === 1 ? styles.selectedTierTitle : ''}`}
-                  >
-                    <Stack
-                      direction="row"
-                      justifyContent={'space-between'}
-                      alignItems="center"
-                      onClick={() => setServiceLevel(1)}
-                      className={`${styles.cursorPointer} ${styles.borderBottom1} ${styles.fullWidth}`}
-                    >
-                      <Stack
-                        direction={'row'}
-                        justifyContent="space-between"
-                        alignItems={'center'}
-                        spacing={2}
-                        className={styles.fullWidth}
-                      >
-                        <div className={styles.avatarContainer}>
-                          <Avatar
-                            alt="tie"
-                            src={layer2}
-                            className={styles.layersAvatar}
-                          />{' '}
-                        </div>
-                        <div className={styles.tierTitle}>
-                          <div className={styles.tierLetter}>Tier 2</div>
-                          {serviceLevel === 0 ? (
-                            <div className={styles.unchecked} />
-                          ) : (
-                            <CheckCircle className={styles.checked} />
-                          )}
-                        </div>
-                      </Stack>
-                    </Stack>
-                  </div>
-
-                  <div
-                    className={`${styles.tierPadding} ${styles.whitBackground} ${styles.borderBottomRadius}`}
-                  >
-                    <Stack
-                      className={styles.price}
-                      direction="row"
-                      alignItems="center"
-                      justifyContent={'flex-start'}
-                    >
-                      <span>$200</span> 32 million calls
-                    </Stack>
-                    <Typography className={styles.description}>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit ut
-                      aliquam, purus sit.
-                    </Typography>
-                    <Stack
-                      display="flex"
-                      gap="5px"
-                      flexDirection="row"
-                      className={styles.mt20}
-                    >
-                      {
-                        snodes.length > 0 && snodes.length > selectedNodeIndex &&
-                        snodes[selectedNodeIndex]?.networks.map(network => (
-                          <Chip key={network} label={network} size='small' className={styles[`chip${capitalizeFirstLetter(network)}`]} />
-                        ))
-                      }
-                    </Stack>
-                  </div>
-                </div>
-              </ServiceLevel>
+              <div className={styles.detail}>
+                <Typography className={`${styles.chooseLabel}`}>
+                  Payment Info
+                </Typography>
+                <Typography className={styles.desc} color="text.primary">
+                  Text content to explain max 1 hour wait for pending tx and what happens next after payment has been made.
+                </Typography>
+              </div>
             </div>
           )}
           {tabIndex === 2 && ( // Step 3
@@ -882,7 +720,7 @@ const ProjectModal = props => {
                   fringilla urna, porttitor rhoncus dolor purus non.
                 </Typography>
               </div>
-              <PaymentInfo spacing={3}>
+              <PaymentInfo spacing={3} className={styles.mb30}>
                 {/* <div className={styles.info}> */}
                 <Stack
                   direction={'row'}
@@ -976,6 +814,19 @@ const ProjectModal = props => {
                 </Typography>
                 {/* </div> */}
               </PaymentInfo>
+              <div className={styles.detail}>
+                <Typography
+                   className={`${styles.chooseLabel}`}
+                  color="common.black"
+                >
+                  Your Project Summary
+                </Typography>
+                <Typography className={styles.desc} color="text.primary">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit ut
+                  aliquam, purus sit amet luctus venenatis, lectus magna
+                  fringilla urna, porttitor rhoncus dolor purus non.
+                </Typography>
+              </div>
               <ProjectInfoPanel
                 spacing={3}
                 className={`${styles.projectInfoPanel} ${styles.mb30}`}
