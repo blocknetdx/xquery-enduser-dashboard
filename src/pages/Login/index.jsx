@@ -10,6 +10,7 @@ import styles from './index.module.scss'
 import logo from '../../assets/logo.svg'
 import { dark, light } from '../../theme'
 import { useEagerConnect, useVerifySignature } from '../../hooks'
+import api from '../../apis'
 
 const MainDiv = styled.div(({ theme }) => ({
   background: `${theme.palette.info.main}`
@@ -77,9 +78,24 @@ const Login = () => {
 
   useEffect(() => {
     if (!preConnect && !!wallet && !!signature) {
-      navigate('/')
+      createUser(wallet);
     }
   }, [preConnect, wallet, signature, navigate])
+
+  async function createUser(wallet) {
+    if (!wallet?.accounts || wallet?.accounts.length === 0) return;
+
+    const data = {
+      wallet_address: wallet?.accounts[0]?.address,
+      user_created_date: new Date(),
+    }
+
+    const response = await api.user.createUser(data);
+
+    localStorage.setItem('userid', response?.data?.data || null)
+
+    navigate('/')
+  }
 
   const handleConnect = async () => {
     if (!wallet) {

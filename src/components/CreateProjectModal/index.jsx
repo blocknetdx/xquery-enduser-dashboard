@@ -263,16 +263,17 @@ const ProjectModal = props => {
         method: 'request_project',
         params: [{"XQuery": "True"}]
       }
+      const userid = localStorage.getItem('userid');
       try {
-        const result = await api.project.createProject(body)
+        const result = await api.project.createProject(body, userid)
         console.log('create project modal result: ', result);
-        dispatch(setProject(result?.data?.result))
+        dispatch(setProject(result?.data?.data))
         setSelectedNodeIndex(index);
-        setProjectDetail(result?.data?.result);
+        setProjectDetail(result?.data?.data);
 
         setState(pre => ({
           ...pre,
-          acceptedCurrencies: filterMinAmount(result?.data?.result),
+          acceptedCurrencies: filterMinAmount(result?.data?.data),
         }))
         setTabIndex(1)
       } catch (error) {
