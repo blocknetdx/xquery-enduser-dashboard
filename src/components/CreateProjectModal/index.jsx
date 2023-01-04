@@ -660,7 +660,7 @@ const ProjectModal = props => {
                     spacing={0.5}
                   >
                     <Typography className={styles.projectInfoLabel}>
-                      Cost per 1000 API calls:
+                      Project ID: 
                     </Typography>
                     <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                   </Stack>
