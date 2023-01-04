@@ -686,7 +686,7 @@ const ProjectModal = props => {
                     spacing={0.5}
                   >
                     <Typography className={styles.projectInfoLabel}>
-                      Project ID:
+                      Project ID: 
                     </Typography>
                     <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                   </Stack>
