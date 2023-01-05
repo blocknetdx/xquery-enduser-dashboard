@@ -253,45 +253,9 @@ const useStyles = makeStyles(theme =>
 )
 
 const StyledTable = props => {
-  const [response, setResponse] = useState([
-    {
-      projectId: 'd6f6bdde-5840-4aa8-9c22-c79321c4fd7b',
-      apiKey: 'W0rbHV0s5Bf1jgiUDQkUbn-cVlIfuD2VOAGvkAKrrQI',
-      expires: 'Nov 23, 2022',
-      status: 'Active',
-      usage: 0
-    },
-    {
-      projectId: 'a9cf3da8-e961-4b6a-b25e-9033f7be4373',
-      apiKey: 'jMg5YijTX_AP1DZEzxGIOip6jEbfEr7POcmxWT3q7dE',
-      expires: 'Oct 24, 2022',
-      status: 'Inactive',
-      usage: 0
-    },
-    {
-      projectId: '3bae6363-165b-4dad-b16e-4733b0c87269',
-      apiKey: 'W87N-dup9i4RI7IP0mwIdAA9JVVaxkJQ93UOKvLuJTc',
-      expires: 'Oct 24, 2022',
-      status: 'Pending',
-      usage: 0
-    },
-    {
-      projectId: '812021e5-5f1a-43d1-928e-aec4840a36fd',
-      apiKey: 'tmYoUe970v4ObI_vZsWL2Wvv_IS0XxvkYNGB1XXTMuw',
-      expires: 'Oct 24, 2022',
-      status: 'Pending',
-      usage: 0
-    },
-    {
-      projectId: '356a186a-baec-431d-80a2-2d3f7b1cb841',
-      apiKey: 'Xbl-IN-e85mH0woZi4kzvBfjBJ4L9srmQtyWLRGSMbM',
-      expires: 'Oct 24, 2022',
-      status: 'Active',
-      usage: 0
-    }
-  ])
+  const [response, setResponse] = useState([])
 
-  const { theme, modalOpen, setModalOpen } = props
+  const { theme, modalOpen, setModalOpen, allUserProjects = [] } = props
   const [search, setSearch] = useState('')
   const [toFilter, setToFilter] = useState([])
   const [fromFilter, setFromFilter] = useState(filterlist)
@@ -310,17 +274,21 @@ const StyledTable = props => {
   useEffect(() => {
     const init = async () => {
       let newResponse = await Promise.all(
-        response.map(async (project, index) => {
-          const { api_tokens, api_tokens_used } = (
+        allUserProjects.map(async (project, index) => {
+          const { api_tokens, api_tokens_used, status } = (
             await api.project.getProjectStats({
-              projectId: project.projectId,
-              apiKey: project.apiKey
+              projectId: project.project_id,
+              apiKey: project.api_key
             })
           )?.data?.result || {}
           // console.log('api tokens:', { api_tokens, api_tokens_used })
           if (api_tokens !== 'N/A' && api_tokens_used !== 'N/A') {
             return {
               ...project,
+              projectId: project.project_id,
+              apiKey: project.api_key,
+              expires: 'Oct 24, 2022',
+              status,
               usage: (Number(api_tokens_used) * 100) / Number(api_tokens)
             }
           }
@@ -330,7 +298,7 @@ const StyledTable = props => {
       setResponse([...newResponse])
     }
     init()
-  }, [])
+  }, [allUserProjects])
 
   const handleChange = event => {
     let fromTemp = fromFilter
@@ -354,9 +322,6 @@ const StyledTable = props => {
 
   const handleGetInfo = async (projectId, apiKey) => {
     try {
-      const projectId = 'd6f6bdde-5840-4aa8-9c22-c79321c4fd7b';
-      const apiKey = 'W0rbHV0s5Bf1jgiUDQkUbn-cVlIfuD2VOAGvkAKrrQI';
-  
       const response = await api.project.getProjectStats({ projectId, apiKey })
       setProjectInfo(response.data.result)
       setModalOpen(true)

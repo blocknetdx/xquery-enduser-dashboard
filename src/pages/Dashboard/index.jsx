@@ -44,6 +44,7 @@ import AccordionDetails from '@mui/material/AccordionDetails'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { makeStyles } from '@mui/styles'
 import { useEagerConnect, useVerifySignature } from '../../hooks'
+import api from '../../apis'
 
 const Code = `curl http://<NODE-URL>/xrs/evm_passthrough/AVAX/<PROJECT-ID> \\
   - X POST \\
@@ -93,12 +94,12 @@ const DividerDiv = styled.div(({ theme }) => ({
   background: `${theme.palette.divider}`
 }))
 
-const Header = ({ signature, customNotification }) => {
+const Header = ({ signature, customNotification, createOpen, setCreateOpen }) => {
   const mode = useSelector(state => state.toogle.darkMode)
   const theme = mode === 'true' ? dark : light
   // const dispatch = useDispatch()
 
-  const [createOpen, setCreateOpen] = useState(false)
+  // const [createOpen, setCreateOpen] = useState(false)
   const handleOpen = () => setCreateOpen(true)
   const handleClose = () => setCreateOpen(false)
 
@@ -241,12 +242,29 @@ const Dashboard = () => {
   const mode = useSelector(state => state.toogle.darkMode)
   const theme = mode === 'true' ? dark : light
   const [modalOpen, setModalOpen] = useState(false)
+  const [createOpen, setCreateOpen] = useState(false)
   const [copyFlag, setCopyFlag] = useState(false)
   const [customNotification] = useNotifications()
   const { preConnect } = useEagerConnect()
   const [{ wallet }] = useConnectWallet()
   const { signature } = useVerifySignature()
   const navigate = useNavigate()
+  const userid = localStorage.getItem('userid');
+  const [allUserProjects, setAllUserProjects] = useState([]);
+
+  useEffect(() => {
+    getAllUserProjects();
+  }, [createOpen])
+
+  async function getAllUserProjects() {
+    if (!userid) return;
+    
+    const allUserProjectsRes = await api.project.getAllProjects(userid);
+    
+    if (!allUserProjectsRes?.data?.success) return;
+
+    setAllUserProjects(allUserProjectsRes.data?.data || [])
+  }
 
   useEffect(() => {
     // console.log('auth info:', { wallet, signature })
@@ -275,7 +293,12 @@ const Dashboard = () => {
 
   return (
     <>
-      <Header signature={signature} customNotification={customNotification} />
+      <Header 
+        signature={signature}
+        customNotification={customNotification}
+        createOpen={createOpen}
+        setCreateOpen={setCreateOpen}
+      />
       <DashboardContainer className={`${styles.content}`}>
         <div className={styles.container}>
           <Typography
@@ -297,6 +320,7 @@ const Dashboard = () => {
                 theme={theme}
                 modalOpen={modalOpen}
                 setModalOpen={setModalOpen}
+                allUserProjects={allUserProjects}
               />
             </FlexColumn>
             <FlexColumn className={`${styles.rightSubContainer} ${styles.gap}`}>

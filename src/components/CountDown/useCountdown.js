@@ -27,7 +27,7 @@ export const getReturnValues = (countDown) => {
   const minutes = Math.floor((countDown % (1000 * 60 * 60)) / (1000 * 60));
   const seconds = Math.floor((countDown % (1000 * 60)) / 1000);
 
-  console.log('days, hors, minutes, seconds: ',days, hours, minutes, seconds);
+  // console.log('days, hors, minutes, seconds: ',days, hours, minutes, seconds);
 
   return [days, hours, minutes, seconds];
 };
