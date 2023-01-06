@@ -847,21 +847,12 @@ const ProjectModal = props => {
                     spacing={1}
                     className={styles.mixBlendMode}
                   >
-                    <Chip
-                      label="ETH"
-                      size="small"
-                      className={styles.darkChipEth}
-                    />
-                    <Chip
-                      label="AVAX"
-                      size="small"
-                      className={styles.darkChipAvax}
-                    />
-                    <Chip
-                      label="BSC"
-                      size="small"
-                      className={styles.darkChipBsc}
-                    />
+                    {
+                      snodes.length > 0 && snodes.length > selectedNodeIndex &&
+                      snodes[selectedNodeIndex]?.networks.map(network => (
+                        <Chip key={network} label={network} size='small' className={styles[`darkChip${capitalizeFirstLetter(network)}`]} />
+                      ))
+                    }
                   </Stack>
                 </Stack>
                 <Stack
