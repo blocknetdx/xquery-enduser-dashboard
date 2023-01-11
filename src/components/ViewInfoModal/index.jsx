@@ -243,21 +243,6 @@ const ProjectInfoModal = props => {
               alignItems="center"
               spacing={0.5}
             >
-              <div className={styles.label}>Expires: </div>
-            </Stack>
-            <div>{analyseInfo()?.expires}</div>
-          </Stack>
-          <Stack
-            direction={'row'}
-            justifyContent="space-between"
-            className={styles.mobileDisplay}
-          >
-            <Stack
-              direction={'row'}
-              justifyContent="flex-start"
-              alignItems="center"
-              spacing={0.5}
-            >
               <div className={styles.label}>Usage: </div>
             </Stack>
             <div>{`${ apiUsage || calcualteApiUsage(tokensUsed, tokens)}%`}</div>
