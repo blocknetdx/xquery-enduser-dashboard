@@ -27,8 +27,8 @@ const useApiUsage = ({
 
     async function getProjectDetail() {
         const response = await api.project.getProjectStats({
-            projectId : 'd6f6bdde-5840-4aa8-9c22-c79321c4fd7b',
-            apiKey: 'W0rbHV0s5Bf1jgiUDQkUbn-cVlIfuD2VOAGvkAKrrQI'
+            projectId : projectId,
+            apiKey: apiKey
         })
 
         const { api_tokens = 'N/A', api_tokens_used = 'N/A' } = response?.data?.result || {};
