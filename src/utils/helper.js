@@ -25,7 +25,7 @@ function capitalizeFirstLetter(str  = '') {
 }
 
 function calcualteApiUsage(tokensUsed, tokens) {
-  return (parseInt(tokensUsed) * 100 / parseInt(tokens)).toFixed()
+  return isNaN(parseInt(tokensUsed)) || isNaN(parseInt(tokens)) ? 0 : (parseInt(tokensUsed) * 100 / parseInt(tokens)).toFixed()
 }
 
 export {
