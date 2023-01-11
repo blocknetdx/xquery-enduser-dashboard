@@ -24,8 +24,9 @@ function capitalizeFirstLetter(str  = '') {
     return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 }
 
-function calcualteApiUsage(tokensUsed, tokens) {
-  return isNaN(parseInt(tokensUsed)) || isNaN(parseInt(tokens)) ? 0 : (parseInt(tokensUsed) * 100 / parseInt(tokens)).toFixed()
+function calcualteApiUsage(tokensUsed = null, tokens = null) {
+  if (!tokensUsed || !tokens || tokens === 0 || isNaN(parseInt(tokensUsed)) || isNaN(parseInt(tokens))) return 0;
+  return (parseInt(tokensUsed) * 100 / parseInt(tokens)).toFixed()
 }
 
 export {
