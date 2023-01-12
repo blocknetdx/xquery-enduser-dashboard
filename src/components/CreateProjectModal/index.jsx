@@ -18,7 +18,6 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
-import CopyToClipboard from 'react-copy-to-clipboard'
 import { Avatar } from '@mui/material'
 
 import {
@@ -49,6 +48,8 @@ import { currencyNames } from '../../configs/constants';
 import { filterMinAmount, getAcceptedCurrencyNames } from '../../utils/helper'
 import ExpiryTimeCountdown from '../ExpiryTimeCountdown'
 // import { useConnectWallet } from '@web3-onboard/react'
+
+import CopyToClipboard from '../CopyToClipboard'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -756,8 +757,8 @@ const ProjectModal = props => {
                   >
                     {/* <ContentCopy  /> */}
                     <CopyToClipboard
-                      text={projectDetail?.payment_eth_address || ''}
-                      onCopy={() => setCopyFlag(true)}
+                      content={projectDetail?.payment_eth_address}
+                      handleCopy={setCopyFlag}
                     >
                       <Stack
                         direction="row"
@@ -767,7 +768,7 @@ const ProjectModal = props => {
                         className={styles.fullWidth}
                       >
                         <span className={classes.key}>
-                          {`${projectDetail?.payment_eth_address?.slice(0, 25)} ...`}
+                          {projectDetail?.payment_eth_address}
                         </span>
                         {copyFlag ? (
                           <CheckCircleOutline

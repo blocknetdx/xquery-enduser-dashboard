@@ -8,7 +8,7 @@ import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
-import { CopyToClipboard } from 'react-copy-to-clipboard'
+// import { CopyToClipboard } from 'react-copy-to-clipboard'
 import {
   Close,
   CheckCircleOutline,
@@ -25,6 +25,7 @@ import { light, dark } from '../../theme'
 import ApiKeySection from '../ApiKeySection'
 import { calcualteApiUsage, capitalizeFirstLetter, filterMinAmount, getAcceptedCurrencyNames } from '../../utils/helper'
 import { currencyNames } from '../../configs/constants'
+import CopyToClipboard from '../CopyToClipboard'
 
 import styles from './index.module.scss'
 import useApiUsage from '../../hooks/useApiUsage'
@@ -452,6 +453,21 @@ const ProjectInfoModal = props => {
                   >
                     {/* <ContentCopy sx={{ cursor: 'pointer' }} /> */}
                     <CopyToClipboard
+                      content={projectInfo[analyseInfo()?.networks[0]]}
+                      handleCopy={setCopyFlag}
+                    >
+                      <div className={styles.address}>
+                        {projectInfo[analyseInfo()?.networks[0]]}
+                        {copyFlag ? (
+                          <CheckCircleOutline
+                            className={styles.cursorPointer}
+                          />
+                        ) : (
+                          <ContentCopy className={styles.cursorPointer} />
+                        )}
+                      </div>
+                    </CopyToClipboard>
+                    {/* <CopyToClipboard
                       text={projectInfo[analyseInfo()?.networks[0]]}
                       onCopy={() => setCopyFlag(true)}
                     >
@@ -465,7 +481,7 @@ const ProjectInfoModal = props => {
                           <ContentCopy className={styles.cursorPointer} />
                         )}
                       </div>
-                    </CopyToClipboard>
+                    </CopyToClipboard> */}
                   </Stack>
                 </Stack>
                 <Typography className={styles.desc} color="text.primary">
