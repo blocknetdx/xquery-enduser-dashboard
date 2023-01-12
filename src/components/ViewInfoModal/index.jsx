@@ -262,7 +262,7 @@ const ProjectInfoModal = props => {
             </Stack>
             <div>{`${ apiUsage || calcualteApiUsage(tokensUsed, tokens)}%`}</div>
           </Stack>
-          { renderSupportedNetworks() }
+          {/* { renderSupportedNetworks() } */}
           <Stack
             direction={'row'}
             justifyContent="space-between"
@@ -516,7 +516,7 @@ const ProjectInfoModal = props => {
                   <div>{projectId || ''}</div>
                 </Stack>
                 <ApiKeySection apiKey={apiKey || ''} />
-                { renderSupportedNetworks('mobileHidden') }
+                {/* { renderSupportedNetworks('mobileHidden') } */}
                 <Stack
                   direction="row"
                   justifyContent={'space-between'}
