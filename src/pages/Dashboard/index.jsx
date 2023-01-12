@@ -254,7 +254,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     getAllUserProjects();
-  }, [createOpen])
+  }, [createOpen, modalOpen])
 
   async function getAllUserProjects() {
     if (!userid) return;
