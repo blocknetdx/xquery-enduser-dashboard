@@ -29,9 +29,22 @@ function calcualteApiUsage(tokensUsed = null, tokens = null) {
   return (parseInt(tokensUsed) * 100 / parseInt(tokens)).toFixed()
 }
 
+function getPaymentAddresses(data = {}) {
+  let addresses = [];
+
+  Object.keys(data).forEach(item => {
+    if (item.includes('_address') && data[item]?.length > 0) {
+      addresses.push(data[item]);
+    }
+  })
+
+  return addresses;
+}
+
 export {
     filterMinAmount,
     getAcceptedCurrencyNames,
     capitalizeFirstLetter,
     calcualteApiUsage,
+    getPaymentAddresses,
 }
