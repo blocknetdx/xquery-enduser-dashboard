@@ -359,13 +359,6 @@ const StyledTable = props => {
           >
             Your Projects
           </Typography>
-          <Typography
-            variant="p"
-            color="text.primary"
-            fontWeight="normal !important"
-          >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit
-          </Typography>
         </FlexColumn>
       </div>
       <div className={`${styles.filter} ${classes.bottomDiv}`}>
