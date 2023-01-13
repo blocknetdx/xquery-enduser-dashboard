@@ -315,13 +315,13 @@ const Dashboard = () => {
           </Typography>
           <FlexRow className={`${styles.subContainer} ${styles.gap}`}>
             <FlexColumn className={`${styles.leftSubContainer} ${styles.gap}`}>
-              <Chart />            
-              <StyledTable
+             <StyledTable
                 theme={theme}
                 modalOpen={modalOpen}
                 setModalOpen={setModalOpen}
                 allUserProjects={allUserProjects}
               />
+               <Chart />            
             </FlexColumn>
             <FlexColumn className={`${styles.rightSubContainer} ${styles.gap}`}>
               <Card className={`${styles.about}`}>
