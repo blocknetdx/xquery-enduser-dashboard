@@ -310,8 +310,7 @@ const Dashboard = () => {
             Projects Overview
           </Typography>
           <Typography variant="h4" color="text.primary" mb="30px">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam,
-            purus sit
+          Create, manage and monitor your XQuery projects.
           </Typography>
           <FlexRow className={`${styles.subContainer} ${styles.gap}`}>
             <FlexColumn className={`${styles.leftSubContainer} ${styles.gap}`}>
@@ -336,8 +335,7 @@ const Dashboard = () => {
                 </div>
                 <div className={styles.aboutBody1}>
                   <Typography variant="p" color="text.primary">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Rhoncus elit interdum aliquet.
+                  Learn more about XQuery, a decentralized protocol for indexing and querying data from blockchains.
                   </Typography>
                   <FlexRow className={`${styles.spaceBetween}`}>
                     <Button
@@ -394,8 +392,7 @@ const Dashboard = () => {
                         color="text.primary"
                         className={styles.requestText}
                       >
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Quis sit facilisi non, suspendisse.
+                        Making your first request is as easy as passing your Project ID and API key with your parameters:
                       </Typography>
                     </div>
                   </AccordionSummary>
@@ -417,8 +414,7 @@ const Dashboard = () => {
                       )}
                     </CodeTag>
                     <Typography variant="p" color="text.primary">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Quis sit facilisi non, suspendisse.
+                    An example response:
                     </Typography>
                     <RequestDetails variant="p">
                       <WhitePre className={classes.codes}>{JsonInfo}</WhitePre>
@@ -438,8 +434,7 @@ const Dashboard = () => {
                 </div>
                 <div className={styles.aboutBody2}>
                   <Typography variant="p" color="text.primary">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Quis sit facilisi non, suspendisse.
+                  Follow the XQuery team and Blocknet on social media to keep up to date with the latest news.
                   </Typography>
                   <FlexRow className={`${styles.flexStart}`}>
                     <IconButton
@@ -489,9 +484,7 @@ const Dashboard = () => {
                       marginTop: isMobile ? '-15px' : '0px'
                     }}
                   >
-                    XQuery decentralizes access to indexed blockchain data,
-                    removing a critical burden of trust from the blockchain
-                    stack: centralized data providers.
+                    XQuery decentralizes access to indexed blockchain data, removing the critical burden of trust from the blockchain stack by eliminating the need for centralized data providers.
                   </Typography>
                   <DividerDiv className={`${styles.divider}`} />
                 </div>
@@ -508,12 +501,8 @@ const Dashboard = () => {
                     color="text.primary"
                     className={styles.blocknet}
                   >
-                    Dolor enim eu tortor urna sed duis nulla. Aliquam
-                    vestibulum, nulla odio nisl vitae. In aliquet pellentesque
-                    aenean hac vestibulum turpis mi bibendum diam. Tempor
-                    integer aliquam in vitae malesuada fringilla. Elit nisi in
-                    eleifend sed nisi. Pulvinar at orci, proin imperdiet commodo
-                    consectetur convallis risus.
+                    Blocknet is a decentralized network that connects blockchains, similar to how the internet connects computers.
+                    Whether it’s through cross-chain dApps or using the protocol as a 2nd layer to extend blockchain functionality, Blocknet provides developers with the capability to create the applications of tomorrow.
                   </Typography>
                   <FlexRow className={`${styles.flexStart}`}>
                     <img src={website} alt="website" />

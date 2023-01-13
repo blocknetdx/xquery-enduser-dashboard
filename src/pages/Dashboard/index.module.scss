@@ -170,9 +170,9 @@
   flex-direction: column;
   gap: 15px;
 }
-
-.blocknet {
-  line-height: 1.43 !important;
+// adding some extra bottom margin to allow space for the wallet-connect float box
+.rightSubContainer {
+  margin-bottom: 40px;
 }
 
 @media (max-width: 1280px) {
@@ -257,6 +257,11 @@
 
 .title {
   font-weight: 500 !important;
+}
+
+span {
+  font-weight: 400 !important;
+  line-height: 1.4em !important;
 }
 
 .spaceBetween {
