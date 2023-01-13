@@ -23,8 +23,15 @@ import Stack from '@mui/material/Stack'
 import { light, dark } from '../../theme'
 
 import ApiKeySection from '../ApiKeySection'
-import { calcualteApiUsage, capitalizeFirstLetter, filterMinAmount, getAcceptedCurrencyNames } from '../../utils/helper'
+import { 
+  calcualteApiUsage,
+  capitalizeFirstLetter,
+  filterMinAmount,
+  getAcceptedCurrencyNames,
+  getPaymentAddresses
+} from '../../utils/helper'
 import { currencyNames } from '../../configs/constants'
+import PaymentAddress from '../PaymentAddress'
 
 import styles from './index.module.scss'
 import useApiUsage from '../../hooks/useApiUsage'
@@ -105,6 +112,8 @@ const ProjectInfoModal = props => {
     status = '',
     api_key: apiKey,
   } = projectInfo || {};
+
+  console.log('viewinfo modal: ', projectInfo);
 
   const [apiUsage] = useApiUsage({
     projectId,
@@ -427,47 +436,7 @@ const ProjectInfoModal = props => {
                     }
                   </Stack>
                 </Stack>
-                <Stack
-                  direction="row"
-                  justifyContent={'space-between'}
-                  alignItems="center"
-                  className={styles.payAddress}
-                >
-                  <Stack
-                    direction="row"
-                    justifyContent={'flex-start'}
-                    alignItems="center"
-                    className={`${styles.left} ${styles.paymentAddress}`}
-                    spacing={1}
-                  >
-                    Payment address:
-                    {/* <HelpOutline sx={{ fontSize: '16px' }} /> */}
-                  </Stack>
-                  <Stack
-                    direction="row"
-                    justifyContent={'flex-start'}
-                    alignItems="center"
-                    className={`${styles.right}`}
-                    spacing={1}
-                  >
-                    {/* <ContentCopy sx={{ cursor: 'pointer' }} /> */}
-                    <CopyToClipboard
-                      text={projectInfo[analyseInfo()?.networks[0]]}
-                      onCopy={() => setCopyFlag(true)}
-                    >
-                      <div className={styles.address}>
-                        {projectInfo[analyseInfo()?.networks[0]]}
-                        {copyFlag ? (
-                          <CheckCircleOutline
-                            className={styles.cursorPointer}
-                          />
-                        ) : (
-                          <ContentCopy className={styles.cursorPointer} />
-                        )}
-                      </div>
-                    </CopyToClipboard>
-                  </Stack>
-                </Stack>
+                <PaymentAddress addresses={getPaymentAddresses(projectInfo)} />
                 <Typography className={styles.desc} color="text.primary">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit ut
                   aliquam, purus sit amet luctus venenatis, lectus magna
