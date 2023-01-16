@@ -35,7 +35,13 @@ yarn start
 
 The project will be running on [localhost:3000](http://localhost:3000)
 
-To deploy to a server, first build the static files:
+To deploy to a server, first change localhost to your server IP in src>configs>index.js:
+
+```bash
+http://yourserverIP/api
+```
+
+Then build the static files:
 
 ```bash
 yarn run build
