@@ -336,8 +336,11 @@ const ProjectInfoModal = props => {
                 {tabIndex === 0 ? 'Your Project Details' : 'Section title'}
               </Typography>
               <Typography className={styles.desc} color="text.primary">
-              To activate the project, send payment(s) sufficient to purchase 1,000 or more API calls.
-              Once the total amount shown below is received and confirmed your project will be activated. Payments made after the quote expiry time shown will receive half the normal number of api calls.
+                {
+                  tabIndex === 0 ? `To activate the project, send payment(s) sufficient to purchase 1,000 or more API calls.
+                  Once the total amount shown below is received and confirmed your project will be activated. Payments made after the quote expiry time shown will receive half the normal number of api calls.` : tabIndex === 1 ? 'Cancel this project' : 'Some other dummy text'
+                }
+              
               </Typography>
             </React.Fragment>
           }
