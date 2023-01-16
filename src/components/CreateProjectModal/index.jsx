@@ -191,13 +191,13 @@ const rows = [
 ]
 
 const titles = [
-  'New Project - Step 1 Title',
-  'New Project - Step 2 Title',
-  'New Project - Step 3 Title',
+  'New Project - Step 1',
+  'New Project - Step 2',
+  'New Project - Step 3',
   'Title - Project Info',
   'Title - Cancel Project',
   'Title - Project Cancelled',
-  'Title - Extend Project - Payment'
+  'Title - Extend Project'
 ]
 
 const filterlist = ['ETH', 'AVAX', 'BSC', 'SYS']
@@ -735,11 +735,7 @@ const ProjectModal = props => {
                 <ExpiryTimeCountdown expiryTime={projectDetail?.quote_expiry_time} />
                 <PaymentAddress addresses={getPaymentAddresses(projectDetail)} />
                 <Typography className={`${styles.fontItalic}`}>
-                  Text content to explain{' '}
-                  <b className={styles.tierInServiceLevel}>
-                    max 1 hour wait for pending tx
-                  </b>{' '}
-                  and what happens next after payment has been made.
+                Once the total amount shown below is received and confirmed your project will be activated. Payments made after the quote expiry time shown will receive half the normal number of api calls.
                 </Typography>
                 {/* </div> */}
               </PaymentInfo>

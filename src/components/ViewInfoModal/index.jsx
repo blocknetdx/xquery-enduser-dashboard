@@ -336,7 +336,8 @@ const ProjectInfoModal = props => {
                 {tabIndex === 0 ? 'Your Project Details' : 'Section title'}
               </Typography>
               <Typography className={styles.desc} color="text.primary">
-              To activate the project, send payment(s) sufficient to purchase 1,000 or more API calls. Once the total amount is received and confirmed on the relevant network, the project will be activated.
+              To activate the project, send payment(s) sufficient to purchase 1,000 or more API calls.
+              Once the total amount shown below is received and confirmed your project will be activated. Payments made after the quote expiry time shown will receive half the normal number of api calls.
               </Typography>
             </React.Fragment>
           }
@@ -399,8 +400,8 @@ const ProjectInfoModal = props => {
                 Payment Info
               </Typography>
               <Typography className={styles.desc} color="text.primary">
-              To extend this project, send payment(s) sufficient to purchase 1,000 or more API calls. Once the total amount is received and confirmed on the relevant network, the project will be activated.
-              Payments made after the time shown above only receive half the normal number of api calls.
+              To extend this project, send payment(s) sufficient to purchase 1,000 or more API calls.
+              Once the total amount shown below is received and confirmed your project will be activated. Payments made after the quote expiry time shown will receive half the normal number of api calls.
               </Typography>
 
               <BigOuter spacing={3}>
