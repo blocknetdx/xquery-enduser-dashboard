@@ -32,8 +32,7 @@ function calcualteApiUsage(tokensUsed = null, tokens = null) {
 const paymentNames = {
   eth: 'aBLOCK, ETH',
   avax: 'aaBLOCK, AVAX',
-  sys: 'wSYS, sysBLOCK',
-  nevm: 'NEVM'
+  nevm: 'wSYS, sysBLOCK'
 }
 
 function getPaymentName(data = '') {
