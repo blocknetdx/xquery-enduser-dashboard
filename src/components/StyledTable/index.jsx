@@ -63,7 +63,7 @@ const BlackFilterList = styled(FilterList)(({ theme }) => ({
   color: theme.palette.common.black
 }))
 
-const filterlist = ['Active', 'Inactive', 'Pending']
+const filterlist = ['pending', 'active', 'active_open', 'inactive', 'cancelled', 'user_cancelled']
 
 const StyledPagination = props => {
   const { items, curPage, length, setPage } = props
