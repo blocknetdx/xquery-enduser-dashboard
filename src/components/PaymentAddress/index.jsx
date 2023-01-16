@@ -37,14 +37,8 @@ const PaymentAddress = ({
     addresses = [],
 }) => {
     return (
-        <Stack
-            direction="row"
-            justifyContent={'space-between'}
-            alignItems="center"
-            className={styles.payAddress}
-        >
+        <React.Fragment>
             <Stack
-                direction="row"
                 justifyContent={'flex-start'}
                 alignItems="flex-start"
                 className={`${styles.left} ${styles.paymentAddress}`}
@@ -53,20 +47,30 @@ const PaymentAddress = ({
                 Payment address:
                 {/* <HelpOutline sx={{ fontSize: '16px' }} /> */}
             </Stack>
-            <Stack
-                direction="column"
-                justifyContent={'flex-start'}
-                alignItems="flex-end"
-                className={`${styles.right}`}
-                spacing={1}
-            >
-                {
-                    addresses.map(address => (
+
+            {
+                addresses.map(({name, address}) => (
+                    <Stack
+                        direction="row"
+                        justifyContent={'space-between'}
+                        alignItems="center"
+                        className={styles.payAddress}
+                    >
+                        <Stack
+                            direction="row"
+                            justifyContent={'flex-start'}
+                            alignItems="flex-start"
+                            className={`${styles.left} ${styles.paymentAddress}`}
+                            spacing={1}
+                        >
+                            {name}
+                            {/* <HelpOutline sx={{ fontSize: '16px' }} /> */}
+                        </Stack>
                         <AddressClipboard content={address} />
-                    ))
-                }
-            </Stack>
-        </Stack>
+                    </Stack>
+                ))
+            }
+        </React.Fragment>
     );
 }
 

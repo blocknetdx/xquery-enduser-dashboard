@@ -29,12 +29,25 @@ function calcualteApiUsage(tokensUsed = null, tokens = null) {
   return (parseInt(tokensUsed) * 100 / parseInt(tokens)).toFixed()
 }
 
+const paymentNames = {
+  eth: 'aBLOCK, ETH',
+  avax: 'aaBLOCK, AVAX',
+  nevm: 'wSYS, sysBLOCK'
+}
+
+function getPaymentName(data = '') {
+  return paymentNames[data.split('_')[1]] || '';
+}
+
 function getPaymentAddresses(data = {}) {
   let addresses = [];
 
   Object.keys(data).forEach(item => {
     if (item.includes('_address') && data[item]?.length > 0) {
-      addresses.push(data[item]);
+      addresses.push({
+        address: data[item],
+        name: getPaymentName(item),
+      });
     }
   })
 
