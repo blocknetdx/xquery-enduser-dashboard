@@ -37,10 +37,10 @@ import styles from './index.module.scss'
 import useApiUsage from '../../hooks/useApiUsage'
 
 const titles = [
-  'Title - Project Info',
-  'Title - Cancel Project',
-  'Title - Project Cancelled',
-  'Title - Extend Project - Payment'
+  'Project Info',
+  'Cancel Project',
+  'Project Cancelled',
+  'Extend Project'
 ]
 
 const LightBox = styled(Box)(({ theme }) => ({
@@ -336,9 +336,7 @@ const ProjectInfoModal = props => {
                 {tabIndex === 0 ? 'Your Project Details' : 'Section title'}
               </Typography>
               <Typography className={styles.desc} color="text.primary">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam,
-                purus sit amet luctus venenatis, lectus magna fringilla urna,
-                porttitor rhoncus dolor purus non.
+              To activate the project, send payment(s) sufficient to purchase 1,000 or more API calls. Once the total amount is received and confirmed on the relevant network, the project will be activated.
               </Typography>
             </React.Fragment>
           }
@@ -401,9 +399,8 @@ const ProjectInfoModal = props => {
                 Payment Info
               </Typography>
               <Typography className={styles.desc} color="text.primary">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit ut
-                aliquam, purus sit amet luctus venenatis, lectus magna fringilla
-                urna, porttitor rhoncus dolor purus non.
+              To extend this project, send payment(s) sufficient to purchase 1,000 or more API calls. Once the total amount is received and confirmed on the relevant network, the project will be activated.
+              Payments made after the time shown above only receive half the normal number of api calls.
               </Typography>
 
               <BigOuter spacing={3}>
@@ -438,9 +435,7 @@ const ProjectInfoModal = props => {
                 </Stack>
                 <PaymentAddress addresses={getPaymentAddresses(projectInfo)} />
                 <Typography className={styles.desc} color="text.primary">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit ut
-                  aliquam, purus sit amet luctus venenatis, lectus magna
-                  fringilla urna, porttitor rhoncus dolor purus non.
+                  *Please check the network for the token you are sending. Any funds sent on an incorrect network will result in those funds being lost.
                 </Typography>
                 {/* </div> */}
               </BigOuter>
@@ -448,11 +443,11 @@ const ProjectInfoModal = props => {
               <Typography className={`${styles.subTItle}`} color="common.black">
                 Your Project Summary
               </Typography>
-              <Typography className={styles.desc} color="text.primary">
+              {/* <Typography className={styles.desc} color="text.primary">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam,
                 purus sit amet luctus venenatis, lectus magna fringilla urna,
                 porttitor rhoncus dolor purus non.
-              </Typography>
+              </Typography> */}
               <SmallOuter className={styles.gap20}>
                 <Stack
                   direction="row"
@@ -481,7 +476,7 @@ const ProjectInfoModal = props => {
                     justifyContent="flex-start"
                     spacing={0.5}
                   >
-                    <div className={styles.left}>Cost per 1000 API calls </div>
+                    <div className={styles.left}>Approx cost per 1000 API calls: </div>
                     {/* <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} /> */}
                   </Stack>
                   <div className={styles.font14}>{costApiCalls}</div>

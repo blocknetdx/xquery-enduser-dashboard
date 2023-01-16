@@ -679,7 +679,7 @@ const ProjectModal = props => {
                   Payment Info
                 </Typography>
                 <Typography className={styles.desc} color="text.primary">
-                  Text content to explain max 1 hour wait for pending tx and what happens next after payment has been made.
+                
                 </Typography>
               </div>
             </div>
