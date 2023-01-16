@@ -253,8 +253,20 @@ const Dashboard = () => {
   const [allUserProjects, setAllUserProjects] = useState([]);
 
   useEffect(() => {
+    const syncProjectInterval = setInterval(() => {
+      getAllUserProjects();
+    }, 600000);
+
+    return (() => {
+      clearInterval(syncProjectInterval);
+    })
+  }, []);
+
+  useEffect(() => {
     getAllUserProjects();
   }, [createOpen])
+
+
 
   async function getAllUserProjects() {
     if (!userid) return;

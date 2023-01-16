@@ -11,7 +11,7 @@ const CopyToClipboard = ({
 
         setTimeout(() => {
             handleCopy(false);
-        }, 3000);
+        }, 2000);
     }
     return (
         <RTCopyToClipboard

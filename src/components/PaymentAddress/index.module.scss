@@ -1,0 +1,403 @@
+.verticalOverflow {
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.closeIcon {
+  font-size: 25px;
+  cursor: pointer;
+  color: #98a2b3;
+  margin: -14px -14px 0px 0px;
+}
+
+.title {
+  font-size: 20px;
+  margin-top: -10px !important;
+}
+
+.projectDetails {
+  font-size: 16px !important;
+  font-weight: 500 !important;
+}
+
+.label {
+  color: #344054;
+  font-weight: 500;
+}
+
+.supportedNetworks {
+  margin-top: 2px !important;
+}
+
+.font14 {
+  font-size: 14px;
+}
+
+.mt12 {
+  margin-top: 12px;
+}
+
+.mt10 {
+  margin-top: 10px !important;
+}
+
+.mb10 {
+  margin-bottom: 10px !important;
+}
+
+.mt30 {
+  margin-top: 30px !important;
+}
+
+.paymentAddress {
+  font-size: 14px;
+  font-weight: 600;
+  width: 35%;
+  color: #344054;
+}
+
+.cursorPointer {
+  cursor: pointer;
+}
+
+.cancelProjectBtn {
+  height: 44px;
+  border-radius: 6px;
+  border: solid 1px #d0d5dd;
+  background-color: #fff;
+  color: #344054;
+}
+
+.extendProjectBtn {
+  height: 44px;
+  border-radius: 6px;
+}
+
+.mt3 {
+  margin-top: 24px;
+}
+
+.gap {
+  gap: 10px;
+}
+
+.height44 {
+  height: 44px;
+}
+
+.createNewProjectBtn {
+  height: 44px;
+  border-radius: 6px;
+  border: solid 1px #d0d5dd;
+  background-color: #fff;
+  color: #344054;
+}
+
+.returnToDashboardBtn {
+  height: 44px;
+  border-radius: 6px;
+}
+
+.gap20 {
+  gap: 20px !important;
+}
+
+.subTItle {
+  text-align: left;
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 500;
+  margin-top: 30px !important;
+}
+
+.modalBox {
+  position: relative;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 700px;
+  width: 90vw;
+  background-color: #f9fafb !important;
+  box-shadow: 0 8px 8px -4px rgba(16, 24, 40, 0.03), 0 20px 24px -4px rgba(16, 24, 40, 0.08);
+  padding: 24px;
+
+  .title {
+    text-align: center;
+    margin-top: 0px;
+  }
+
+  .key {
+    color: #344054 !important;
+  }
+
+  .divider {
+    width: 100%;
+    height: 1px;
+    background-color: #eaecf0;
+    margin: 20px 0 20px
+  }
+
+  .hr {
+    margin-top: 19px;
+  }
+
+
+
+  .bold {
+    font-weight: 500;
+  }
+
+  .desc {
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    letter-spacing: normal;
+    text-align: left;
+    margin-top: 10px;
+  }
+
+  .tab0 {
+    .tableBox {
+      // background-color: #f2f4f7;
+      width: 100%;
+
+      .tableFilter {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+        padding: 10px;
+        background: #f2f4f7 !important;
+      }
+    }
+
+    .cancelBtn {
+      margin-top: 10px;
+    }
+  }
+
+  .tab1 {
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 10px;
+    // background-color: #eaecf0;
+
+    .tier {
+      padding: 20px;
+      border: solid 1px #eaecf0;
+      width: 48%;
+      border-radius: 10px;
+
+      .tierLetter {
+        font-family: Inter;
+        font-size: 18px;
+        font-weight: 500;
+      }
+
+      .price {
+        font-family: Inter;
+        font-size: 14px;
+        line-height: 1.43;
+        text-align: left;
+        margin-top: 15px;
+
+        span {
+          font-size: 24px;
+          font-weight: 500;
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+
+  .tab2 {
+    .projectDetail {
+      padding: 20px 15px;
+      border-radius: 8px;
+    }
+
+    .info {
+      padding: 20px 15px;
+      border-radius: 8px;
+
+      .left {
+        width: 35%;
+        text-align: left;
+        color: #344054;
+        font-weight: 500;
+      }
+
+      .right {
+        width: 65%;
+        text-align: left;
+      }
+    }
+  }
+
+  .tab3 {
+    .projectInfo {
+      gap: 20px;
+    }
+
+    font-size: 14px !important;
+  }
+}
+
+.mobileBox {
+  display: none;
+}
+
+.address {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #344054;
+}
+
+.left {
+  color: #344054 !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+}
+
+.right {
+  color: #344054 !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  width: 65% !important;
+}
+
+.payLeft {
+  width: 35%;
+  gap: 5px;
+}
+
+.payRight {
+  width: 65%;
+  gap: 5px;
+}
+
+.mobileDisplay {
+  font-size: 14px !important;
+}
+
+.dotsBody {
+  padding: 7px 0;
+  background: none;
+
+  .dot {
+    outline: none;
+    border: none;
+    width: 30px;
+    height: 6px;
+    background: #e9d7fe;
+    border-radius: 2px;
+    cursor: pointer;
+  }
+}
+
+.mobileDisplay .analysisInfo {
+  padding: 2px 0px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.mobileDisplay .status-active {
+  background-color: #edfdf3;
+  color: #10794a
+}
+
+.mobileDisplay .status-inactive {
+  background-color: rgb(254, 243, 242);
+  color: rgb(144, 33, 29)
+}
+
+
+@media (max-width: 576px) {
+  .modalBox {
+    position: relative;
+    margin: 15px 0px;
+
+    * {
+      box-sizing: border-box;
+    }
+
+    padding: 15px !important;
+    width: calc(100% - 16px);
+    transform: translateX(-50%);
+
+    .mobileDisplay {
+      font-size: 14px !important;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .mobileBtns {
+      flex-direction: column;
+    }
+
+    .payAddress {
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+
+      .left {
+        width: 100%;
+      }
+
+      .right {
+        font-size: 12px;
+        margin-top: 10px;
+      }
+    }
+
+    .address {
+      font-size: 12px !important;
+    }
+
+    .mobileHidden {
+      display: none;
+      align-items: center;
+    }
+
+    .mobilePay {
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      gap: 5px;
+
+      .payLeft {
+        width: 100%;
+        gap: 5px;
+      }
+
+      .payRight {
+        width: 100%;
+        gap: 5px;
+      }
+    }
+  }
+}
+
+@media (max-height: 1200px) {
+  .modalBox {
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 440px) {
+  .mobileBox {
+    * {
+      box-sizing: border-box;
+    }
+
+    width: 325px;
+  }
+}

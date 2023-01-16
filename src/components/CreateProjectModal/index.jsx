@@ -45,11 +45,14 @@ import { setProject } from '../../redux/slice/projectSlice'
 
 import ApiKeySection from '../ApiKeySection'
 import { currencyNames } from '../../configs/constants';
-import { filterMinAmount, getAcceptedCurrencyNames } from '../../utils/helper'
+import { 
+  filterMinAmount, 
+  getAcceptedCurrencyNames, 
+  getPaymentAddresses 
+} from '../../utils/helper'
 import ExpiryTimeCountdown from '../ExpiryTimeCountdown'
+import PaymentAddress from '../PaymentAddress'
 // import { useConnectWallet } from '@web3-onboard/react'
-
-import CopyToClipboard from '../CopyToClipboard'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -730,57 +733,7 @@ const ProjectModal = props => {
                   </Stack>
                 </Stack>
                 <ExpiryTimeCountdown expiryTime={projectDetail?.quote_expiry_time} />
-                <Stack
-                  direction="row"
-                  justifyContent={'space-between'}
-                  alignItems="center"
-                  className={styles.payAddress}
-                >
-                  <Stack
-                    direction="row"
-                    justifyContent={'flex-start'}
-                    alignItems="center"
-                    className={styles.amountLeft}
-                    spacing={1}
-                  >
-                    <div className={`${styles.subTItle} ${styles.m0}`}>
-                      Payment address:
-                    </div>
-                    {/* <HelpOutline sx={{ fontSize: '20px' }} /> */}
-                  </Stack>
-                  <Stack
-                    direction="row"
-                    justifyContent={'flex-start'}
-                    alignItems="center"
-                    className={`${styles.amountRight} ${styles.fullWidth}`}
-                    spacing={1}
-                  >
-                    {/* <ContentCopy  /> */}
-                    <CopyToClipboard
-                      content={projectDetail?.payment_eth_address}
-                      handleCopy={setCopyFlag}
-                    >
-                      <Stack
-                        direction="row"
-                        alignItems="center"
-                        justifyContent="space-between"
-                        spacing={1}
-                        className={styles.fullWidth}
-                      >
-                        <span className={classes.key}>
-                          {projectDetail?.payment_eth_address}
-                        </span>
-                        {copyFlag ? (
-                          <CheckCircleOutline
-                            className={styles.cursorPointer}
-                          />
-                        ) : (
-                          <ContentCopy className={styles.cursorPointer} />
-                        )}
-                      </Stack>
-                    </CopyToClipboard>
-                  </Stack>
-                </Stack>
+                <PaymentAddress addresses={getPaymentAddresses(projectDetail)} />
                 <Typography className={`${styles.fontItalic}`}>
                   Text content to explain{' '}
                   <b className={styles.tierInServiceLevel}>
