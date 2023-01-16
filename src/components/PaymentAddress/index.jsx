@@ -7,7 +7,8 @@ import {
 
 import { Stack } from '@mui/material';
 
-import CopyToClipboard from 'react-copy-to-clipboard';
+// import CopyToClipboard from 'react-copy-to-clipboard';
+import CopyToClipboard from '../CopyToClipboard';
 import styles from './index.module.scss';
 
 const AddressClipboard = ({
@@ -16,8 +17,8 @@ const AddressClipboard = ({
     const [copyFlag, setCopyFlag] = useState(false);
     return (
         <CopyToClipboard
-            text={content}
-            onCopy={() => setCopyFlag(true)}
+            content={content}
+            handleCopy={setCopyFlag}
         >
             <div className={styles.address}>
                 {content}
