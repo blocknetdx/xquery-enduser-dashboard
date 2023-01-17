@@ -338,7 +338,7 @@ const ProjectInfoModal = props => {
               <Typography className={styles.desc} color="text.primary">
                 {
                   tabIndex === 0 ? `To activate the project, send payment(s) sufficient to purchase 1,000 or more API calls.
-                  Once the total amount shown below is received and confirmed your project will be activated. Payments made after the quote expiry time shown will receive half the normal number of api calls.` : tabIndex === 1 ? 'Cancel this project' : 'Some other dummy text'
+                  Once the total amount shown below is received and confirmed your project will be activated. Payments made after the quote expiry time shown will receive half the normal number of api calls.` : tabIndex === 1 ? 'Cancel this project' : 'Please note: cancelling a project is not yet supported for XQuery and will be available in a future update. Pressing the cancel button below will NOT result in a project being cancelled.'
                 }
               
               </Typography>
