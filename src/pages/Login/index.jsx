@@ -135,15 +135,14 @@ const Login = () => {
               textAlign="center"
               mt="30px"
             >
-              Connect a wallet to login.
+              Let's get started
             </Typography>
             <Typography
               className={styles.subtitle}
               variant="h4"
               color="text.primary"
             >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit ut
-              aliquam, purus sit
+              Connect a wallet to login to the XQuery dashboard app.
             </Typography>
             <Button
               variant="contained"

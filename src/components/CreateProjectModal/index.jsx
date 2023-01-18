@@ -744,13 +744,13 @@ const ProjectModal = props => {
                    className={`${styles.chooseLabel}`}
                   color="common.black"
                 >
-                  Your Project Summary
+                  Your New Project Details
                 </Typography>
-                <Typography className={styles.desc} color="text.primary">
+                {/* <Typography className={styles.desc} color="text.primary">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit ut
                   aliquam, purus sit amet luctus venenatis, lectus magna
                   fringilla urna, porttitor rhoncus dolor purus non.
-                </Typography>
+                </Typography> */}
               </div>
               <ProjectInfoPanel
                 spacing={3}
