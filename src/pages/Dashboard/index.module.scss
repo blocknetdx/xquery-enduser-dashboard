@@ -73,10 +73,12 @@
   box-sizing: border-box;
   align-items: flex-start !important;
   padding: 24px 24px 4px 24px !important;
+  // opacity: 0.5;
 }
 
 .desktopSelect {
   display: flex;
+  opacity: 0.5;
 }
 
 .codes {
@@ -168,9 +170,9 @@
   flex-direction: column;
   gap: 15px;
 }
-
-.blocknet {
-  line-height: 1.43 !important;
+// adding some extra bottom margin to allow space for the wallet-connect float box
+.rightSubContainer {
+  margin-bottom: 40px;
 }
 
 @media (max-width: 1280px) {
@@ -203,6 +205,16 @@
 
 .subContainer {
   width: 100%;
+}
+
+.leftSubContainer {
+  width:69%;
+}
+
+@media (max-width: 1280px) {
+  .leftSubContainer {
+    width: 100%;
+  }
 }
 
 @media (max-width: 860px) {
@@ -239,11 +251,17 @@
     display: flex;
     width: 100%;
     margin-bottom: 10px;
+    opacity: 0.5;
   }
 }
 
 .title {
   font-weight: 500 !important;
+}
+
+span {
+  font-weight: 400 !important;
+  line-height: 1.4em !important;
 }
 
 .spaceBetween {

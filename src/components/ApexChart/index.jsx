@@ -9,7 +9,8 @@ import { useMedia } from 'react-use'
 
 const ApexChart = () => {
   const dataSet = [
-    [620, 630, 640, 660, 680, 690, 620, 680, 740, 710, 720, 800],
+    [620, 630, 640, 660, 680, 690, 620, 680, 740, 710, 720, 800]
+    ,
     [390, 395, 392, 405, 410, 420, 400, 430, 460, 440, 445, 450]
   ]
 
@@ -19,7 +20,7 @@ const ApexChart = () => {
 
   const series = [
     { name: 'This period', data: dataSet[0] },
-    { name: 'Previous period', data: dataSet[1] }
+    { name: 'Coming soon...', data: dataSet[1] }
   ]
 
   const options = {
@@ -112,6 +113,7 @@ const ApexChart = () => {
       }
     },
     tooltip: {
+      enabled: false,
       shared: true
     },
     legend: {
@@ -120,7 +122,7 @@ const ApexChart = () => {
       offsetX: -10,
       labels: {
         colors: theme.palette.text.primary,
-        fontFamily: 'Inter'
+        fontFamily: 'Inter !important'
       }
     },
     responsive: [

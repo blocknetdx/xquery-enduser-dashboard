@@ -29,7 +29,7 @@ import website from '../../assets/icons/website.svg'
 // import lightIcon from "../../assets/icons/light.svg"
 // import avatar1 from "../../assets/avatar/avatar1.png"
 
-import ProjectModal from '../../components/Modal'
+import ProjectModal from '../../components/CreateProjectModal'
 
 // mui select
 import FormControl from '@mui/material/FormControl'
@@ -44,6 +44,7 @@ import AccordionDetails from '@mui/material/AccordionDetails'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { makeStyles } from '@mui/styles'
 import { useEagerConnect, useVerifySignature } from '../../hooks'
+import api from '../../apis'
 
 const Code = `curl http://<NODE-URL>/xrs/evm_passthrough/AVAX/<PROJECT-ID> \\
   - X POST \\
@@ -93,12 +94,12 @@ const DividerDiv = styled.div(({ theme }) => ({
   background: `${theme.palette.divider}`
 }))
 
-const Header = ({ signature, customNotification }) => {
+const Header = ({ signature, customNotification, createOpen, setCreateOpen }) => {
   const mode = useSelector(state => state.toogle.darkMode)
   const theme = mode === 'true' ? dark : light
   // const dispatch = useDispatch()
 
-  const [createOpen, setCreateOpen] = useState(false)
+  // const [createOpen, setCreateOpen] = useState(false)
   const handleOpen = () => setCreateOpen(true)
   const handleClose = () => setCreateOpen(false)
 
@@ -186,13 +187,13 @@ const Chart = () => {
   return (
     <Card className={`${styles.chart}`}>
       <Typography variant="h3" color="common.black">
-        Data Usage Summary
+        Chart data coming soon...
       </Typography>
       <div className={styles.mobileSelect}>
         <FormControl className={classes.formControl}>
           <DateRangeOutlined className={classes.dateIcon} />
 
-          <Select
+          <Select disabled
             labelId="demo-simple-select-helper-label"
             id="demo-simple-select-helper"
             value={value}
@@ -220,7 +221,8 @@ const Chart = () => {
               <CustomMenuItem
                 key={index}
                 variant="contained"
-                active={activeStatus === index ? 'true' : 'false'}
+                // active={activeStatus === index ? 'true' : 'false'}
+                active="false"
                 onClick={() => changeStatus(index)}
               >
                 {duration}
@@ -240,15 +242,44 @@ const Dashboard = () => {
   const mode = useSelector(state => state.toogle.darkMode)
   const theme = mode === 'true' ? dark : light
   const [modalOpen, setModalOpen] = useState(false)
+  const [createOpen, setCreateOpen] = useState(false)
   const [copyFlag, setCopyFlag] = useState(false)
   const [customNotification] = useNotifications()
   const { preConnect } = useEagerConnect()
   const [{ wallet }] = useConnectWallet()
   const { signature } = useVerifySignature()
   const navigate = useNavigate()
+  const userid = localStorage.getItem('userid');
+  const [allUserProjects, setAllUserProjects] = useState([]);
 
   useEffect(() => {
-    console.log('auth info:', { wallet, signature })
+    const syncProjectInterval = setInterval(() => {
+      getAllUserProjects();
+    }, 600000);
+
+    return (() => {
+      clearInterval(syncProjectInterval);
+    })
+  }, []);
+
+  useEffect(() => {
+    getAllUserProjects();
+  }, [createOpen])
+
+
+
+  async function getAllUserProjects() {
+    if (!userid) return;
+    
+    const allUserProjectsRes = await api.project.getAllProjects(userid);
+    
+    if (!allUserProjectsRes?.data?.success) return;
+
+    setAllUserProjects(allUserProjectsRes.data?.data || [])
+  }
+
+  useEffect(() => {
+    // console.log('auth info:', { wallet, signature })
     if (!preConnect && (!wallet || !signature)) {
       console.log('redirecting:', { preConnect, wallet, signature })
       navigate('/login')
@@ -274,7 +305,12 @@ const Dashboard = () => {
 
   return (
     <>
-      <Header signature={signature} customNotification={customNotification} />
+      <Header 
+        signature={signature}
+        customNotification={customNotification}
+        createOpen={createOpen}
+        setCreateOpen={setCreateOpen}
+      />
       <DashboardContainer className={`${styles.content}`}>
         <div className={styles.container}>
           <Typography
@@ -286,17 +322,17 @@ const Dashboard = () => {
             Projects Overview
           </Typography>
           <Typography variant="h4" color="text.primary" mb="30px">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam,
-            purus sit
+          Create, manage and monitor your XQuery projects.
           </Typography>
           <FlexRow className={`${styles.subContainer} ${styles.gap}`}>
             <FlexColumn className={`${styles.leftSubContainer} ${styles.gap}`}>
-              <Chart />
-              <StyledTable
+             <StyledTable
                 theme={theme}
                 modalOpen={modalOpen}
                 setModalOpen={setModalOpen}
+                allUserProjects={allUserProjects}
               />
+               <Chart />            
             </FlexColumn>
             <FlexColumn className={`${styles.rightSubContainer} ${styles.gap}`}>
               <Card className={`${styles.about}`}>
@@ -311,8 +347,7 @@ const Dashboard = () => {
                 </div>
                 <div className={styles.aboutBody1}>
                   <Typography variant="p" color="text.primary">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Rhoncus elit interdum aliquet.
+                  Learn more about XQuery, a decentralized protocol for indexing and querying data from blockchains.
                   </Typography>
                   <FlexRow className={`${styles.spaceBetween}`}>
                     <Button
@@ -369,8 +404,7 @@ const Dashboard = () => {
                         color="text.primary"
                         className={styles.requestText}
                       >
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Quis sit facilisi non, suspendisse.
+                        Making your first request is as easy as passing your Project ID and API key with your parameters:
                       </Typography>
                     </div>
                   </AccordionSummary>
@@ -392,8 +426,7 @@ const Dashboard = () => {
                       )}
                     </CodeTag>
                     <Typography variant="p" color="text.primary">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Quis sit facilisi non, suspendisse.
+                    An example response:
                     </Typography>
                     <RequestDetails variant="p">
                       <WhitePre className={classes.codes}>{JsonInfo}</WhitePre>
@@ -413,8 +446,7 @@ const Dashboard = () => {
                 </div>
                 <div className={styles.aboutBody2}>
                   <Typography variant="p" color="text.primary">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Quis sit facilisi non, suspendisse.
+                  Follow the XQuery team and Blocknet on social media to keep up to date with the latest news.
                   </Typography>
                   <FlexRow className={`${styles.flexStart}`}>
                     <IconButton
@@ -464,9 +496,7 @@ const Dashboard = () => {
                       marginTop: isMobile ? '-15px' : '0px'
                     }}
                   >
-                    XQuery decentralizes access to indexed blockchain data,
-                    removing a critical burden of trust from the blockchain
-                    stack: centralized data providers.
+                    XQuery decentralizes access to indexed blockchain data, removing the critical burden of trust from the blockchain stack by eliminating the need for centralized data providers.
                   </Typography>
                   <DividerDiv className={`${styles.divider}`} />
                 </div>
@@ -483,12 +513,8 @@ const Dashboard = () => {
                     color="text.primary"
                     className={styles.blocknet}
                   >
-                    Dolor enim eu tortor urna sed duis nulla. Aliquam
-                    vestibulum, nulla odio nisl vitae. In aliquet pellentesque
-                    aenean hac vestibulum turpis mi bibendum diam. Tempor
-                    integer aliquam in vitae malesuada fringilla. Elit nisi in
-                    eleifend sed nisi. Pulvinar at orci, proin imperdiet commodo
-                    consectetur convallis risus.
+                    Blocknet is a decentralized network that connects blockchains, similar to how the internet connects computers.
+                    Whether it’s through cross-chain dApps or using the protocol as a 2nd layer to extend blockchain functionality, Blocknet provides developers with the capability to create the applications of tomorrow.
                   </Typography>
                   <FlexRow className={`${styles.flexStart}`}>
                     <img src={website} alt="website" />

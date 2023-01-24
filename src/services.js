@@ -1,5 +1,5 @@
-import blocknativeLogo from './icons/blocknative-logo'
-import blocknativeIcon from './icons/blocknative-icon'
+import blocknetLogo from './icons/blocknet-logo'
+import blocknetIcon from './icons/blocknet-icon'
 
 import { init } from '@web3-onboard/react'
 import injectedModule from '@web3-onboard/injected-wallets'
@@ -16,7 +16,7 @@ import coinbaseModule from '@web3-onboard/coinbase'
 // import web3authModule from '@web3-onboard/web3auth'
 
 // Replace with your DApp's Infura ID
-const INFURA_ID = 'cea9deb6467748b0b81b920b005c10c1'
+const INFURA_ID = '08f02448970246a9a2a82ad997458959'
 
 const dappId = '1730eff0-9d50-4382-a3fe-89f0d34a2070'
 
@@ -112,18 +112,18 @@ export const initWeb3Onboard = init({
   ],
   appMetadata: {
     name: 'Blocknative Web3-Onboard',
-    icon: blocknativeIcon,
-    logo: blocknativeLogo,
+    icon: blocknetIcon,
+    logo: blocknetLogo,
     description: 'Web3-Onboard',
     recommendedInjectedWallets: [
       { name: 'Coinbase', url: 'https://wallet.coinbase.com/' },
       { name: 'MetaMask', url: 'https://metamask.io' }
     ],
-    agreement: {
-      version: '1.0.0'
+    // agreement: {
+      // version: '1.0.0'
       // termsUrl: 'https://www.blocknative.com/terms-conditions',
       // privacyUrl: 'https://www.blocknative.com/privacy-policy'
-    }
+    // }
     // gettingStartedGuide: 'https://blocknative.com',
     // explore: 'https://blocknative.com'
   },

@@ -18,7 +18,7 @@ const ProgressBar = ({ process }) => {
   const theme = mode === 'true' ? dark : light
   return (
     <div className={`${styles.back}`}>
-      <Process value={process} theme={theme} />
+      <Process value={isNaN(process) ? 0 : process} theme={theme} />
     </div>
   )
 }

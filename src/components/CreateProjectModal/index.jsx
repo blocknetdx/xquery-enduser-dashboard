@@ -18,7 +18,6 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
-import CopyToClipboard from 'react-copy-to-clipboard'
 import { Avatar } from '@mui/material'
 
 import {
@@ -26,12 +25,10 @@ import {
   Close,
   HelpOutline,
   CheckCircleOutline,
-  RadioButtonUnchecked,
+  //RadioButtonUnchecked,
   ArrowForward,
   ArrowBack,
   ContentCopy,
-  VisibilityOutlined,
-  VisibilityOffOutlined,
   CheckCircle
 } from '@mui/icons-material'
 
@@ -45,6 +42,16 @@ import Stack from '@mui/material/Stack'
 import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
 import { setProject } from '../../redux/slice/projectSlice'
+
+import ApiKeySection from '../ApiKeySection'
+import { currencyNames } from '../../configs/constants';
+import { 
+  filterMinAmount, 
+  getAcceptedCurrencyNames, 
+  getPaymentAddresses 
+} from '../../utils/helper'
+import ExpiryTimeCountdown from '../ExpiryTimeCountdown'
+import PaymentAddress from '../PaymentAddress'
 // import { useConnectWallet } from '@web3-onboard/react'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -184,13 +191,13 @@ const rows = [
 ]
 
 const titles = [
-  'New Project - Step 1 Title',
-  'New Project - Step 2 Title',
-  'New Project - Step 3 Title',
+  'New Project - Step 1',
+  'New Project - Step 2',
+  'New Project - Step 3',
   'Title - Project Info',
   'Title - Cancel Project',
   'Title - Project Cancelled',
-  'Title - Extend Project - Payment'
+  'Title - Extend Project'
 ]
 
 const filterlist = ['ETH', 'AVAX', 'BSC', 'SYS']
@@ -202,6 +209,10 @@ const hasNetwork = (row, filters) => {
     }
   }
   return false
+}
+
+const capitalizeFirstLetter = (string = '') => {
+  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 }
 
 const ProjectModal = props => {
@@ -218,28 +229,59 @@ const ProjectModal = props => {
 
   const [active, setActive] = useState(0)
   const [tabIndex, setTabIndex] = useState(0)
-  const [newProj, setNewProj] = useState(null)
   const [serviceLevel, setServiceLevel] = useState(0)
-  const [keyVisibility, setKeyVisibility] = useState(false)
+
+  const [projectDetail, setProjectDetail] = useState(null);
+
+  const [state, setState] = useState({
+    costApiCall: '$0.0002',
+    acceptedCurrencies: [],
+    quoteExpiryTime: null,
+  })
+  const [snodes, setSnodes] = useState([]);
+  const [selectedNodeIndex, setSelectedNodeIndex] = useState(null);
 
   // const [scroll, setScroll] = React.useState<DialogProps['scroll']>('body');
 
   // const [loading, setLoading] = useState(false)
 
-  const onClickDetail = async () => {
+  useEffect(() => {
+    getSNodes();
+  }, [props])
+
+  async function getSNodes() {
+    try {
+      const response = await api.project.getSNodes();
+      console.log('CreateProjectModal response: ', response);
+      setSnodes(response.data?.data || []);
+    } catch (error) {
+      toast(`Backend server error occured: ${error?.message}`)
+    }
+  }
+
+  const onClickDetail = async (index) => {
+    // console.log('onClickDetail', index);
     if (signature) {
       const body = {
         id: 1,
         method: 'request_project',
-        params: []
+        params: [{"XQuery": "True"}]
       }
+      const userid = localStorage.getItem('userid');
       try {
-        const result = await api.project.createProject(body)
-        dispatch(setProject(result?.data?.result))
-        setNewProj(result?.data?.result)
+        const result = await api.project.createProject(body, userid)
+        console.log('create project modal result: ', result);
+        dispatch(setProject(result?.data?.data))
+        setSelectedNodeIndex(index);
+        setProjectDetail(result?.data?.data);
+
+        setState(pre => ({
+          ...pre,
+          acceptedCurrencies: filterMinAmount(result?.data?.data),
+        }))
         setTabIndex(1)
       } catch (error) {
-        console.log(typeof error?.message)
+        // console.log(typeof error?.message)
         toast(`Backend server error occured: ${error?.message}`)
       }
     }
@@ -263,9 +305,7 @@ const ProjectModal = props => {
   useEffect(() => {
     setActive(0)
     setTabIndex(0)
-    setNewProj(null)
     setServiceLevel(0)
-    setKeyVisibility(false)
     setCopyFlag(false)
     setToFilter([])
     setFromFilter(filterlist)
@@ -290,15 +330,6 @@ const ProjectModal = props => {
     toTemp = toFilter.filter(item => item !== newValue)
     setToFilter(toTemp)
   }
-
-  const recover = len => {
-    const ch = '*'
-    let pass = ''
-    for (let i = 0; i < len; i++) pass += ch
-    return pass
-  }
-
-  console.log('rows:', rows, toFilter)
 
   return (
     <div>
@@ -328,17 +359,22 @@ const ProjectModal = props => {
               : titles[2]}
           </Typography>
           <PaletteDividerBg className={styles.divider} />
-          <Typography className={`${styles.chooseLabel}`}>
-            Your Project Details
-          </Typography>
-          <Typography
-            className={`${styles.desc} ${styles.mb10}`}
-            color="text.primary"
-          >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam,
-            purus sit amet luctus venenatis, lectus magna fringilla urna,
-            porttitor rhoncus dolor purus non.
-          </Typography>
+          {
+            tabIndex !== 2 &&
+            <React.Fragment>            
+              <Typography className={`${styles.chooseLabel}`}>
+                Your Project Details
+              </Typography>
+              <Typography
+                className={`${styles.desc} ${styles.mb10}`}
+                color="text.primary"
+              >
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam,
+                purus sit amet luctus venenatis, lectus magna fringilla urna,
+                porttitor rhoncus dolor purus non.
+              </Typography>
+            </React.Fragment>
+          }
           {tabIndex === 0 && (
             <div className={styles.tab0}>
               <div className={styles.tableBox}>
@@ -426,7 +462,7 @@ const ProjectModal = props => {
                             alt="help"
                           />
                         </StyledTableCell>
-                        <StyledTableCell
+                        {/* <StyledTableCell
                           align="left"
                           className={`${styles.headItem} ${styles.headItem3}`}
                         >
@@ -438,7 +474,7 @@ const ProjectModal = props => {
                             height="16px"
                             alt="help"
                           />
-                        </StyledTableCell>
+                        </StyledTableCell> */}
                         <StyledTableCell
                           align="left"
                           className={`${`${styles.headItem} ${styles.headItem4}`} ${
@@ -450,7 +486,7 @@ const ProjectModal = props => {
                       </TableRow>
                     </TableHead>
                     <TableBody className={styles.whiteBg}>
-                      {rows
+                      {snodes
                         .filter(
                           row =>
                             toFilter.length === 0 || hasNetwork(row, toFilter)
@@ -469,29 +505,14 @@ const ProjectModal = props => {
                                 gap="5px"
                                 flexDirection="row"
                               >
-                                {/* {
+                                {
                                   row.networks.map((network) => {
-                                    return <Chip key={network} label={network} size='small' color="primary" />
+                                    return <Chip key={network} label={network} size='small' className={styles[`chip${capitalizeFirstLetter(network)}`]} />
                                   })
-                                } */}
-                                <Chip
-                                  label="ETH"
-                                  size="small"
-                                  className={styles.chipEth}
-                                />
-                                <Chip
-                                  label="AVAX"
-                                  size="small"
-                                  className={styles.chipAvax}
-                                />
-                                <Chip
-                                  label="BSC"
-                                  size="small"
-                                  className={styles.chipBsc}
-                                />
+                                }
                               </Stack>
                             </StyledTableCell>
-                            <StyledTableCell align="left">
+                            {/* <StyledTableCell align="left">
                               <Stack direction="column">
                                 <div className={styles.tier}>
                                   Tier 1: ${row.cost[0]}
@@ -500,7 +521,7 @@ const ProjectModal = props => {
                                   Tier 2: ${row.cost[1]}
                                 </div>
                               </Stack>
-                            </StyledTableCell>
+                            </StyledTableCell> */}
                             <StyledTableCell
                               align="left"
                               className={classes.sticky}
@@ -508,7 +529,7 @@ const ProjectModal = props => {
                               <Button
                                 variant="contained"
                                 className={styles.detailsButton}
-                                onClick={onClickDetail}
+                                onClick={() => onClickDetail(index)}
                               >
                                 <span className={styles.infoBtnSpace}>
                                   View details
@@ -523,7 +544,7 @@ const ProjectModal = props => {
                               <Button
                                 variant="contained"
                                 className={styles.infoMobile}
-                                onClick={onClickDetail}
+                                onClick={() => onClickDetail(index)}
                               >
                                 <img
                                   src={info}
@@ -550,7 +571,8 @@ const ProjectModal = props => {
                 <Stack
                   direction="row"
                   justifyContent="space-between"
-                  className={styles.mobileDisplay}
+                  flexWrap="wrap"
+                  className={styles.apiKey}
                 >
                   <Stack
                     direction="row"
@@ -559,46 +581,11 @@ const ProjectModal = props => {
                     spacing={0.5}
                   >
                     <Typography className={styles.projectInfoLabel}>
-                      Project ID:
+                      Host Server IP:
                     </Typography>
                     <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                   </Stack>
-                  <div>{1231212}</div>
-                </Stack>
-                <Stack
-                  direction="row"
-                  justifyContent="space-between"
-                  className={styles.mobileDisplay}
-                >
-                  <Stack
-                    direction="row"
-                    justifyContent="flex-start"
-                    alignItems="center"
-                    spacing={0.5}
-                  >
-                    <Typography className={styles.projectInfoLabel}>
-                      API Key:
-                    </Typography>
-                    <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
-                  </Stack>
-                  <Stack direction="row" alignItems="center" spacing={1}>
-                    <span className={classes.key}>
-                      {keyVisibility
-                        ? newProj?.api_key
-                        : recover(newProj?.api_key?.length)}
-                    </span>
-                    {keyVisibility ? (
-                      <VisibilityOffOutlined
-                        className={styles.cursorPointer}
-                        onClick={() => setKeyVisibility(false)}
-                      />
-                    ) : (
-                      <VisibilityOutlined
-                        className={styles.cursorPointer}
-                        onClick={() => setKeyVisibility(true)}
-                      />
-                    )}
-                  </Stack>
+                  <div>{snodes.length > selectedNodeIndex && snodes[selectedNodeIndex]?.ip[0]}</div>
                 </Stack>
                 <Stack
                   direction="row"
@@ -622,21 +609,12 @@ const ProjectModal = props => {
                     spacing={1}
                     className={styles.mixBlendMode}
                   >
-                    <Chip
-                      label="ETH"
-                      size="small"
-                      className={styles.darkChipEth}
-                    />
-                    <Chip
-                      label="AVAX"
-                      size="small"
-                      className={styles.darkChipAvax}
-                    />
-                    <Chip
-                      label="BSC"
-                      size="small"
-                      className={styles.darkChipBsc}
-                    />
+                    {
+                      snodes.length > 0 && snodes.length > selectedNodeIndex &&
+                      snodes[selectedNodeIndex]?.networks.map(network => (
+                        <Chip key={network} label={network} size='small' className={styles[`darkChip${capitalizeFirstLetter(network)}`]} />
+                      ))
+                    }
                   </Stack>
                 </Stack>
                 <Stack
@@ -655,13 +633,12 @@ const ProjectModal = props => {
                     </Typography>
                     <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                   </Stack>
-                  <div>ETH, aaBLOCK, aBLOCK, BNB, AVAX</div>
+                  <div>{ getAcceptedCurrencyNames(state?.acceptedCurrencies) }</div>
                 </Stack>
                 <Stack
                   direction="row"
                   justifyContent="space-between"
-                  flexWrap="wrap"
-                  className={styles.apiKey}
+                  className={styles.mobileDisplay}
                 >
                   <Stack
                     direction="row"
@@ -670,206 +647,111 @@ const ProjectModal = props => {
                     spacing={0.5}
                   >
                     <Typography className={styles.projectInfoLabel}>
-                      Host Server IP:
+                      Cost per 1000 API calls:
                     </Typography>
                     <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                   </Stack>
-                  <div>65.119.157.65</div>
+                  <div>{state?.costApiCall}</div>
                 </Stack>
+                <Stack
+                  direction="row"
+                  justifyContent="space-between"
+                  className={styles.mobileDisplay}
+                >
+                  <Stack
+                    direction="row"
+                    justifyContent="flex-start"
+                    alignItems="center"
+                    spacing={0.5}
+                  >
+                    <Typography className={styles.projectInfoLabel}>
+                      Project ID: 
+                    </Typography>
+                    <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
+                  </Stack>
+                  <div>{projectDetail?.project_id}</div>
+                </Stack>
+                <ApiKeySection apiKey={projectDetail?.api_key} />
+                <ExpiryTimeCountdown expiryTime={projectDetail?.quote_expiry_time} />
               </ProjectInfoPanel>
-
-              <Typography
-                className={`${styles.chooseLabel} ${styles.marginTop}`}
-                color="common.black"
-              >
-                Choose from one of the following service levels:
-              </Typography>
-
-              <ServiceLevel
-                direction={'row'}
-                justifyContent="space-between"
-                className={styles.tierBody}
-              >
-                <div
-                  className={`${styles.tier} ${
-                    serviceLevel === 0 ? styles.selectedTier : ''
-                  }`}
-                >
-                  <div
-                    className={`${styles.tierInner} ${
-                      serviceLevel === 0 ? styles.selectedTierInner : ''
-                    } ${serviceLevel === 0 ? styles.selectedTierTitle : ''}`}
-                  >
-                    <Stack
-                      direction="row"
-                      justifyContent={'space-between'}
-                      alignItems="center"
-                      onClick={() => setServiceLevel(0)}
-                      className={`${styles.cursorPointer} ${styles.borderBottom1} ${styles.fullWidth}`}
-                    >
-                      <Stack
-                        direction={'row'}
-                        justifyContent="space-between"
-                        alignItems={'center'}
-                        spacing={2}
-                        className={styles.fullWidth}
-                      >
-                        <div className={styles.avatarContainer}>
-                          <Avatar
-                            alt="tie"
-                            src={layer2}
-                            className={styles.layersAvatar}
-                          />{' '}
-                        </div>
-                        <div className={styles.tierTitle}>
-                          <div className={styles.tierLetter}>Tier 1</div>
-                          {serviceLevel === 1 ? (
-                            <div className={styles.unchecked} />
-                          ) : (
-                            <CheckCircle className={styles.checked} />
-                          )}
-                        </div>
-                      </Stack>
-                    </Stack>
-                  </div>
-
-                  <div
-                    className={`${styles.tierPadding} ${styles.whitBackground} ${styles.borderBottomRadius}`}
-                  >
-                    <Stack
-                      className={styles.price}
-                      direction="row"
-                      alignItems="center"
-                      justifyContent={'flex-start'}
-                    >
-                      <span>$35</span> 6 million calls
-                    </Stack>
-                    <Typography clasName={styles.description}>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit ut
-                      aliquam, purus sit.
-                    </Typography>
-                    <Stack
-                      display="flex"
-                      gap="5px"
-                      flexDirection="row"
-                      className={styles.mt20}
-                    >
-                      {/* {
-                                  row.networks.map((network) => {
-                                    return <Chip key={network} label={network} size='small' color="primary" />
-                                  })
-                                } */}
-                      <Chip
-                        label="ETH"
-                        size="small"
-                        className={styles.chipEth}
-                      />
-                      <Chip
-                        label="AVAX"
-                        size="small"
-                        className={styles.chipAvax}
-                      />
-                      <Chip
-                        label="BSC"
-                        size="small"
-                        className={styles.chipBsc}
-                      />
-                    </Stack>
-                  </div>
-                </div>
-
-                <div
-                  className={`${styles.tier} ${
-                    serviceLevel === 1 ? styles.selectedTier : ''
-                  }`}
-                >
-                  <div
-                    className={`${styles.tierInner} ${
-                      serviceLevel === 1 ? styles.selectedTierInner : ''
-                    } ${serviceLevel === 1 ? styles.selectedTierTitle : ''}`}
-                  >
-                    <Stack
-                      direction="row"
-                      justifyContent={'space-between'}
-                      alignItems="center"
-                      onClick={() => setServiceLevel(1)}
-                      className={`${styles.cursorPointer} ${styles.borderBottom1} ${styles.fullWidth}`}
-                    >
-                      <Stack
-                        direction={'row'}
-                        justifyContent="space-between"
-                        alignItems={'center'}
-                        spacing={2}
-                        className={styles.fullWidth}
-                      >
-                        <div className={styles.avatarContainer}>
-                          <Avatar
-                            alt="tie"
-                            src={layer2}
-                            className={styles.layersAvatar}
-                          />{' '}
-                        </div>
-                        <div className={styles.tierTitle}>
-                          <div className={styles.tierLetter}>Tier 2</div>
-                          {serviceLevel === 0 ? (
-                            <div className={styles.unchecked} />
-                          ) : (
-                            <CheckCircle className={styles.checked} />
-                          )}
-                        </div>
-                      </Stack>
-                    </Stack>
-                  </div>
-
-                  <div
-                    className={`${styles.tierPadding} ${styles.whitBackground} ${styles.borderBottomRadius}`}
-                  >
-                    <Stack
-                      className={styles.price}
-                      direction="row"
-                      alignItems="center"
-                      justifyContent={'flex-start'}
-                    >
-                      <span>$200</span> 32 million calls
-                    </Stack>
-                    <Typography clasName={styles.description}>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit ut
-                      aliquam, purus sit.
-                    </Typography>
-                    <Stack
-                      display="flex"
-                      gap="5px"
-                      flexDirection="row"
-                      className={styles.mt20}
-                    >
-                      {/* {
-                                  row.networks.map((network) => {
-                                    return <Chip key={network} label={network} size='small' color="primary" />
-                                  })
-                                } */}
-                      <Chip
-                        label="ETH"
-                        size="small"
-                        className={styles.chipEth}
-                      />
-                      <Chip
-                        label="AVAX"
-                        size="small"
-                        className={styles.chipAvax}
-                      />
-                      <Chip
-                        label="BSC"
-                        size="small"
-                        className={styles.chipBsc}
-                      />
-                    </Stack>
-                  </div>
-                </div>
-              </ServiceLevel>
+              <div className={styles.detail}>
+                <Typography className={`${styles.chooseLabel}`}>
+                  Payment Info
+                </Typography>
+                <Typography className={styles.desc} color="text.primary">
+                
+                </Typography>
+              </div>
             </div>
           )}
           {tabIndex === 2 && ( // Step 3
             <div className={styles.tab2}>
+              <div className={styles.detail}>
+                <Typography
+                  className={`${styles.subTitle} ${styles.marginTopHalf}`}
+                  color="common.black"
+                >
+                  Payment Info
+                </Typography>
+                <Typography className={styles.desc} color="text.primary">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit ut
+                  aliquam, purus sit amet luctus venenatis, lectus magna
+                  fringilla urna, porttitor rhoncus dolor purus non.
+                </Typography>
+              </div>
+              <PaymentInfo spacing={3} className={styles.mb30}>
+                {/* <div className={styles.info}> */}
+                <Stack
+                  direction={'row'}
+                  justifyContent="space-between"
+                  className={styles.amount}
+                >
+                  <Stack
+                    direction="row"
+                    justifyContent={'flex-start'}
+                    className={styles.amountLeft}
+                    spacing={1}
+                  >
+                    <div className={`${styles.subTItle} ${styles.m0}`}>
+                      Amount to pay:
+                    </div>
+                    <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
+                  </Stack>
+                  <Stack
+                    direction="column"
+                    justifyContent={'flex-end'}
+                    className={styles.amountRight}
+                    alignItems={'flex-end'}
+                  >
+                    {
+                      state?.acceptedCurrencies.map(currency => (
+                        <div key={currency}>
+                          <span>{`${projectDetail[currency]} ${currencyNames[currency]}`}</span>
+                        </div>
+                      ))
+                    }
+                  </Stack>
+                </Stack>
+                <ExpiryTimeCountdown expiryTime={projectDetail?.quote_expiry_time} />
+                <PaymentAddress addresses={getPaymentAddresses(projectDetail)} />
+                <Typography className={`${styles.fontItalic}`}>
+                Once the total amount shown below is received and confirmed your project will be activated. Payments made after the quote expiry time shown will receive half the normal number of api calls.
+                </Typography>
+                {/* </div> */}
+              </PaymentInfo>
+              <div className={styles.detail}>
+                <Typography
+                   className={`${styles.chooseLabel}`}
+                  color="common.black"
+                >
+                  Your New Project Details
+                </Typography>
+                {/* <Typography className={styles.desc} color="text.primary">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit ut
+                  aliquam, purus sit amet luctus venenatis, lectus magna
+                  fringilla urna, porttitor rhoncus dolor purus non.
+                </Typography> */}
+              </div>
               <ProjectInfoPanel
                 spacing={3}
                 className={`${styles.projectInfoPanel} ${styles.mb30}`}
@@ -890,8 +772,9 @@ const ProjectModal = props => {
                     </Typography>
                     <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                   </Stack>
-                  <div>{1231212}</div>
+                  <div>{projectDetail?.project_id}</div>
                 </Stack>
+                <ApiKeySection apiKey={projectDetail?.api_key} />
                 <Stack
                   direction="row"
                   justifyContent="space-between"
@@ -914,21 +797,12 @@ const ProjectModal = props => {
                     spacing={1}
                     className={styles.mixBlendMode}
                   >
-                    <Chip
-                      label="ETH"
-                      size="small"
-                      className={styles.darkChipEth}
-                    />
-                    <Chip
-                      label="AVAX"
-                      size="small"
-                      className={styles.darkChipAvax}
-                    />
-                    <Chip
-                      label="BSC"
-                      size="small"
-                      className={styles.darkChipBsc}
-                    />
+                    {
+                      snodes.length > 0 && snodes.length > selectedNodeIndex &&
+                      snodes[selectedNodeIndex]?.networks.map(network => (
+                        <Chip key={network} label={network} size='small' className={styles[`darkChip${capitalizeFirstLetter(network)}`]} />
+                      ))
+                    }
                   </Stack>
                 </Stack>
                 <Stack
@@ -943,147 +817,13 @@ const ProjectModal = props => {
                     spacing={0.5}
                   >
                     <Typography className={styles.projectInfoLabel}>
-                      Monthly cost in $USD:
+                      Cost per 1000 API calls:
                     </Typography>
                     <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
                   </Stack>
-                  <div>$200</div>
-                </Stack>
-                <Stack
-                  direction="row"
-                  justifyContent="space-between"
-                  flexWrap="wrap"
-                  className={styles.apiKey}
-                >
-                  <Stack
-                    direction="row"
-                    justifyContent="flex-start"
-                    alignItems="center"
-                    spacing={0.5}
-                  >
-                    <Typography className={styles.projectInfoLabel}>
-                      Service Level:
-                    </Typography>
-                    <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
-                  </Stack>
-                  <div className={styles.serviceLevel}>
-                    <div className={styles.tierInServiceLevel}>Tier 2</div> - 32
-                    million requests / month
-                  </div>
+                  <div>{state?.costApiCall}</div>
                 </Stack>
               </ProjectInfoPanel>
-              <div className={styles.detail}>
-                <Typography
-                  className={`${styles.subTitle} ${styles.marginTopHalf}`}
-                  color="common.black"
-                >
-                  Payment Info
-                </Typography>
-                <Typography className={styles.desc} color="text.primary">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit ut
-                  aliquam, purus sit amet luctus venenatis, lectus magna
-                  fringilla urna, porttitor rhoncus dolor purus non.
-                </Typography>
-              </div>
-
-              <PaymentInfo spacing={3}>
-                {/* <div className={styles.info}> */}
-                <Stack
-                  direction={'row'}
-                  justifyContent="space-between"
-                  className={styles.amount}
-                >
-                  <Stack
-                    direction="row"
-                    justifyContent={'flex-start'}
-                    className={styles.amountLeft}
-                    spacing={1}
-                  >
-                    <div className={`${styles.subTItle} ${styles.m0}`}>
-                      Amount to pay:
-                    </div>
-                    <HelpOutline sx={{ fontSize: '20px', color: '#98a2b3' }} />
-                  </Stack>
-                  <Stack
-                    direction="column"
-                    justifyContent={'flex-start'}
-                    className={styles.amountRight}
-                    alignItems={'flex-start'}
-                  >
-                    <div>
-                      <span>aaBlock: 19.652</span>includes a 10% discount
-                    </div>
-                    <div>
-                      <span>aaBlock: 21.342</span>includes a 10% discount
-                    </div>
-                    <div>
-                      <span>aaBlock: 0.23</span>includes a 10% discount
-                    </div>
-                    <div>
-                      <span>aaBlock: 0.21</span>includes a 10% discount
-                    </div>
-                  </Stack>
-                </Stack>
-                <Stack
-                  direction="row"
-                  justifyContent={'space-between'}
-                  alignItems="center"
-                  className={styles.payAddress}
-                >
-                  <Stack
-                    direction="row"
-                    justifyContent={'flex-start'}
-                    alignItems="center"
-                    className={styles.amountLeft}
-                    spacing={1}
-                  >
-                    <div className={`${styles.subTItle} ${styles.m0}`}>
-                      Payment address:
-                    </div>
-                    {/* <HelpOutline sx={{ fontSize: '20px' }} /> */}
-                  </Stack>
-                  <Stack
-                    direction="row"
-                    justifyContent={'flex-start'}
-                    alignItems="center"
-                    className={`${styles.amountRight} ${styles.fullWidth}`}
-                    spacing={1}
-                  >
-                    {/* <ContentCopy  /> */}
-                    <CopyToClipboard
-                      text={newProj?.payment_eth_address || ''}
-                      onCopy={() => setCopyFlag(true)}
-                    >
-                      <Stack
-                        direction="row"
-                        alignItems="center"
-                        justifyContent="space-between"
-                        spacing={1}
-                        className={styles.fullWidth}
-                      >
-                        <span className={classes.key}>
-                          0x1576E561F2636e090cb855277eBA
-                        </span>
-                        {copyFlag ? (
-                          <CheckCircleOutline
-                            className={styles.cursorPointer}
-                          />
-                        ) : (
-                          <ContentCopy className={styles.cursorPointer} />
-                        )}
-                      </Stack>
-                    </CopyToClipboard>
-                  </Stack>
-                </Stack>
-                <Typography className={`${styles.fontItalic}`}>
-                  Text content to explain{' '}
-                  <b className={styles.tierInServiceLevel}>
-                    max 1 hour wait for pending tx
-                  </b>{' '}
-                  and what happens next after payment has been made.
-                </Typography>
-                {/* </div> */}
-              </PaymentInfo>
             </div>
           )}
 

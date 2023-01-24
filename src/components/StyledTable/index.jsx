@@ -28,6 +28,7 @@ import OutlinedInput from '@mui/material/OutlinedInput'
 // custom components
 import ProjectInfoModal from '../ViewInfoModal'
 import api from '../../apis'
+import ProjectTableRow from './ProjectTableRow'
 
 const List = styled('ul')({
   listStyle: 'none',
@@ -62,7 +63,7 @@ const BlackFilterList = styled(FilterList)(({ theme }) => ({
   color: theme.palette.common.black
 }))
 
-const filterlist = ['Active', 'Inactive', 'Pending']
+const filterlist = ['pending', 'active', 'active_open', 'inactive', 'cancelled', 'user_cancelled']
 
 const StyledPagination = props => {
   const { items, curPage, length, setPage } = props
@@ -252,45 +253,9 @@ const useStyles = makeStyles(theme =>
 )
 
 const StyledTable = props => {
-  const [response, setResponse] = useState([
-    {
-      projectId: 'bb7873e8-e1e7-4016-9bed-c187db349a1d',
-      apiKey: 'mr_KQrNOKzTCHJzmnXJxTw6peHhRmUG7MlE3A6jBGfY',
-      expires: 'Nov 23, 2022',
-      status: 'Active',
-      usage: 0
-    },
-    {
-      projectId: 'a9cf3da8-e961-4b6a-b25e-9033f7be4373',
-      apiKey: 'jMg5YijTX_AP1DZEzxGIOip6jEbfEr7POcmxWT3q7dE',
-      expires: 'Oct 24, 2022',
-      status: 'Inactive',
-      usage: 0
-    },
-    {
-      projectId: '3bae6363-165b-4dad-b16e-4733b0c87269',
-      apiKey: 'W87N-dup9i4RI7IP0mwIdAA9JVVaxkJQ93UOKvLuJTc',
-      expires: 'Oct 24, 2022',
-      status: 'Pending',
-      usage: 0
-    },
-    {
-      projectId: '812021e5-5f1a-43d1-928e-aec4840a36fd',
-      apiKey: 'tmYoUe970v4ObI_vZsWL2Wvv_IS0XxvkYNGB1XXTMuw',
-      expires: 'Oct 24, 2022',
-      status: 'Pending',
-      usage: 0
-    },
-    {
-      projectId: '356a186a-baec-431d-80a2-2d3f7b1cb841',
-      apiKey: 'Xbl-IN-e85mH0woZi4kzvBfjBJ4L9srmQtyWLRGSMbM',
-      expires: 'Oct 24, 2022',
-      status: 'Active',
-      usage: 0
-    }
-  ])
+  const [response, setResponse] = useState([])
 
-  const { theme, modalOpen, setModalOpen } = props
+  const { theme, modalOpen, setModalOpen, allUserProjects = [] } = props
   const [search, setSearch] = useState('')
   const [toFilter, setToFilter] = useState([])
   const [fromFilter, setFromFilter] = useState(filterlist)
@@ -309,28 +274,31 @@ const StyledTable = props => {
   useEffect(() => {
     const init = async () => {
       let newResponse = await Promise.all(
-        response.map(async (project, index) => {
-          const { api_tokens, api_tokens_used } = (
+        allUserProjects.map(async (project, index) => {
+          const { api_tokens, api_tokens_used, status } = (
             await api.project.getProjectStats({
-              projectId: project.projectId,
-              apiKey: project.apiKey
+              projectId: project.project_id,
+              apiKey: project.api_key
             })
-          ).data.result
-          console.log('api tokens:', { api_tokens, api_tokens_used })
+          )?.data?.result || {}
+          // console.log('api tokens:', { api_tokens, api_tokens_used })
           if (api_tokens !== 'N/A' && api_tokens_used !== 'N/A') {
             return {
               ...project,
+              projectId: project.project_id,
+              apiKey: project.api_key,
+              expires: 'Oct 24, 2022',
+              status,
               usage: (Number(api_tokens_used) * 100) / Number(api_tokens)
             }
           }
           return project
         })
       )
-      console.log('response:', newResponse)
       setResponse([...newResponse])
     }
     init()
-  }, [])
+  }, [allUserProjects])
 
   const handleChange = event => {
     let fromTemp = fromFilter
@@ -390,13 +358,6 @@ const StyledTable = props => {
             className={`${styles.title}`}
           >
             Your Projects
-          </Typography>
-          <Typography
-            variant="p"
-            color="text.primary"
-            fontWeight="normal !important"
-          >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit
           </Typography>
         </FlexColumn>
       </div>
@@ -461,104 +422,12 @@ const StyledTable = props => {
             {filteredList
               .slice((page - 1) * 10, page * 10)
               .map((data, index) => (
-                <TableRow className={classes.rowInline} key={index}>
-                  <TableCell
-                    className={classes.cell}
-                    padding="none"
-                    component="th"
-                    scope="row"
-                  >
-                    <FlexColumn
-                      className={`${styles.column} ${styles.flexStart}`}
-                    >
-                      <Typography
-                        className={`${styles.title}`}
-                        color="common.black"
-                        variant="h6"
-                      >
-                        Project ID
-                      </Typography>
-                      <Typography
-                        variant="h6"
-                        color="#475467"
-                        className={styles.fontWeight400}
-                      >
-                        {data.projectId.slice(0, 8).concat('...')}
-                      </Typography>
-                    </FlexColumn>
-                  </TableCell>
-                  <TableCell
-                    className={classes.cell}
-                    padding="none"
-                    align="right"
-                  >
-                    <FlexColumn
-                      className={`${styles.column} ${styles.flexStart}`}
-                    >
-                      <Typography
-                        className={`${styles.title}`}
-                        color="common.black"
-                        variant="h6"
-                      >
-                        Status
-                      </Typography>
-                      <Typography variant="h6" color="#475467">
-                        {data.status}
-                      </Typography>
-                    </FlexColumn>
-                  </TableCell>
-                  <TableCell
-                    className={classes.cell}
-                    padding="none"
-                    align="right"
-                  >
-                    <FlexColumn
-                      className={`${styles.column} ${styles.flexStart}`}
-                    >
-                      <Typography
-                        className={`${styles.title}`}
-                        color="common.black"
-                        variant="h6"
-                      >
-                        Usage
-                      </Typography>
-                      <ProgressBar process={data.usage} />
-                    </FlexColumn>
-                  </TableCell>
-                  <TableCell
-                    className={classes.cell}
-                    padding="none"
-                    align="right"
-                  >
-                    <FlexColumn className={`${styles.column}`}>
-                      <Typography
-                        className={`${styles.title}`}
-                        color="common.black"
-                        variant="h6"
-                      >
-                        Expires
-                      </Typography>
-                      <Typography variant="h6" color="#475467">
-                        {data.expires}
-                      </Typography>
-                    </FlexColumn>
-                  </TableCell>
-                  <TableCell
-                    className={`${classes.cell} ${classes.paddingRight}`}
-                    align="right"
-                  >
-                    <Button
-                      variant="contained"
-                      onClick={() => handleGetInfo(data.projectId, data.apiKey)}
-                      className={styles.viewProjectInfoBtn}
-                    >
-                      <span className={styles.infoBtnSpace}>
-                        View project info
-                      </span>
-                      <img src={info} alt="info" />
-                    </Button>
-                  </TableCell>
-                </TableRow>
+                <ProjectTableRow 
+                  data={data} 
+                  index={index} 
+                  handleGetInfo={handleGetInfo}
+                  useStyles={useStyles}
+                />
               ))}
           </TableBody>
         </Table>
