@@ -363,7 +363,7 @@ const ProjectModal = props => {
             tabIndex !== 2 &&
             <React.Fragment>            
               <Typography className={`${styles.chooseLabel}`}>
-                Your Project Details
+                Select a Server
               </Typography>
               <Typography
                 className={`${styles.desc} ${styles.mb10}`}
@@ -372,6 +372,7 @@ const ProjectModal = props => {
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam,
                 purus sit amet luctus venenatis, lectus magna fringilla urna,
                 porttitor rhoncus dolor purus non.
+
               </Typography>
             </React.Fragment>
           }
@@ -694,9 +695,7 @@ const ProjectModal = props => {
                   Payment Info
                 </Typography>
                 <Typography className={styles.desc} color="text.primary">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit ut
-                  aliquam, purus sit amet luctus venenatis, lectus magna
-                  fringilla urna, porttitor rhoncus dolor purus non.
+                  Payment info details content below...
                 </Typography>
               </div>
               <PaymentInfo spacing={3} className={styles.mb30}>
