@@ -363,15 +363,13 @@ const ProjectModal = props => {
             tabIndex !== 2 &&
             <React.Fragment>            
               <Typography className={`${styles.chooseLabel}`}>
-                Your Project Details
+              Select a Server
               </Typography>
               <Typography
-                className={`${styles.desc} ${styles.mb10}`}
+                className={`${styles.desc} ${styles.mb20}`}
                 color="text.primary"
               >
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam,
-                purus sit amet luctus venenatis, lectus magna fringilla urna,
-                porttitor rhoncus dolor purus non.
+                Select a server to request your new project from from the following list:
               </Typography>
             </React.Fragment>
           }
@@ -694,9 +692,7 @@ const ProjectModal = props => {
                   Payment Info
                 </Typography>
                 <Typography className={styles.desc} color="text.primary">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit ut
-                  aliquam, purus sit amet luctus venenatis, lectus magna
-                  fringilla urna, porttitor rhoncus dolor purus non.
+                  Payment info details content below...
                 </Typography>
               </div>
               <PaymentInfo spacing={3} className={styles.mb30}>
@@ -734,7 +730,7 @@ const ProjectModal = props => {
                 </Stack>
                 <ExpiryTimeCountdown expiryTime={projectDetail?.quote_expiry_time} />
                 <PaymentAddress addresses={getPaymentAddresses(projectDetail)} />
-                <Typography className={`${styles.fontItalic}`}>
+                <Typography className={styles.desc} color="text.primary">
                 Once the total amount shown below is received and confirmed your project will be activated. Payments made after the quote expiry time shown will receive half the normal number of api calls.
                 </Typography>
                 {/* </div> */}
