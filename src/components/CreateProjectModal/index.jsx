@@ -259,22 +259,25 @@ const ProjectModal = props => {
     }
   }
 
-  const onClickDetail = async (index) => {
-    // console.log('onClickDetail', index);
-    if (signature) {
+  const onClickDetail = async (index, ip = null) => {
+    if (!ip) return;
+    // console.log('onClickDetail', ip);
+    if (signature) {  
       const body = {
-        id: 1,
-        method: 'request_project',
-        params: [{"XQuery": "True"}]
+        ip,
+        data: {
+          id: 1,
+          method: 'request_project',
+          params: [{"XQuery": "True"}]
+        }
       }
       const userid = localStorage.getItem('userid');
       try {
         const result = await api.project.createProject(body, userid)
-        console.log('create project modal result: ', result);
+        // console.log('create project modal result: ', result);
         dispatch(setProject(result?.data?.data))
         setSelectedNodeIndex(index);
         setProjectDetail(result?.data?.data);
-
         setState(pre => ({
           ...pre,
           acceptedCurrencies: filterMinAmount(result?.data?.data),
@@ -527,7 +530,7 @@ const ProjectModal = props => {
                               <Button
                                 variant="contained"
                                 className={styles.detailsButton}
-                                onClick={() => onClickDetail(index)}
+                                onClick={() => onClickDetail(index, row.ip[0])}
                               >
                                 <span className={styles.infoBtnSpace}>
                                   View details
