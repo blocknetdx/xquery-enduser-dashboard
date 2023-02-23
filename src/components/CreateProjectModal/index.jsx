@@ -372,7 +372,7 @@ const ProjectModal = props => {
                 className={`${styles.desc} ${styles.mb20}`}
                 color="text.primary"
               >
-                Select a server to request your new project from from the following list:
+                Select a server from the list to request your new project from:
               </Typography>
             </React.Fragment>
           }
