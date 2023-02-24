@@ -257,7 +257,7 @@ const StyledTable = props => {
 
   const { theme, modalOpen, setModalOpen, allUserProjects = [] } = props
   const [search, setSearch] = useState('')
-  const [toFilter, setToFilter] = useState([])
+  const [toFilter, setToFilter] = useState(['active','pending'])
   const [fromFilter, setFromFilter] = useState(filterlist)
   const classes = useStyles()
   const filteredList = response.filter(
@@ -287,7 +287,8 @@ const StyledTable = props => {
               ...project,
               projectId: project.project_id,
               apiKey: project.api_key,
-              expires: 'Oct 24, 2022',
+              // TODO - why is date hard-coded still?
+              expires: 'Oct 24, 2022', 
               status,
               usage: (Number(api_tokens_used) * 100) / Number(api_tokens)
             }
