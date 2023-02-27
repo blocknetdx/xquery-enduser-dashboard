@@ -63,7 +63,16 @@ const BlackFilterList = styled(FilterList)(({ theme }) => ({
   color: theme.palette.common.black
 }))
 
-const filterlist = ['pending', 'active', 'active_open', 'inactive', 'cancelled', 'user_cancelled']
+//const filterlist = ['pending', 'active', 'active_open', 'inactive', 'cancelled', 'user_cancelled']
+
+// updated filterlist to use labels and status groups
+const filterlist = [
+  { label: 'Pending', value: 'pending' },
+  { label: 'Active', value: ['active', 'active_open'] },
+  { label: 'Inactive', value: 'expired' },
+  { label: 'Cancelled', value: ['cancelled', 'user_cancelled'] },
+];
+
 
 const StyledPagination = props => {
   const { items, curPage, length, setPage } = props
@@ -258,7 +267,12 @@ const StyledTable = props => {
   const { theme, modalOpen, setModalOpen, allUserProjects = [] } = props
   const [search, setSearch] = useState('')
   const [toFilter, setToFilter] = useState([])
-  const [fromFilter, setFromFilter] = useState(filterlist)
+  const [fromFilter, setFromFilter] = useState([
+    { label: 'Pending', value: 'pending' },
+    { label: 'Active', value: ['active', 'active_open'] },
+    { label: 'Inactive', value: 'expired' },
+    { label: 'Cancelled', value: ['cancelled', 'user_cancelled'] },
+  ]);
   const classes = useStyles()
   const filteredList = response.filter(
     data =>
@@ -301,14 +315,18 @@ const StyledTable = props => {
   }, [allUserProjects])
 
   const handleChange = event => {
-    let fromTemp = fromFilter
-    let toTemp = toFilter
-
-    toTemp.push(event.target.value)
-    setToFilter(toTemp)
-    fromTemp = fromFilter.filter(item => item !== event.target.value)
-    setFromFilter(fromTemp)
-  }
+    const value = event.target.value;
+    if (value === 0) {
+      setToFilter([]);
+    } else {
+      const selectedFilter = fromFilter[value - 1];
+      if (Array.isArray(selectedFilter.value)) {
+        setToFilter([...toFilter, ...selectedFilter.value]);
+      } else {
+        setToFilter([...toFilter, selectedFilter.value]);
+      }
+    }
+  };
 
   const handleDelete = newValue => {
     let fromTemp = fromFilter
@@ -400,13 +418,11 @@ const StyledTable = props => {
                 <span className={classes.filtText}>Filter</span>
               </div>
             </MenuItem>
-            {fromFilter.map(item => {
-              return (
-                <MenuItem key={item} value={item} className={classes.item}>
-                  {item}
-                </MenuItem>
-              )
-            })}
+            {filterlist.map((filter, index) => (
+              <MenuItem key={index} value={index + 1}>
+                {filter.label}
+              </MenuItem>
+            ))}
           </Select>
           <div className={styles.tag2}>{filterTags()}</div>
         </Stack>
